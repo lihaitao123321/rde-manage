@@ -1,26 +1,69 @@
 html, body {
-  width: 100%;
-  height: 100%;
   margin: 0;
   padding: 0;
   font-size: 14px;
 }
 #app {
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 div {
   box-sizing: border-box;
 }
+.keep-alive-position {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  transition: all .5s cubic-bezier(.55, 0, .1, 1);
+}
+.slide-left-enter, .slide-right-leave-active {
+  opacity: 0;
+  -webkit-transform: translate(30px, 0);
+  transform: translate(30px, 0);
+}
+
+.slide-left-leave-active, .slide-right-enter {
+  opacity: 0;
+  -webkit-transform: translate(-30px, 0);
+  transform: translate(-30px, 0);
+}
 .t_page{
+  position: relative;
   width: 100%;
   height: 100%;
+  .t_content{
+    position: absolute;
+    top: 46px;
+    left: 0;
+    right: 0;
+    bottom: 53px;
+  }
   .weui-tabbar__label{
     margin: 0;
   }
+}
+
+//flex布局样式封装
+.uf{
+  display: flex;
+}
+.uf-dc{
+  flex-direction: column;
+}
+.uf-ac{
+  align-items: center;
+}
+.uf-jc{
+  justify-content: center;
+}
+.uf-f1{
+  flex-grow: 1;
 }

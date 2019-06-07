@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Condition></Condition>
         <v-chart :data="data">
             <v-scale x field="date" type="timeCat" mask="MM-DD" />
             <v-scale y field="value" :tick-count="4" :max="300" />

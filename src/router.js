@@ -11,7 +11,7 @@ export default new Router({
         {
             path: '/',
             redirect: to => {
-                return '/home';
+                return '/login';
             }
         },
         {

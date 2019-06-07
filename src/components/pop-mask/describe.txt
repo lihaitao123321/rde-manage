@@ -1,0 +1,24 @@
+案例：参考home页
+传参：
+value（也可v-model）:Boolean
+    true-显示
+    false-隐藏
+direction：Number
+    1-从上到下推出内容（默认）
+    2-从右到左推出内容
+    3-从下到上推出内容
+    4-从左到右推出内容
+mask：Object
+    灰层的自定义style
+content:Object
+    内容外框的自定义style
+options：Object
+    便捷弹框参数，此参数传了之后，slot插槽内容失效
+    type:Number
+        1-垂直列表
+        2-横向栅格
+    source:Array
+        source[0]:Object
+            key:String
+                显示的标签名
+            value:String/Number
