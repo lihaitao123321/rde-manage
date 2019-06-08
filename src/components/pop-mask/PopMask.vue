@@ -2,6 +2,9 @@
     .weui-cell__bd p {
         margin: 0.1em 0 !important;
     }
+    .weui-cells{
+        font-size: 14px !important;
+    }
     .demo5-item {
         width: 82px;
         height: 30px;
@@ -11,7 +14,7 @@
         margin: 3px;
     }
     .demo5-item-selected {
-        background-color: rgb(191, 219, 222);
+        background-color: violet;
     }
 </style>
 <template>
@@ -23,18 +26,19 @@
                         <div v-if="options.type">
                             <div v-if="options.type===1">
                                 <checklist
-                                        v-model="checklist"
+                                        v-model="checklist1"
                                         label-position="left"
                                         :options="options.source"
-                                        @on-change="$emit('onCheckListChange',checklist)"
+                                        @on-change="$emit('onCheckListChange',checklist1)"
                                 ></checklist>
                             </div>
                             <div style="padding: 10px;" v-if="options.type===2">
                                 <checker
-                                        v-model="checklist"
+                                        v-model="checklist2"
                                         type="checkbox"
                                         default-item-class="demo5-item"
                                         selected-item-class="demo5-item-selected"
+                                        @on-change="$emit('onCheckListChange',checklist2)"
                                 >
                                     <checker-item
                                             v-for="(item,index) in options.source"
@@ -100,8 +104,8 @@
         data() {
             return {
                 aniName: '',
-                commonList: ['China', 'Japan', 'America'],
-                checklist: []
+                checklist1: [],
+                checklist2: []
             }
         },
         created() {
@@ -114,11 +118,22 @@
             } else if (this.direction === 4) {
                 this.aniName = 'contentAni4';
             }
+            if(this.options.type===1){
+                this.checklist1=this.options.checklist;
+            }else if(this.options.type===2){
+                this.checklist2=this.options.checklist;
+            }
+        },
+        watch:{
+            options(){
+                if(this.options.type===1){
+                    this.checklist1=this.options.checklist;
+                }else if(this.options.type===2){
+                    this.checklist2=this.options.checklist;
+                }
+            }
         },
         methods: {
-            onCheckListChange(list) {
-                console.log(list)
-            },
             closePop() {
                 this.$emit('input', false);
             },
@@ -150,6 +165,8 @@
     .mask_content {
         position: absolute;
         width: 100%;
+        max-height: 100%;
+        overflow-y: auto;
         background-color: white;
     }
 

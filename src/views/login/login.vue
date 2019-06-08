@@ -1,8 +1,8 @@
 <template>
     <div class="t_page">
-        <x-header>登陆</x-header>
+        <x-header>登陆<a slot="right" @click.stop="register">注册</a></x-header>
         <div class="t_content">
-            <group>
+            <group >
                 <x-input
                         title="手机号码"
                         mask="999 9999 9999"
@@ -58,6 +58,9 @@
         methods:{
             login(){
                 this.$router.push({path: '/home'});
+            },
+            register(){
+                this.$router.push({path: '/register'});
             },
             clearPhone(){
                 this.phone='';

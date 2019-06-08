@@ -109,6 +109,7 @@
                 showMenus: false,
                 options: {
                     type: 1,
+                    checklist: [],
                     source: [{
                         key: 'value1',
                         value: '全部',
@@ -139,8 +140,8 @@
         },
         methods: {
             onCheckListChange(list) {
-                this.searchModel.checklist = list || [];
                 console.log(list)
+                this.options.checklist = list;
             },
             tabPage(index) {
                 this.isActive = 'index' + (index + 1);

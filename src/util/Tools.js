@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Qs from 'qs';
 //测试
 let isTest = false;
@@ -31,113 +32,30 @@ export default {
     ajax: function (obj) {
         // 配置默认值
         const service = axios.create({
-            url: Tools.config.host,
+            url: 'http://www.congrongyun.com/organ/api',
+            method:'post',
             timeout: 30000,
             responseType: 'text'
         });
         // 请求拦截器
         service.interceptors.request.use(config => {
-            if (obj.type === 'get') {
-                config.method = 'get';
-                config.url += '/organ/api';
-            } else {
-                config.method = 'post';
-                config.url += '/organ/api';
-            }
+            config.url += obj.method;
             return config;
         }, error => {
             // 请求错误
-            checkStatus(error.response);
         });
         //响应拦截器
         service.interceptors.response.use(response => {
             // 对响应数据做些事
-            if (response.data.code === 0 || response.code === 0) {
-                return response.data;
-            } else {
-                if (Vue.prototype.$Notice && isTest) {
-                    // 接口报错
-                    Vue.prototype.$Notice.error({
-                        title: '错误编码：' + response.data.code,
-                        desc: response.data.message || response.data
-                    });
-                }
-                return response.data;
-            }
+                return response;
         }, error => {
             // 请求错误
-            checkStatus(error.request);
         });
-
-        function checkStatus(response) {
-            if (response.status >= 200 && response.status < 300) {
-                return response;
-            }
-            const errortext = Tools.codeMessage[response.status] || response.statusText;
-            if (Vue.prototype.$Notice && isTest) {
-                // 接口报错
-                Vue.prototype.$Notice.error({
-                    title: '错误编码：' + response.status,
-                    desc: errortext
-                });
-            }
-            const error = new Error(errortext);
-            error.name = response.status;
-            error.response = response;
-            throw error;
-        }
-        let postData = Qs.stringify(obj);
-        if (obj.type === 'get') {
-            return service({
-                params: postData
-            });
-        } else {
-            return service({
-                data: postData
-            });
-        }
+        let postData = Qs.stringify(obj.data);
+        return service({
+            data: postData
+        });
     },
-
-    createQuery: function (obj) {
-        /*普通参数*/
-        let app_key = "5000",
-            data_sign = 0,
-            tenant_num_id = 5;
-        /*其它声明*/
-        let time = Tools.Date.TimeFormat(new Date().getTime(), 'ymdhms2');
-        let params = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(obj.data)));
-        let sid = '';
-        let salt = '';
-        let loginInfo = sessionStorage.getItem('loginInfo');
-        if (loginInfo) {
-            sid = JSON.parse(loginInfo).sid;
-            salt = JSON.parse(loginInfo).salt;
-        } else {
-            sid = localStorage.getItem('sid');
-            salt = localStorage.getItem('salt');
-        }
-
-        let postData = {
-            method: obj.method,
-            params: params,
-            app_key: app_key,
-            timestamp: time,
-            data_sign: data_sign,
-            tenant_num_id: tenant_num_id,
-            sid: sid,
-            sign: CryptoJS.SHA1(salt + 'method' + obj.method + 'params' + params + 'sid' + sid + 'timestamp' + time + salt).toString()
-        };
-        let getData = {
-            method: obj.method,
-            params: params,
-            app_key: app_key
-        };
-        if (obj.type === 'get') {
-            return getData;
-        }
-        return Qs.stringify(postData);
-    },
-
     //获取url传参集合
     getQuery() {
         let url = location.search;
@@ -206,7 +124,8 @@ export default {
                             resolve(false);
                         }
                     },
-                    error: (res) => {}
+                    error: (res) => {
+                    }
                 });
             });
         },
@@ -232,7 +151,8 @@ export default {
                             resolve(false);
                         }
                     },
-                    error: (res) => {}
+                    error: (res) => {
+                    }
                 });
             });
         },
@@ -258,7 +178,8 @@ export default {
                             resolve(false);
                         }
                     },
-                    error: (res) => {}
+                    error: (res) => {
+                    }
                 });
             });
         },
@@ -286,7 +207,8 @@ export default {
                             resolve(false);
                         }
                     },
-                    error: (res) => {}
+                    error: (res) => {
+                    }
                 });
             });
         },
@@ -815,7 +737,8 @@ export default {
         Phone: /^1([38]\d|5[0-35-9]|7[3678])\d{8}$/,
         //座机
         Tel: /([0-9]{3,4}-)?[0-9]{7,8}/,
-        email: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
+        email: /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/,
+        password:/^[-_a-zA-Z0-9]+$/
     },
     //form表单校验，RegExpKey-RegExp的key errorMsg-校验失败返回的提示信息 required-是否必填
     formValidator_RegExp(RegExpKey, errorMsg, required) {
@@ -868,7 +791,8 @@ export default {
             let instance = new constructor({
                 el: document.createElement('div'),
             });
-            instance.callback = function (row) {};
+            instance.callback = function (row) {
+            };
             // 关闭方法，删除节点
             instance.show = function (data) {
                 let text, timeout;
@@ -897,4 +821,3 @@ export default {
         }
     }
 };
-Tools.components.mount();
