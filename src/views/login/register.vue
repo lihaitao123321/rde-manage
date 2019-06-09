@@ -3,13 +3,13 @@
         <x-header
                 :left-options="{preventGoBack:true}"
                 @on-click-back="$router.goBack()"
-        >注册</x-header>
+        >注册
+        </x-header>
         <div class="t_content">
             <group label-width="80px">
                 <x-input
                         title="用户名"
                         v-model="username"
-                        is-type="china-mobile"
                         @on-click-clear-icon="clearPhone"
                 ></x-input>
                 <x-input
@@ -42,7 +42,7 @@
                     <div class="sendCode" :class="sending?'active':''" @click.stop="sendCode">{{codeText}}</div>
                 </div>
                 <div style="padding:15px;">
-                    <x-button @click.native="login" type="primary" @click.stop="register">注册</x-button>
+                    <x-button type="primary" @click.native="register">注册</x-button>
                 </div>
             </group>
         </div>
@@ -51,7 +51,21 @@
 </template>
 
 <script>
-    import { XHeader, Actionsheet, TransferDom, ButtonTab, ButtonTabItem ,Tabbar, TabbarItem, Group, Cell,XInput,XButton} from 'vux'
+    import Vue from 'vue'
+    import {
+        XHeader,
+        Actionsheet,
+        TransferDom,
+        ButtonTab,
+        ButtonTabItem,
+        Tabbar,
+        TabbarItem,
+        Group,
+        Cell,
+        XInput,
+        XButton
+    } from 'vux'
+    import md5 from 'md5';
 
     export default {
         components: {
@@ -66,15 +80,15 @@
             XInput,
             XButton
         },
-        data () {
+        data() {
             return {
-                username:'',
-                telephone:'17630378060',
-                password:'',
-                repassword:'',
-                code:'',
-                codeText:'获取验证码',
-                sending:false,
+                username: '',
+                telephone: '17630378060',
+                password: '',
+                repassword: '',
+                code: '',
+                codeText: '获取验证码',
+                sending: false,
                 menus: {
                     menu1: 'Take Photo',
                     menu2: 'Choose from photos'
@@ -82,34 +96,35 @@
                 showMenus: false
             }
         },
-        methods:{
-            sendCode(){
-                if(this.sending){
+        methods: {
+            sendCode() {
+                if (this.sending) {
                     return false;
                 }
-                if(!this.Tools.RegExp.Phone.test(this.telephone)){
+                if (!this.Tools.RegExp.Phone.test(this.telephone)) {
                     this.$vux.toast.text('请输入正确的手机号码');
                     return false;
                 }
-                this.sending=true;
-                let n=120;
-                this.codeText='再次获取('+n+'s)';
-                let timer= setInterval(()=>{
-                    if(n===0){
-                        this.sending=false;
-                        this.codeText='获取验证码';
+                this.sending = true;
+                let n = 120;
+                this.codeText = '再次获取(' + n + 's)';
+                let timer = setInterval(() => {
+                    if (n === 0) {
+                        this.sending = false;
+                        this.codeText = '获取验证码';
                         clearInterval(timer);
-                    }else{
-                        this.codeText='再次获取('+n+'s)';
+                    } else {
+                        this.codeText = '再次获取(' + n + 's)';
                         n--;
                     }
-                },1000);
+                }, 1000);
                 this.Tools.ajax({
-                    method:'/sendregistermsg',
-                    data:{
-                        "telephone" : this.telephone
+                    method: '/sendregistermsg',
+                    data: {
+                        "telephone": this.telephone
                     }
-                }).then(res=>{
+                }).then(res => {
+                    console.log(res)
                     switch (res.status) {
                         case '0':
                             // 发送成功
@@ -125,59 +140,77 @@
                     }
                 });
             },
-            register(){
-                if(!this.username.trim()){
+            register() {
+                console.log(666, this)
+                if (!this.username) {
                     this.$vux.toast.text('请输入用户名');
                     return false;
                 }
-                if(!this.Tools.RegExp.Phone.test(this.telephone)){
+                if (!this.Tools.RegExp.Phone.test(this.telephone)) {
                     this.$vux.toast.text('请输入正确的手机号码');
                     return false;
                 }
-                if(!this.Tools.RegExp.password.test(this.password)){
+                if (!this.Tools.RegExp.password.test(this.password)) {
                     this.$vux.toast.text('请输入正确的密码，4~20位字母、数字、 _的组合');
                     return false;
                 }
-                if(this.password!==this.repassword){
+                if (this.password !== this.repassword) {
                     this.$vux.toast.text('两次密码不一致');
                     return false;
                 }
+                if (!this.code) {
+                    this.$vux.toast.text('验证码不能为空');
+                    return false;
+                }
+
                 this.Tools.ajax({
-                    method:'/register',
-                    data:{
-                        "username" : this.username,
-                        "telephone" : this.telephone,
-                        "passwd" : encrypt.encrypt(password),
-                        "code" : code
+                    method: '/register',
+                    headers : {
+                        'Content-type': 'application/json'
+                    },
+                    data: {
+                        "username": this.username.trim(),
+                        "telephone": this.telephone.trim(),
+                        "passwd": md5(this.password.trim()),
+                        "code": this.code.trim()
                     }
-                }).then(res=>{
+                }).then(res => {
                     switch (res.status) {
                         case '0':
-                            // 发送成功
-                            this.$vux.toast.text('验证码已发送请注意查收');
+                            // 注册成功
+                            this.$vux.toast.text('注册成功');
+                            setTimeout(() => {
+                                this.$router.goBack();
+                            }, 1500);
                             break;
                         case '2':
-                            this.$vux.toast.text('2分钟内不重复发送短信');
+                            this.$vux.toast.text('验证码错误');
+                            break;
+                        case '3':
+                            this.$vux.toast.text('验证码过期');
+                            break;
+                        case '4':
+                            this.$vux.toast.text('用户已存在');
                             break;
                         default:
                             // 1：失败 或者其他情况
-                            this.$vux.toast.text('发送失败，请稍后重试！');
+                            this.$vux.toast.text('注册失败，请重试');
                             break;
                     }
                 });
 
             },
-            clearPhone(){
-                this.telephone='';
+            clearPhone() {
+                this.telephone = '';
             },
-            clearPassword(){
-                this.password='';
+            clearPassword() {
+                this.password = '';
             },
         }
     }
 </script>
 <style scoped>
-    .sendCode{
+    .sendCode {
         position: absolute;
         z-index: 1;
         top: -37px;
@@ -189,7 +222,8 @@
         font-size: 12px;
         border-radius: 3px;
     }
-    .active{
-        background-color: rgba(0,0,0,0.1);
+
+    .active {
+        background-color: rgba(0, 0, 0, 0.1);
     }
 </style>

@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "jsencrypt": "^2.3.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
+    "md5": "^2.2.1",
     "mqtt": "^3.0.0",
     "px2rem": "^0.5.0",
     "qs": "^6.7.0",

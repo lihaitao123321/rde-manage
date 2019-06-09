@@ -32,10 +32,11 @@ export default {
     ajax: function (obj) {
         // 配置默认值
         const service = axios.create({
-            url: 'http://www.congrongyun.com/organ/api',
+            url: 'http://106.12.24.133:9080/organ/api',
             method:'post',
             timeout: 30000,
-            responseType: 'text'
+            responseType: 'text',
+            headers:obj.headers || {}
         });
         // 请求拦截器
         service.interceptors.request.use(config => {
@@ -47,11 +48,16 @@ export default {
         //响应拦截器
         service.interceptors.response.use(response => {
             // 对响应数据做些事
-                return response;
+                return response.data;
         }, error => {
             // 请求错误
         });
-        let postData = Qs.stringify(obj.data);
+        let postData=obj.data;
+        if(obj.headers && obj.headers['Content-type']){
+            postData=JSON.stringify(obj.data);
+        }else{
+            postData = Qs.stringify(obj.data);
+        }
         return service({
             data: postData
         });
