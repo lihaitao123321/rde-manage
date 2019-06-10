@@ -80,14 +80,16 @@
 
                     try {
                         if (data.num > 1) {
+                            this.$router.push('selectCompany');
                             // commonjs.goPage("selectCompany");
                         } else {
                             localStorage.setItem("userToken", data.token);
+                            this.$router.push('home');
                         }
                     }catch(e){
 
                     }
-                    this.$router.push('home');
+
                 });
                 this.$router.push({path: '/home'});
             },

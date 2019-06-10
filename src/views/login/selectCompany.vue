@@ -35,32 +35,16 @@
                 showMenus: false
             }
         },
+        created(){
+            this.getAllCompany();
+        },
         methods: {
-            sendCode() {
-                if (this.sending) {
-                    return false;
-                }
-                if (!this.Tools.RegExp.Phone.test(this.telephone)) {
-                    this.$vux.toast.text('请输入正确的手机号码');
-                    return false;
-                }
-                this.sending = true;
-                let n = 120;
-                this.codeText = '再次获取(' + n + 's)';
-                let timer = setInterval(() => {
-                    if (n === 0) {
-                        this.sending = false;
-                        this.codeText = '获取验证码';
-                        clearInterval(timer);
-                    } else {
-                        this.codeText = '再次获取(' + n + 's)';
-                        n--;
-                    }
-                }, 1000);
+            getAllCompany() {
                 this.Tools.ajax({
-                    method: '/sendregistermsg',
+                    method: '/findByUserId',
+                    type:'get',
                     data: {
-                        "telephone": this.telephone
+                        Authorization : localStorage.getItem("prevToken")
                     }
                 }).then(res => {
                     console.log(res)

@@ -40,6 +40,9 @@ export default {
         });
         // 请求拦截器
         service.interceptors.request.use(config => {
+            if(obj.type){
+                config.method=obj.type;
+            }
             config.url += obj.method;
             return config;
         }, error => {
