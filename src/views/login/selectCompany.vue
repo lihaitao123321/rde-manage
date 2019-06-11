@@ -42,7 +42,6 @@
             getAllCompany() {
                 this.Tools.ajax({
                     method: '/findByUserId',
-                    type:'get',
                     data: {
                         Authorization : localStorage.getItem("prevToken")
                     }

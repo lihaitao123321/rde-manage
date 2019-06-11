@@ -65,7 +65,7 @@
         XInput,
         XButton
     } from 'vux'
-    import md5 from 'md5';
+    import encrypt from '../../util/jsencrypt'
 
     export default {
         components: {
@@ -141,7 +141,6 @@
                 });
             },
             register() {
-                console.log(666, this)
                 if (!this.username) {
                     this.$vux.toast.text('请输入用户名');
                     return false;
@@ -162,7 +161,6 @@
                     this.$vux.toast.text('验证码不能为空');
                     return false;
                 }
-
                 this.Tools.ajax({
                     method: '/register',
                     headers : {
@@ -171,7 +169,7 @@
                     data: {
                         "username": this.username.trim(),
                         "telephone": this.telephone.trim(),
-                        "passwd": md5(this.password.trim()),
+                        "passwd": encrypt.encrypt(this.password),
                         "code": this.code.trim()
                     }
                 }).then(res => {
