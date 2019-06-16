@@ -77,21 +77,15 @@
                     localStorage.setItem("prevToken", data.token);
                     localStorage.setItem("userCompanyNum", data.num);
                     localStorage.setItem("userCurrentCompanyStatus", data.companyStatus);
-
-                    try {
-                        if (data.num > 1) {
-                            this.$router.push('selectCompany');
-                            // commonjs.goPage("selectCompany");
-                        } else {
-                            localStorage.setItem("userToken", data.token);
-                            this.$router.push('home');
-                        }
-                    }catch(e){
-
-                    }
+                    // if (data.num > 1) {
+                    //     this.$router.push('selectCompany');
+                    // } else {
+                    //     localStorage.setItem("userToken", data.token);
+                    //     this.$router.push('home');
+                    // }
+                    this.$router.push('home');
 
                 });
-                this.$router.push({path: '/home'});
             },
             register(){
                 this.$router.push({path: '/register'});
