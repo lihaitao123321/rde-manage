@@ -1,17 +1,17 @@
 <template>
     <div class="t_page">
-        <x-header>登陆<a slot="right" @click.stop="register">注册</a></x-header>
+        <x-header>{{$t('login.title')}}<a slot="right" @click.stop="register">{{$t('login.register')}}</a></x-header>
         <div class="t_content">
             <group >
                 <x-input
-                        title="手机号码"
+                        :title="$t('login.phone')"
                         v-model="telephone"
                         is-type="china-mobile"
                         @on-click-clear-icon="clearPhone"
                 ></x-input>
                 <x-input
                         type="password"
-                        title="登陆密码"
+                        :title="$t('login.password')"
                         v-model="password"
                         @on-click-clear-icon="clearPassword"
                 ></x-input>

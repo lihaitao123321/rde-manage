@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+import vuexI18n from "vuex-i18n";
+Vue.use(Vuex);
+let store=new Vuex.Store({
   state: {
 
   },
@@ -12,5 +11,10 @@ export default new Vuex.Store({
   },
   actions: {
 
+  },
+  modules: {
+    i18n: vuexI18n.store
   }
-})
+});
+Vue.use(vuexI18n.plugin, store);
+export default store;

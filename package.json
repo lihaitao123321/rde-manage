@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "glob-fs": "^0.1.7",
     "jsencrypt": "^2.3.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
@@ -18,6 +19,7 @@
     "vue-baidu-map": "^0.21.20",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1",
+    "vuex-i18n": "^1.11.0",
     "vux": "^2.9.4",
     "vux-loader": "^1.2.9"
   },

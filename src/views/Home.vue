@@ -1,7 +1,7 @@
 <template>
     <div class="t_page">
         <x-header :right-options="{showMore: true}">
-            <span>{{getTitle}}</span>
+            <span>{{$t('home.title')}}</span>
             <x-icon
                     slot="overwrite-left"
                     type="navicon"

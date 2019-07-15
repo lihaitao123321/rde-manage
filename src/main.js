@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import './plugins/axios'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import i18n from './plugins/i18n'        //引入vue-i18n
 
 import './main.less';
 //引入全局字体图标库,用法：<i class="fa fa-angle-left"></i>,具体图标去 http://fontawesome.dashgame.com 查看
@@ -23,6 +23,7 @@ Vue.prototype.Tools=Tools;
 
 
 import  { ToastPlugin } from 'vux'
+import Vuex from "vuex";
 Vue.use(ToastPlugin);
 
 

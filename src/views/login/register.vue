@@ -8,15 +8,14 @@
         <div class="t_content">
             <group label-width="80px">
                 <x-input
-                        title="用户名"
+                        title="真实姓名"
                         v-model="username"
                         @on-click-clear-icon="clearPhone"
                 ></x-input>
                 <x-input
-                        title="手机号码"
-                        v-model="telephone"
-                        is-type="china-mobile"
-                        @on-click-clear-icon="clearPhone"
+                        title="用户名"
+                        v-model="nickname"
+                        @on-click-clear-icon="clearNickname"
                 ></x-input>
                 <x-input
                         type="password"
@@ -25,12 +24,17 @@
                         v-model="password"
                         @on-click-clear-icon="clearPassword"
                 ></x-input>
+                <button-tab v-model="registerType">
+                    <button-tab-item @on-item-click="consoleIndex()">{{ 666 }}</button-tab-item>
+                    <button-tab-item @on-item-click="consoleIndex()">{{ 888 }}</button-tab-item>
+                </button-tab>
+
+
                 <x-input
-                        type="password"
-                        title="再次密码"
-                        placeholder="4~20位字母、数字、 _的组合"
-                        v-model="repassword"
-                        @on-click-clear-icon="clearPassword"
+                        title="手机号码"
+                        v-model="telephone"
+                        is-type="china-mobile"
+                        @on-click-clear-icon="clearPhone"
                 ></x-input>
                 <x-input
                         type="password"
@@ -82,10 +86,10 @@
         },
         data() {
             return {
-                username: '',
+                username: '李海涛',
+                nickname:'Dolphin',
                 telephone: '17630378060',
-                password: '',
-                repassword: '',
+                password: '123321',
                 code: '',
                 codeText: '获取验证码',
                 sending: false,
@@ -93,10 +97,14 @@
                     menu1: 'Take Photo',
                     menu2: 'Choose from photos'
                 },
-                showMenus: false
+                showMenus: false,
+                registerType:1
             }
         },
         methods: {
+            consoleIndex(){
+
+            },
             sendCode() {
                 if (this.sending) {
                     return false;
@@ -153,10 +161,6 @@
                     this.$vux.toast.text('请输入正确的密码，4~20位字母、数字、 _的组合');
                     return false;
                 }
-                if (this.password !== this.repassword) {
-                    this.$vux.toast.text('两次密码不一致');
-                    return false;
-                }
                 if (!this.code) {
                     this.$vux.toast.text('验证码不能为空');
                     return false;
@@ -200,6 +204,9 @@
             },
             clearPhone() {
                 this.telephone = '';
+            },
+            clearNickname(){
+                this.nickname = '';
             },
             clearPassword() {
                 this.password = '';
