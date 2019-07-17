@@ -1,5 +1,5 @@
 import xiongjian from './xiongjian';
-module.exports = {
+export default {
     ...xiongjian,
     login: {
         title: '登陆',

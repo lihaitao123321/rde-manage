@@ -5,5 +5,5 @@ import ja from './ja'
 Vue.i18n.add('zh', zh);
 Vue.i18n.add('en', en);
 Vue.i18n.add('ja', ja);
-Vue.i18n.set('en');
+Vue.i18n.set('zh');
 
