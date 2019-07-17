@@ -3,40 +3,54 @@
         <x-header
                 :left-options="{preventGoBack:true}"
                 @on-click-back="$router.goBack()"
-        >注册
+        >{{$t('register.title')}}
         </x-header>
         <div class="t_content">
+            <div class="padding_lrt15px">
+                <button-tab v-model="registerType">
+                    <button-tab-item button-tab-border-radius="3px" @on-item-click="consoleIndex()">{{
+                        $t('register.phone') }}
+                    </button-tab-item>
+                    <button-tab-item button-tab-border-radius="3px" @on-item-click="consoleIndex()">{{
+                        $t('register.email') }}
+                    </button-tab-item>
+                </button-tab>
+            </div>
             <group label-width="80px">
+
                 <x-input
-                        title="真实姓名"
+                        :title="$t('register.username')"
                         v-model="username"
                         @on-click-clear-icon="clearPhone"
                 ></x-input>
                 <x-input
-                        title="用户名"
+                        :title="$t('register.username')"
                         v-model="nickname"
                         @on-click-clear-icon="clearNickname"
                 ></x-input>
                 <x-input
                         type="password"
-                        title="登陆密码"
+                        :title="$t('register.password')"
                         placeholder="4~20位字母、数字、 _的组合"
                         v-model="password"
                         @on-click-clear-icon="clearPassword"
                 ></x-input>
-                <button-tab v-model="registerType">
-                    <button-tab-item @on-item-click="consoleIndex()">{{ 666 }}</button-tab-item>
-                    <button-tab-item @on-item-click="consoleIndex()">{{ 888 }}</button-tab-item>
-                </button-tab>
-
-
                 <x-input
-                        title="手机号码"
+                        v-if="registerType===0"
+                        :title="$t('register.phone')"
                         v-model="telephone"
                         is-type="china-mobile"
                         @on-click-clear-icon="clearPhone"
                 ></x-input>
                 <x-input
+                        v-if="registerType===1"
+                        :title="$t('register.email')"
+                        v-model="email"
+                        is-type="email"
+                        @on-click-clear-icon="clearPhone"
+                ></x-input>
+                <x-input
+                        :title="$t('register.code')"
                         type="password"
                         title="验证码"
                         v-model="code"
@@ -46,7 +60,7 @@
                     <div class="sendCode" :class="sending?'active':''" @click.stop="sendCode">{{codeText}}</div>
                 </div>
                 <div style="padding:15px;">
-                    <x-button type="primary" @click.native="register">注册</x-button>
+                    <x-button type="primary" @click.native="register">{{$t('register.ok')}}</x-button>
                 </div>
             </group>
         </div>
@@ -87,8 +101,9 @@
         data() {
             return {
                 username: '李海涛',
-                nickname:'Dolphin',
+                nickname: 'Dolphin',
                 telephone: '17630378060',
+                email:'1340706176@qq.com',
                 password: '123321',
                 code: '',
                 codeText: '获取验证码',
@@ -98,11 +113,11 @@
                     menu2: 'Choose from photos'
                 },
                 showMenus: false,
-                registerType:1
+                registerType: 0
             }
         },
         methods: {
-            consoleIndex(){
+            consoleIndex() {
 
             },
             sendCode() {
@@ -167,7 +182,7 @@
                 }
                 this.Tools.ajax({
                     method: '/register',
-                    headers : {
+                    headers: {
                         'Content-type': 'application/json'
                     },
                     data: {
@@ -205,7 +220,7 @@
             clearPhone() {
                 this.telephone = '';
             },
-            clearNickname(){
+            clearNickname() {
                 this.nickname = '';
             },
             clearPassword() {
@@ -214,7 +229,8 @@
         }
     }
 </script>
-<style scoped>
+<style lang="less" scoped>
+    @button-tab-border-radius: 3px;
     .sendCode {
         position: absolute;
         z-index: 1;
@@ -230,5 +246,13 @@
 
     .active {
         background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /deep/ .t_content {
+        padding: 0 10px;
+    }
+
+    .padding_lrt15px {
+        padding: 15px 15px 0 15px;
     }
 </style>

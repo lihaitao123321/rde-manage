@@ -1,5 +1,5 @@
 module.exports = {
-    person:{
-
+    home:{
+        title: '主页',
     }
 };
