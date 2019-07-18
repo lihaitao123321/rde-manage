@@ -6,6 +6,7 @@ module.exports = {
             options: {},
             plugins: [
                 'vux-ui',
+
                 {
                     name: 'less-theme',
                     path: './src/css/theme.less'
