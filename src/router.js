@@ -5,6 +5,7 @@ import login from './views/login/login.vue'
 import register from './views/login/register.vue'
 import registerOk from './views/login/registerOk.vue'
 import selectCompany from './views/login/selectCompany.vue'
+import index3 from './views/index3/index3.vue'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
             path: '/home',
             name: 'home',
             component: Home
+        },
+        {
+            path: '/index3',
+            name: 'index3',
+            component: index3
         }
     ]
 })

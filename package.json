@@ -8,10 +8,12 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "element-ui": "^2.11.1",
     "glob-fs": "^0.1.7",
     "jsencrypt": "^2.3.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
+    "mint-ui": "^2.2.13",
     "mqtt": "^3.0.0",
     "px2rem": "^0.5.0",
     "qs": "^6.7.0",
@@ -20,13 +22,14 @@
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1",
     "vuex-i18n": "^1.11.0",
-    "vux": "^2.9.4",
+    "vux": "^2.9.2",
     "vux-loader": "^1.2.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
     "axios": "^0.18.0",
+    "babel-plugin-component": "^1.1.1",
     "vue-cli-plugin-axios": "^0.0.4",
     "vue-loader": "14.2.2",
     "vue-template-compiler": "^2.6.10"

@@ -4,9 +4,18 @@ import router from './router'
 import store from './store'
 import i18n from './plugins/i18n'        //引入vue-i18n
 
+// 引入Mint ui全部组件
+import Mint from 'mint-ui';
+import 'mint-ui/lib/style.css'
+Vue.use(Mint);
+
+
 import './css/main.less';
 //引入全局字体图标库,用法：<i class="fa fa-angle-left"></i>,具体图标去 http://fontawesome.dashgame.com 查看
 import './assets/font-awesome-4.7.0/css/font-awesome.css'
+//遮罩弹框组件
+import xSelect from './components/select/x-select'
+Vue.component('xSelect',xSelect);
 //遮罩弹框组件
 import PopMask from './components/pop-mask/PopMask.vue'
 Vue.component('PopMask',PopMask);

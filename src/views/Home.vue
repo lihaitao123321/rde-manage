@@ -144,6 +144,10 @@
                 this.options.checklist = list;
             },
             tabPage(index) {
+                if(index===2){
+                    this.$router.push('index3');
+                    return false;
+                }
                 this.isActive = 'index' + (index + 1);
             },
             showLeftMore() {
