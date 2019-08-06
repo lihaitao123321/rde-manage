@@ -2,19 +2,25 @@
     <div class="t_page">
         <x-header>{{$t('login.title')}}<a slot="right" @click.stop="register">{{$t('login.register')}}</a></x-header>
         <div class="t_content">
-            <group >
-                <x-input
-                        :title="$t('login.phone')"
-                        v-model="telephone"
-                        is-type="china-mobile"
-                        @on-click-clear-icon="clearPhone"
-                ></x-input>
+            <div class="t_content_image">
+                <div class="t_content_image1"></div>
+            </div>
+            <group class="t_login">
+                    <x-input
+                            v-model="telephone"
+                            is-type="china-mobile"
+                            @on-click-clear-icon="clearPhone"
+                            placeholder="请填写用户名"
+                    >
+                        <label slot=label  class="t_margin_icon fa fa-user-o"></label>
+                    </x-input>
                 <x-input
                         type="password"
-                        :title="$t('login.password')"
                         v-model="password"
-                        @on-click-clear-icon="clearPassword"
-                ></x-input>
+                        placeholder="请填写密码"
+                        @on-click-clear-icon="clearPassword">
+                    <label slot=label  class="t_margin_icon fa fa-lock"></label>
+                </x-input>
                 <div style="padding:15px;">
                     <x-button @click.native="login" type="primary">登陆</x-button>
                 </div>
@@ -47,6 +53,7 @@
             return {
                 telephone:'15261872169',
                 password:'87654321',
+                td:false,
             }
         },
         methods:{
@@ -91,11 +98,36 @@
                 this.$router.push({path: '/register'});
             },
             clearPhone(){
-                this.phone='';
+                console.log(666)
+                this.telephone='';
             },
-            clearPassword(){
+            clearPassword:function(){
+                console('我点击了');
                 this.password='';
-            },
+            }
         }
     }
 </script>
+<style>
+    .t_content_image{
+        width: 100%;
+        height: 210px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .t_content_image1{
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        border: 0px;
+        border-radius: 15px;
+    }
+    .t_login{
+        padding: 0px 38px;
+    }
+    .t_margin_icon{
+        margin-right: 22px;
+        color: #CC183C;
+    }
+</style>
