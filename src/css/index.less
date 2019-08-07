@@ -1,0 +1,54 @@
+.index-page{
+  padding: 0 0 35px 0;
+  .index-top{
+    padding: 0 30px;
+    background: linear-gradient(to bottom, #E22F49, #B41736);
+    .index-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 110px;
+      .more-icon{
+        color: #ffffff;
+      }
+      .search-box{
+        flex: 1;
+        box-sizing: border-box;
+        border-radius: 30px;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        background: rgba(255,255,255,0.3);
+        /deep/ .weui-cells{
+          margin-top: 0;
+          background: none;
+          &::before{
+            border-top: none;
+          }
+          &::after{
+            border-bottom: none;
+          }
+          input::-webkit-input-placeholder {
+            color: #ffffff;
+          }
+        }
+        .search-icon{
+
+        }
+        .search-con{
+        }
+      }
+      .notice-icon{
+        color: #ffffff;
+      }
+      .white-x-icon {
+        display: block;
+        fill: #ffffff;
+      }
+    }
+
+  }
+  .index-bottom{
+
+  }
+}

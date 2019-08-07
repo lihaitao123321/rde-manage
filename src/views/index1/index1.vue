@@ -1,14 +1,34 @@
 <template>
-    <div>
-        <Condition
+    <div class="index-page">
+        <!-- <Condition
                 :options="options"
                 @onCheckListChange="onCheckListChange"
-        ></Condition>
+        ></Condition> -->
+        <div class="index-top">
+            <div class="index-header">
+                <x-icon class="more-icon white-x-icon" type="ios-ionic-outline" size="30"></x-icon>
+                <div class="search-box">
+                    <x-icon class="search-icon white-x-icon" type="ios-ionic-outline" size="30"></x-icon>
+                    <group>
+                        <x-input class="search-con" readonly placeholder="请输入内容"></x-input>
+                    </group>
+                </div>
+                <x-icon class="white-x-icon" type="ios-ionic-outline" size="30"></x-icon>
+            </div>
+        </div>
+        <div class="index-bottom">
+            <div></div>
+        </div>
     </div>
 </template>
 
 <script>
+    import { XHeader, Actionsheet, TransferDom, ButtonTab, ButtonTabItem ,Tabbar, TabbarItem, Group, Cell,XInput,XButton} from 'vux'
     export default {
+        components: {
+            Group,
+            XInput
+        },
         data () {
             return {
                 options: [
@@ -117,4 +137,8 @@
         }
     }
 </script>
+<style lang="less" scoped>
+@import '../../css/index';
+</style>
+
 
