@@ -7,6 +7,13 @@ import registerOk from './views/login/registerOk.vue'
 import selectCompany from './views/login/selectCompany.vue'
 import index3 from './views/index3/index3.vue'
 import searchBaoJing from './views/index3/searchBaoJing.vue'
+import changePassword from './views/index5/changePassword.vue'
+import message from './views/index5/message.vue'
+import language from './views/index5/language.vue'
+import personal from './views/index5/personal.vue'
+import nickname from './views/index5/nickname.vue'
+import address from './views/index5/address.vue'
+
 
 Vue.use(Router)
 
@@ -53,9 +60,38 @@ export default new Router({
             path: '/searchBaoJing',
             name: 'searchBaoJing',
             component: searchBaoJing
-        }
+        },
 
 
-
+        {
+            path: '/changePassword',
+            name: 'changePassword',
+            component: changePassword
+        },
+        {
+            path: '/message',
+            name: 'message',
+            component: message
+        },
+        {
+            path: '/language',
+            name: 'language',
+            component: language
+        },
+        {
+            path: '/personal',
+            name: 'personal',
+            component: personal
+        },
+        {
+            path: '/nickname',
+            name: 'nickname',
+            component: nickname
+        },
+        {
+            path: '/address',
+            name: 'address',
+            component: address
+        },
     ]
 })
