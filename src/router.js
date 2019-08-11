@@ -13,7 +13,6 @@ import language from './views/index5/language.vue'
 import personal from './views/index5/personal.vue'
 import nickname from './views/index5/nickname.vue'
 import address from './views/index5/address.vue'
-
 import search from './views/index1/search.vue'
 
 Vue.use(Router)
