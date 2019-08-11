@@ -22,15 +22,15 @@
         methods:{
             init(){
                 document.addEventListener("deviceready",  ()=> {
-                    //注册极光
-                    document.addEventListener('jpush.receiveRegistrationId', function (event) {
-                        console.log(event.registrationId)
-                    }, false);
-                    window.JPush.init();
-                    window.JPush.setDebugMode(true);
-                    window.JPush.getRegistrationID(function(rId) {
-                        console.log("JPushPlugin:registrationID is " + rId)
-                    })
+                    // //注册极光
+                    // document.addEventListener('jpush.receiveRegistrationId', function (event) {
+                    //     console.log(event.registrationId)
+                    // }, false);
+                    // window.JPush.init();
+                    // window.JPush.setDebugMode(true);
+                    // window.JPush.getRegistrationID(function(rId) {
+                    //     console.log("JPushPlugin:registrationID is " + rId)
+                    // })
 
                     let backClick = 0;// 退出点击次数，默认为0
                     let time = new Date(); // 2s内再次点击就退出

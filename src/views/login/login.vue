@@ -12,7 +12,7 @@
                             class="t_position_bottom"
                             placeholder="请输入账号"
                             clearable
-                            v-model="input1">
+                            v-model="telephone">
                         <i slot="prefix" class="el-input__icon t_margin_icon fa fa-user-o"></i>
                     </el-input>
                 </div>
@@ -22,7 +22,7 @@
                             placeholder="请输入密码"
                             show-password
                             clearable
-                            v-model="input2">
+                            v-model="password">
                         <i slot="prefix" class="el-input__icon t_margin_icon fa fa-lock"></i>
                     </el-input>
                 </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="footer_title uf uf-dr js">
                     <span>忘记密码</span>
-                    <span>新用户注册 ></span>
+                    <span @click="register()">新用户注册 ></span>
                 </div>
             </group>
         </div>
@@ -79,6 +79,8 @@
                 }
 
                 let pwd=encrypt.encrypt(this.password);
+                this.$router.push('home');
+                return false;
                 this.Tools.ajax({
                     method: '/appLogin',
                     data: {

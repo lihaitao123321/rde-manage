@@ -6,7 +6,7 @@
                 @on-click-back="$router.goBack()"
         >
         </x-header>
-        <div class="t_content">
+        <div class="pageContent">
             <div class="padding_lrt15px">
                 <div class="t_tabs uf dr js jc ac">
                     <div class="uf  jc ac dc"  @click="tabColor" v-bind:class="{activefont1:isActive}">手机注册</div>
@@ -264,6 +264,14 @@
     }
 </script>
 <style lang="less" scoped>
+    .pageContent{
+        position: absolute;
+        top: 50px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        overflow-y: auto;
+    }
     /deep/ .vux-header-title span {
         color: black;
     }
@@ -394,6 +402,6 @@
 
 
     .padding_lrt15px {
-        padding: 60px 0px 0 0px;
+        padding: 15px 0px 0 0px;
     }
 </style>
