@@ -2,7 +2,7 @@
   <div>
     <div class="personal">
       <div class="red">
-        <flexbox :justify='space-around'>
+        <flexbox >
           <flexbox-item :span="3">
             <div class="img">
               
