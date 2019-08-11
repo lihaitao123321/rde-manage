@@ -6,14 +6,11 @@
                 <div class="t_content_image1"></div>
             </div>
             <group class="t_login">
-                    <x-input
-                            v-model="telephone"
-                            is-type="china-mobile"
-                            @on-click-clear-icon="clearPhone"
-                            placeholder="请填写用户名"
-                    >
-                        <label slot=label  class="t_margin_icon fa fa-user-o"></label>
-                    </x-input>
+                <el-input
+                        placeholder="请输入内容"
+                        v-model="input4">
+                    <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                </el-input>
                 <x-input
                         type="password"
                         v-model="password"
@@ -21,8 +18,12 @@
                         @on-click-clear-icon="clearPassword">
                     <label slot=label  class="t_margin_icon fa fa-lock"></label>
                 </x-input>
-                <div style="padding:15px;">
-                    <x-button @click.native="login" type="primary">登陆</x-button>
+                <div class="t_distance">
+                    <x-button @click.native="login" class="t_submit" type="primary">登陆</x-button>
+                </div>
+                <div class="footer_title uf uf-dr js">
+                    <span>忘记密码</span>
+                    <span>新用户注册></span>
                 </div>
             </group>
         </div>
@@ -109,6 +110,12 @@
     }
 </script>
 <style>
+    .js{
+        justify-content: space-between;
+    }
+    .uf-dr{
+        flex-direction: row;
+    }
     .t_content_image{
         width: 100%;
         height: 210px;
@@ -129,5 +136,37 @@
     .t_margin_icon{
         margin-right: 22px;
         color: #CC183C;
+    }
+    .t_distance{
+        margin-top:50px;
+        padding: 15px;
+    }
+    .t_page{
+        background-color: white;
+    }
+    .weui-btn_primary{
+        background-color: red !important;
+        border-radius: 20px !important;
+        height: 44px;
+    }
+    .weui-cell{
+        height: 66px;
+        border: 0px !important;
+        background-color: white !important;
+        border-bottom: 0.5px solid darkgray !important;
+        align-items: flex-end !important;
+    }
+    .footer_title{
+        margin-top: 16px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .footer_title :nth-child(1){
+        font-size: 14px;
+        color: gray;
+    }
+    .footer_title :nth-child(2){
+        font-size: 14px;
+        color: red;
     }
 </style>
