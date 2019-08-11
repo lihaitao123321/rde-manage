@@ -1,15 +1,5 @@
 <template>
     <div class="t_page">
-        <x-header :right-options="{showMore: true}">
-            <span>{{$t('home.title')}}</span>
-            <x-icon
-                    slot="overwrite-left"
-                    type="navicon"
-                    size="35"
-                    style="fill:#fff;position:relative;top:-8px;left:-3px;"
-                    @click.stop="showLeftMore"
-            ></x-icon>
-        </x-header>
         <div class="t_content">
             <keep-alive>
                 <transition :name="transitionName">
@@ -18,7 +8,7 @@
             </keep-alive>
         </div>
         <tabbar @on-index-change="tabPage">
-            <tabbar-item  v-for="(item,index) in this.menus" :selected="index===0">
+            <tabbar-item  v-for="(item,index) in this.menus" :key="index" :selected="index===0">
                 <img class="image" slot="icon" src="../assets/images/logo.png">
                 <span slot="label">{{item.title}}</span>
             </tabbar-item>
