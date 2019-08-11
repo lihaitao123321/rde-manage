@@ -1,7 +1,8 @@
 <template>
         <div>
             <div class="message">
-                <XHeader :left-options="{backText: ''}" title="消息设置"></XHeader>
+                <XHeader :left-options="{preventGoBack:true}"
+                @on-click-back="$router.goBack()" title="消息设置"></XHeader>
                 <group>
                     <x-switch title="声音" v-model="xswitch.voice"></x-switch>
                     <x-switch title="振动" v-model="xswitch.vibration"></x-switch>

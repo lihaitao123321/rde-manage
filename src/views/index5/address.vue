@@ -1,7 +1,8 @@
 <template>
         <div>
             <div class="address">
-                <XHeader :left-options="{backText: ''}" title="修改地址" ><XButton slot="right" type="warn">保存</XButton></XHeader>
+                <XHeader :left-options="{preventGoBack:true}"
+                @on-click-back="$router.goBack()" title="修改地址" ><XButton slot="right" type="warn">保存</XButton></XHeader>
                 <Group class="address-input">
                     <XTextarea  v-model="address" placeholder="请输入地址"></XTextarea>
                 </Group>

@@ -1,7 +1,8 @@
 <template>
         <div>
             <div class="nickname">
-                <XHeader :left-options="{backText: ''}" title="修改昵称" ><XButton slot="right" type="warn" @click.native="onSave">保存</XButton></XHeader>
+                <XHeader :left-options="{preventGoBack:true}"
+                @on-click-back="$router.goBack()" title="修改昵称" ><XButton slot="right" type="warn" @click.native="onSave">保存</XButton></XHeader>
                 <Group class="nickname-input">
                     <XInput  v-model="nickname" placeholder="请输入昵称"></XInput>
                 </Group>
