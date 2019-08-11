@@ -394,6 +394,6 @@
 
 
     .padding_lrt15px {
-        padding: 15px 0px 0 0px;
+        padding: 60px 0px 0 0px;
     }
 </style>
