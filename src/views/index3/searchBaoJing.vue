@@ -1,3 +1,4 @@
+
 <template>
     <div class="t_page">
         <drawer
@@ -146,12 +147,6 @@
                         </div>
                     </div>
                 </div>
-                <tabbar @on-index-change="tabPage">
-                    <tabbar-item  v-for="(item,index) in this.menus" :selected="index===0">
-                        <img class="tabbar_image" slot="icon" :src="tabActive===index?item.activeIcon:item.icon" />
-                        <span class="tabbar_label" slot="label">{{item.title}}</span>
-                    </tabbar-item>
-                </tabbar>
             </div>
         </drawer>
     </div>
@@ -377,7 +372,6 @@
     .main_content{
         width: 100%;
         height: 170px;
-        background:linear-gradient(27deg,rgba(180,23,54,1),rgba(226,47,73,1));
         .header{
             display: flex;
             position: absolute;
@@ -385,6 +379,7 @@
             left: 0;
             width: 100%;
             height: 50px;
+            background-color: white;
             .left{
                 display: flex;
                 align-items: center;
@@ -394,7 +389,7 @@
                 i{
                     font-size: 22px;
                     font-weight: bold;
-                    color: white;
+                    color: #333333;
                 }
             }
             .right{
@@ -405,7 +400,7 @@
                 height: 50px;
                 i{
                     font-size: 20px;
-                    color: white;
+                    color: #343434;
                 }
             }
             .search{
@@ -417,7 +412,7 @@
                     display: flex;
                     width: 100%;
                     height:30px;
-                    background:rgba(255,255,255,0.3);
+                    background:rgba(222,222,224,0.3);
                     border-radius:30px;
                     .left_search_icon{
                         display: flex;
@@ -428,7 +423,7 @@
                         border-radius:30px;
                         i{
                             font-size: 18px;
-                            color: white;
+                            color: #999999;
                         }
                     }
                     .search_content{
@@ -443,7 +438,7 @@
                         }
                         input::placeholder{
                             font-size: 14px;
-                            color:rgba(255,255,255,0.7);
+                            color:#999999;
                         }
                     }
                 }
@@ -456,7 +451,7 @@
             z-index: 1;
             top: 50px;
             right: 0;
-            bottom: 45px;
+            bottom: 0;
             left: 0;
             width: 100%;
             overflow-y: auto;

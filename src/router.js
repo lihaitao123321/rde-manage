@@ -6,6 +6,7 @@ import register from './views/login/register.vue'
 import registerOk from './views/login/registerOk.vue'
 import selectCompany from './views/login/selectCompany.vue'
 import index3 from './views/index3/index3.vue'
+import searchBaoJing from './views/index3/searchBaoJing.vue'
 
 Vue.use(Router)
 
@@ -47,6 +48,14 @@ export default new Router({
             path: '/index3',
             name: 'index3',
             component: index3
+        },
+        {
+            path: '/searchBaoJing',
+            name: 'searchBaoJing',
+            component: searchBaoJing
         }
+
+
+
     ]
 })
