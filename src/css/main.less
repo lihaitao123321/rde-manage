@@ -43,10 +43,14 @@ div {
   background-color: #efefef;
   .t_content{
     position: absolute;
-    top: 46px;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 53px;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
   .weui-tabbar__label{
     margin: 0;
