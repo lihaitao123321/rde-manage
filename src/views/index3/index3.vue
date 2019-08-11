@@ -1,5 +1,5 @@
 <template>
-    <div style="height:100%;">
+    <div class="t_page">
         <drawer
                 :show.sync="drawerVisibility"
                 :show-mode="showModeValue"
@@ -12,8 +12,9 @@
                     <div class="header">
                         报警管理
                     </div>
-                    <div>
-                        <el-select v-model="value" placeholder="请选择">
+                    <div class="list">
+                        <div class="little_title">报警时间:</div>
+                        <el-select v-model="value" placeholder="起始时间" style="width: 135px;">
                             <el-option
                                     v-for="item in options"
                                     :key="item.value"
@@ -21,26 +22,97 @@
                                     :value="item.value">
                             </el-option>
                         </el-select>
+                        -
+                        <el-select v-model="value" placeholder="结束时间" style="width: 135px;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <div class="little_title">设备类别：</div>
+                        <el-select v-model="value" placeholder="设备类别" style="width: 135px;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <div class="little_title">设备型号：</div>
+                        <el-select v-model="value" placeholder="设备型号" style="width: 135px;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <div class="little_title">所属电站：</div>
+                        <el-select v-model="value" placeholder="所属电站" style="width: 135px;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <div class="little_title">通讯状态：</div>
+                        <el-select v-model="value" placeholder="通讯状态" style="width: 135px;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <div class="little_title">工作状态：</div>
+                        <el-select v-model="value" placeholder="工作状态" style="width: 135px;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <div class="little_title">报警状态：</div>
+                        <el-select v-model="value" placeholder="报警状态" style="width: 135px;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+
+
                     </div>
                 </div>
             </div>
 
             <!-- main content -->
-            <view-box>
-                <x-header
-                        :left-options="{preventGoBack:true}"
-                        @on-click-back="$router.goBack()"
-                        @on-click-more="showDrawer"
-                        :right-options="{showMore: true}">
-                    <div>这是头部</div>
-                </x-header>
-            </view-box>
+            <div class="t_page">
+                
+                666
+            </div>
+<!--            <view-box>-->
+<!--                <x-header-->
+<!--                        :left-options="{preventGoBack:true}"-->
+<!--                        @on-click-back="$router.goBack()"-->
+<!--                        @on-click-more="showDrawer"-->
+<!--                        :right-options="{showMore: true}">-->
+<!--                    <div>这是头部</div>-->
+<!--                </x-header>-->
+<!--                <div>-->
+
+<!--                </div>-->
+<!--            </view-box>-->
         </drawer>
     </div>
 </template>
 
 <script>
-    import { Select } from 'element-ui'
     import {
         Radio,
         Group,
@@ -55,14 +127,14 @@
         Tabbar,
         TabbarItem,
         Loading,
-        TransferDom
+        TransferDom,
+        Datetime
     } from 'vux'
     import {mapState, mapActions} from 'vuex'
 
     export default {
         directives: {
             TransferDom,
-            "x-select":Select
         },
         components: {
             Radio,
@@ -77,10 +149,28 @@
             Tabbar,
             TabbarItem,
             Loading,
-            Actionsheet
+            Actionsheet,
+            Datetime
         },
         data() {
             return {
+                options: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
+                value: '',
                 rightOptions: {
                     value: ''
                 },
@@ -178,7 +268,22 @@
             color: rgba(0, 0, 0, 1);
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
+        .little_title{
+            height:20px;
+            line-height: 20px;
+            font-size:12px;
+            font-family:PingFangSCMedium;
+            font-weight:500;
+            color:rgba(153,153,153,1);
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .list{
+            color: #E3E3E6;
+        }
 
 
     }
+
+
 </style>
