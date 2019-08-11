@@ -9,6 +9,10 @@ import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 Vue.use(Mint);
 
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI, { size: 'mini', zIndex: 3000 });
+
 
 import './css/main.less';
 //引入全局字体图标库,用法：<i class="fa fa-angle-left"></i>,具体图标去 http://fontawesome.dashgame.com 查看
