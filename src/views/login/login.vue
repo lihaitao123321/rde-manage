@@ -1,29 +1,37 @@
 <template>
     <div class="t_page">
-        <x-header>{{$t('login.title')}}<a slot="right" @click.stop="register">{{$t('login.register')}}</a></x-header>
         <div class="t_content">
             <div class="t_content_image">
-                <div class="t_content_image1"></div>
+                <div class="t_content_image1">
+                    <img style="height: 100%;width: 100%" src="../../assets/images/login/redlogo@2x.png">
+                </div>
             </div>
             <group class="t_login">
-                <el-input
-                        placeholder="请输入内容"
-                        v-model="input4">
-                    <i slot="prefix" class="el-input__icon el-icon-search"></i>
-                </el-input>
-                <x-input
-                        type="password"
-                        v-model="password"
-                        placeholder="请填写密码"
-                        @on-click-clear-icon="clearPassword">
-                    <label slot=label  class="t_margin_icon fa fa-lock"></label>
-                </x-input>
+                <div class="t_position">
+                    <el-input
+                            class="t_position_bottom"
+                            placeholder="请输入账号"
+                            clearable
+                            v-model="input1">
+                        <i slot="prefix" class="el-input__icon t_margin_icon fa fa-user-o"></i>
+                    </el-input>
+                </div>
+                <div class="t_position">
+                    <el-input
+                            class="t_position_bottom"
+                            placeholder="请输入密码"
+                            show-password
+                            clearable
+                            v-model="input2">
+                        <i slot="prefix" class="el-input__icon t_margin_icon fa fa-lock"></i>
+                    </el-input>
+                </div>
                 <div class="t_distance">
                     <x-button @click.native="login" class="t_submit" type="primary">登陆</x-button>
                 </div>
                 <div class="footer_title uf uf-dr js">
                     <span>忘记密码</span>
-                    <span>新用户注册></span>
+                    <span>新用户注册 ></span>
                 </div>
             </group>
         </div>
@@ -55,6 +63,8 @@
                 telephone:'15261872169',
                 password:'87654321',
                 td:false,
+                input1:'',
+                input2:'',
             }
         },
         methods:{
@@ -109,7 +119,7 @@
         }
     }
 </script>
-<style>
+<style  scoped>
     .js{
         justify-content: space-between;
     }
@@ -124,9 +134,12 @@
         align-items: center;
     }
     .t_content_image1{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100px;
         height: 100px;
-        background-color: red;
+        background-color: rgba(213,51,77,1);
         border: 0px;
         border-radius: 15px;
     }
@@ -144,12 +157,34 @@
     .t_page{
         background-color: white;
     }
-    .weui-btn_primary{
-        background-color: red !important;
+    /deep/.weui-btn_primary{
+        background-color: rgba(213,51,77,1) !important;
         border-radius: 20px !important;
         height: 44px;
     }
-    .weui-cell{
+    /deep/.el-input--mini /deep/.el-input__inner{
+        border: 0px !important;
+        background-color: white !important;
+        border-radius: 0px !important;
+    }
+    /deep/.el-input__inner{
+        height: 35px !important;
+    }
+    .t_position{
+        position: relative;
+        height: 66px;
+        border: 0px !important;
+        background-color: white !important;
+        border-bottom: 0.5px solid darkgray !important;
+        border-radius: 0px !important;
+    }
+    .t_position_bottom{
+        position: absolute;
+        bottom: 10px;
+        left: 0px;
+    }
+
+    /deep/.weui-cell{
         height: 66px;
         border: 0px !important;
         background-color: white !important;
@@ -167,6 +202,6 @@
     }
     .footer_title :nth-child(2){
         font-size: 14px;
-        color: red;
+        color: rgba(213,51,77,1);
     }
 </style>
