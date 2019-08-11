@@ -3,14 +3,14 @@
         <div class="t_content">
             <keep-alive>
                 <transition :name="transitionName">
-                    <component :is="isActive"></component>
+                    <component :is="'index'+(tabActive+1)"></component>
                 </transition>
             </keep-alive>
         </div>
         <tabbar @on-index-change="tabPage">
-            <tabbar-item  v-for="(item,index) in this.menus" :key="index" :selected="index===0">
-                <img class="image" slot="icon" src="../assets/images/logo.png">
-                <span slot="label">{{item.title}}</span>
+            <tabbar-item  v-for="(item,index) in this.menus" :selected="index===0">
+                <img class="tabbar_image" slot="icon" :src="tabActive===index?item.activeIcon:item.icon" />
+                <span class="tabbar_label" slot="label">{{item.title}}</span>
             </tabbar-item>
         </tabbar>
 
@@ -73,27 +73,33 @@
                 show_more: false,
                 transitionName: 'slide-left',
                 isActive: 'index1',
+                tabActive:0,
                 menus: [
                     {
-                        title: '主页',
+                        title: '首页',
                         value: 'index1',
-                        icon:'../assets/images/logo.png'
+                        icon:require('../assets/images/index1/shouye_black@3x.png'),
+                        activeIcon:require('../assets/images/index1/shouye_red@3x.png')
                     }, {
                         title: '地图',
                         value: 'index2',
-                        icon:'../assets/images/logo.png'
-                    }, {
-                        title: '任务',
-                        value: 'index3',
-                        icon:'../assets/images/logo.png'
+                        icon:require('../assets/images/index1/ditu_black@3x.png'),
+                        activeIcon:require('../assets/images/index1/ditu_red@3x.png')
                     }, {
                         title: '监控',
+                        value: 'index3',
+                        icon:require('../assets/images/index1/jiankong_black@3x.png'),
+                        activeIcon:require('../assets/images/index1/jiankong_red@3x.png')
+                    }, {
+                        title: '业务',
                         value: 'index4',
-                        icon:'../assets/images/logo.png'
+                        icon:require('../assets/images/index1/yewu_black@3x.png'),
+                        activeIcon:require('../assets/images/index1/yewu_red@3x.png')
                     }, {
                         title: '我的',
                         value: 'index5',
-                        icon:'../assets/images/logo.png'
+                        icon:require('../assets/images/index1/wode_black@3x.png'),
+                        activeIcon:require('../assets/images/index1/wode_red@3x.png')
                     }
                 ],
                 showMenus: false,
@@ -138,7 +144,7 @@
                     this.$router.push('index3');
                     return false;
                 }
-                this.isActive = 'index' + (index + 1);
+                this.tabActive=index;
             },
             showLeftMore() {
                 this.show_more = true;
