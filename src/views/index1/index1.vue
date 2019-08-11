@@ -22,27 +22,27 @@
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation2.png" >
                             <div class="action-name">装机容量<span>(MW)</span></div>
-                            <div class="action-number">1</div>
+                            <div class="action-number">268</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation3.png" >
                             <div class="action-name">电站设备<span>(台套)</span></div>
-                            <div class="action-number">1</div>
+                            <div class="action-number">1000</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation4.png" >
                             <div class="action-name">运维设备<span>(台套)</span></div>
-                            <div class="action-number">1</div>
+                            <div class="action-number">500</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation5.png" >
                             <div class="action-name">累计发电量<span>(Gwh)</span></div>
-                            <div class="action-number">1</div>
+                            <div class="action-number">56</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation6.png" >
                             <div class="action-name">实时功率<span>(KW)</span></div>
-                            <div class="action-number">1</div>
+                            <div class="action-number">35</div>
                         </div>
                     </div>
                     <div class="all-mon">
