@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="changePassword">
-            <XHeader :left-options="{backText: ''}" title="修改密码"></XHeader>
+            <XHeader :left-options="{preventGoBack:true}"
+            @on-click-back="$router.goBack()" title="修改密码"></XHeader>
             <Group class="password-input">
                 <XInput title="当前密码" type="password" v-model="password.old" placeholder="请输入当前密码"></XInput>
                 <XInput title="新密码" type="password" v-model="password.new" placeholder="请输入新密码"></XInput>

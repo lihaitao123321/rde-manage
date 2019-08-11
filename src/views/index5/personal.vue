@@ -1,7 +1,8 @@
 <template>
     <div>
       <div class="">
-        <XHeader :left-options="{backText: ''}" title="个人中心"></XHeader>
+        <XHeader :left-options="{preventGoBack:true}"
+        @on-click-back="$router.goBack()" title="个人中心"></XHeader>
         <Group>
           <cell :title="cellData.avatar" :value='cellValue.avatar' is-link></cell>
           <cell :title="cellData.nickname" :value='cellValue.nickname' is-link :link="{path:'/nickname'}"></cell>

@@ -1,7 +1,8 @@
 <template>
         <div>
             <div class="language">
-                <XHeader :left-options="{backText: ''}" title="语言类型"></XHeader>
+                <XHeader :left-options="{preventGoBack:true}"
+                @on-click-back="$router.goBack()" title="语言类型"></XHeader>
                 <group >
                     <radio  :options="options" v-model="value"></radio>
                 </group>
