@@ -47,10 +47,18 @@
                 </div>
                 <div class="t_position">
                     <el-input placeholder="请输入手机号" class="t_position_bottom" v-model="input4">
-                        <el-select v-model="select" slot="prepend" placeholder="请选择">
-                            <el-option label="中国大陆+86" value="1"></el-option>
-                            <el-option label="美国+86" value="2"></el-option>
-                            <el-option label="日本+23" value="3"></el-option>
+<!--                        <el-select v-model="select" slot="prepend" placeholder="请选择">-->
+<!--                            <el-option label="中国大陆+86" value="test"></el-option>-->
+<!--                            <el-option label="美国+86" value="test1"></el-option>-->
+<!--                            <el-option label="日本+23" value="test2"></el-option>-->
+<!--                        </el-select>-->
+                        <el-select v-model="select" slot="prepend" placeholder="请选择" style="width: 135px;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
                         </el-select>
                     </el-input>
                 </div>
@@ -140,6 +148,10 @@
                 input3:'',
                 input4:'',
                 select:1,
+                options:[
+                    {value:"中国大陆86+",label:'中国大陆86+'},
+                    {value:1,label:'日本43+'},
+                ],
             }
         },
         methods: {
@@ -316,13 +328,13 @@
     }
     .t_margin_icon{
         margin-right: 22px;
-        color: #CC183C;
+        color: rgba(43, 127, 243, 1);
     }
     .activefont1{
-        color: #CC183C;
+        color: rgba(43, 127, 243, 1);
     }
     .activefont2{
-        color: #CC183C;
+        color: rgba(43, 127, 243, 1);
     }
     .activeColor1{
        position: absolute;
@@ -330,7 +342,7 @@
         width: 26px;
         height: 4px;
         left: calc(25% - 13px);
-        background-color: #CC183C;
+        background-color: rgba(43, 127, 243, 1);
         border-radius: 26%;
     }
     .activeColor2{
@@ -339,7 +351,7 @@
         width: 26px;
         height: 4px;
         left: calc(75% - 13px);
-        background-color: #CC183C;
+        background-color: rgba(43, 127, 243, 1);
         border-radius: 26%;
     }
     .t_tabs :nth-child(2){
@@ -380,7 +392,7 @@
         left: 0px;
     }
     /deep/.weui-btn_primary{
-        background-color: rgba(213,51,77,1) !important;
+        background-color: rgba(43, 127, 243, 1) !important;
         border-radius: 20px !important;
         height: 44px;
     }

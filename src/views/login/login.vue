@@ -3,7 +3,7 @@
         <div class="t_content">
             <div class="t_content_image">
                 <div class="t_content_image1">
-                    <img style="height: 100%;width: 100%" src="../../assets/images/login/redlogo@2x.png">
+                    <img style="height: 100%;width: 100%" src="../../assets/images/login/bluelogo@2x.png">
                 </div>
             </div>
             <group class="t_login">
@@ -121,7 +121,7 @@
         }
     }
 </script>
-<style  scoped>
+<style lang="less" scoped>
     .js{
         justify-content: space-between;
     }
@@ -141,7 +141,7 @@
         align-items: center;
         width: 100px;
         height: 100px;
-        background-color: rgba(213,51,77,1);
+        background-color: rgba(43, 127, 243, 1);
         border: 0px;
         border-radius: 15px;
     }
@@ -150,7 +150,7 @@
     }
     .t_margin_icon{
         margin-right: 22px;
-        color: #CC183C;
+        color: rgba(43, 127, 243, 1);
     }
     .t_distance{
         margin-top:50px;
@@ -160,7 +160,7 @@
         background-color: white;
     }
     /deep/.weui-btn_primary{
-        background-color: rgba(213,51,77,1) !important;
+        background-color: rgba(43, 127, 243, 1) !important;
         border-radius: 20px !important;
         height: 44px;
     }
@@ -193,6 +193,9 @@
         border-bottom: 0.5px solid darkgray !important;
         align-items: flex-end !important;
     }
+    .t_content /deep/.weui-cells:after{
+        border-bottom: 0px !important;
+    }
     .footer_title{
         margin-top: 16px;
         padding-left: 15px;
@@ -204,6 +207,6 @@
     }
     .footer_title :nth-child(2){
         font-size: 14px;
-        color: rgba(213,51,77,1);
+        color: rgba(43, 127, 243, 1);
     }
 </style>
