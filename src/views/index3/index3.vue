@@ -14,23 +14,18 @@
                     </div>
                     <div class="list">
                         <div class="little_title">报警时间:</div>
-                        <el-select v-model="value" placeholder="起始时间" style="width: 135px;">
-                            <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
-                        -
-                        <el-select v-model="value" placeholder="结束时间" style="width: 135px;">
-                            <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
+                        <el-date-picker
+                                style="width: 135px;"
+                                v-model="value"
+                                type="date"
+                                placeholder="起始时间">
+                        </el-date-picker>-
+                        <el-date-picker
+                                style="width: 135px;"
+                                v-model="value"
+                                type="date"
+                                placeholder="起始时间">
+                        </el-date-picker>
                         <div class="little_title">设备类别：</div>
                         <el-select v-model="value" placeholder="设备类别" style="width: 135px;">
                             <el-option
@@ -49,7 +44,7 @@
                                     :value="item.value">
                             </el-option>
                         </el-select>
-                        <div class="little_title">所属电站：</div>
+                        <div class="little_title">设备编号：</div>
                         <el-select v-model="value" placeholder="所属电站" style="width: 135px;">
                             <el-option
                                     v-for="item in options"
@@ -58,33 +53,36 @@
                                     :value="item.value">
                             </el-option>
                         </el-select>
+                        <div class="little_title">所属系统：</div>
+                        <el-select v-model="value" placeholder="通讯状态" style="width: 100%;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                        <div class="little_title">所属项目：</div>
+                        <el-select v-model="value" placeholder="通讯状态" style="width: 100%;">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
                         <div class="little_title">通讯状态：</div>
-                        <el-select v-model="value" placeholder="通讯状态" style="width: 135px;">
-                            <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
+                        <div>
+                            <CheckButtonList :data="checkedButtonDics1" v-model="checkedList1"></CheckButtonList>
+                        </div>
                         <div class="little_title">工作状态：</div>
-                        <el-select v-model="value" placeholder="工作状态" style="width: 135px;">
-                            <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
+                        <div>
+                            <CheckButtonList :data="checkedButtonDics2" v-model="checkedList2"></CheckButtonList>
+                        </div>
                         <div class="little_title">报警状态：</div>
-                        <el-select v-model="value" placeholder="报警状态" style="width: 135px;">
-                            <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
+                        <div>
+                            <CheckButtonList :data="checkedButtonDics3" v-model="checkedList3"></CheckButtonList>
+                        </div>
 
 
                     </div>
@@ -103,7 +101,7 @@
                                 <i class="el-icon-search"></i>
                             </div>
                             <div class="search_content">
-                                <input placeholder="请输入搜索内容" @focus="openSearchPage"/>
+                                <input placeholder="请输入搜索内容" readonly @click="openSearchPage"/>
                             </div>
                         </div>
                     </div>
@@ -159,6 +157,8 @@
 
 <script>
     import {
+        XButton,
+        Calendar,
         Radio,
         Group,
         Cell,
@@ -182,6 +182,8 @@
             TransferDom,
         },
         components: {
+            XButton,
+            Calendar,
             Radio,
             Group,
             Cell,
@@ -243,6 +245,36 @@
                     value: '选项5',
                     label: '北京烤鸭'
                 }],
+                checkedButtonDics1:[{
+                    value:'1',
+                    label:'在线'
+                },{
+                    value:'2',
+                    label:'离线'
+                }],
+                checkedButtonDics2:[{
+                    value:'1',
+                    label:'运行'
+                },{
+                    value:'2',
+                    label:'停止'
+                }],
+                checkedButtonDics3:[{
+                    value:'1',
+                    label:'正常'
+                },{
+                    value:'2',
+                    label:'故障'
+                },{
+                    value:'3',
+                    label:'报警'
+                },{
+                    value:'4',
+                    label:'警告'
+                }],
+                checkedList1:[],
+                checkedList2:[],
+                checkedList3:[],
                 tabActive:0,
                 value: '',
                 rightOptions: {
@@ -377,7 +409,8 @@
     .main_content{
         width: 100%;
         height: 170px;
-        background:linear-gradient(27deg,rgba(180,23,54,1),rgba(226,47,73,1));
+        background:linear-gradient(27deg,rgba(39,61,220,1),rgba(56,141,239,1));
+        /*background:linear-gradient(27deg,rgba(180,23,54,1),rgba(226,47,73,1));*/
         .header{
             display: flex;
             position: absolute;

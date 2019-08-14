@@ -17,9 +17,9 @@ Vue.use(ElementUI, { size: 'mini', zIndex: 3000 });
 import './css/main.less';
 //引入全局字体图标库,用法：<i class="fa fa-angle-left"></i>,具体图标去 http://fontawesome.dashgame.com 查看
 import './assets/font-awesome-4.7.0/css/font-awesome.css'
-//遮罩弹框组件
-import xSelect from './components/select/x-select'
-Vue.component('xSelect',xSelect);
+//多选button组件
+import CheckButtonList from './components/checkButtonList'
+Vue.component('CheckButtonList',CheckButtonList);
 //遮罩弹框组件
 import PopMask from './components/pop-mask/PopMask.vue'
 Vue.component('PopMask',PopMask);
