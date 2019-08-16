@@ -78,7 +78,6 @@
     .outer {
         display: flex;
         flex-wrap: wrap;
-        padding: 10px;
         width: 100%;
         .item {
             height: 34px;

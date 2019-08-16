@@ -129,6 +129,9 @@
                 }
             }
         },
+        created(){
+            console.log(666)
+        },
         computed:{
             getTitle(){
                 return this.menus.find(item=>item.value===this.isActive).title;
@@ -143,8 +146,9 @@
                 if(index===2){
                     this.$router.push('index3');
                     return false;
+                }else{
+                    this.tabActive=index;
                 }
-                this.tabActive=index;
             },
             showLeftMore() {
                 this.show_more = true;
