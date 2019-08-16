@@ -8,7 +8,7 @@
                         <div class="search-box" @click.stop="seachDetail">
                             <x-icon class="white-x-icon" type="ios-search" size="25"></x-icon>
                             <group>
-                                <x-input class="search-con" readonly placeholder="请输入内容"></x-input>
+                                <x-input class="search-con" readonly placeholder="从容智能运维云服务系统"></x-input>
                             </group>
                         </div>
                         <x-icon class="white-x-icon" type="ios-ionic-outline" size="25"></x-icon>
@@ -16,32 +16,32 @@
                     <div class="index-action">
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation1.png" >
-                            <div class="action-name">电站数<span>(座)</span></div>
+                            <div class="action-name">项目数量<span>(座)</span></div>
                             <div class="action-number">1</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation2.png" >
-                            <div class="action-name">装机容量<span>(MW)</span></div>
+                            <div class="action-name">设备数量<span>(套)</span></div>
                             <div class="action-number">268</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation3.png" >
-                            <div class="action-name">电站设备<span>(台套)</span></div>
+                            <div class="action-name">负荷容量<span>(KW)</span></div>
                             <div class="action-number">1000</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation4.png" >
-                            <div class="action-name">运维设备<span>(台套)</span></div>
+                            <div class="action-name">新能源装机容量<span>(KW)</span></div>
                             <div class="action-number">500</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation5.png" >
-                            <div class="action-name">累计发电量<span>(Gwh)</span></div>
+                            <div class="action-name">实用用电功率<span>(KW)</span></div>
                             <div class="action-number">56</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation6.png" >
-                            <div class="action-name">实时功率<span>(KW)</span></div>
+                            <div class="action-name">新能源发电功率<span>(KW)</span></div>
                             <div class="action-number">35</div>
                         </div>
                     </div>
@@ -86,23 +86,7 @@
                 <div class="index-bottom">
                     <div class="all-mon">
                         <div class="title">
-                            <div>累计发电量</div>
-                            <div><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
-                        </div>
-                        <div class="pillar-box">
-                            <v-chart
-                                class="chart-box"
-                                :width= "340"
-                                ref="demo4"
-                                :data="data4">
-                                <v-bar />
-                                <v-tooltip :show-item-marker="false" />
-                            </v-chart>
-                        </div>
-                    </div>
-                    <div class="all-mon">
-                        <div class="title">
-                            <div>实时功率</div>
+                            <div>实际用电功率</div>
                             <div><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="pillar-box">
@@ -124,7 +108,7 @@
                     </div>
                     <div class="all-mon">
                         <div class="title">
-                            <div>实时光伏发电资产利用率</div>
+                            <div>新能源发电功率</div>
                             <div><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="pillar-box">
@@ -146,7 +130,7 @@
                     </div>
                     <div class="all-mon">
                         <div class="title">
-                            <div>运维设备</div>
+                            <div>绿色能源实时占比</div>
                             <div><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="pillar-box">
@@ -236,15 +220,6 @@
                     { name: '运维设备', title: '报警', nub: 23.2 },
                     { name: '运维设备', title: '警告', nub: 34.5 },
                     { name: '运维设备', title: '离线', nub: 99.7 }
-                ],
-                data4: [
-                    { day: '7.12', sales: 700 },
-                    { day: '7.13', sales: 1000 },
-                    { day: '7.14', sales: 1600 },
-                    { day: '7.15', sales: 1200 },
-                    { day: '7.16', sales: 900 },
-                    { day: '7.17', sales: 600 },
-                    { day: '7.18', sales: 900 }
                 ],
                 data5: [
                     { time: '2016-08-08 00:00:00', tem: 10 },
