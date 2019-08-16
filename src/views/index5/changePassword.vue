@@ -9,7 +9,7 @@
                 <XInput title="确认密码" type="password" v-model="password.confirm" placeholder="确认新密码"></XInput>
             </Group>
             <div class="button">
-                <XButton type="warn" @click.native="onSave">保存</XButton>
+                <XButton  @click.native="onSave">保存</XButton>
             </div>
             <toast v-model="toast.showPositionValue" type="text" :time="5000"  :text="toast.text" position="center"></toast>
         </div>
@@ -79,15 +79,26 @@
   };
   </script>
 
-  <style scoped>
-      .changePassword .password-input .weui-cell{
-          padding: 20px 10px;
-      }
-      .changePassword .button {
-        margin-top: 40px;
-        padding: 0 50px;
-      }
-      .changePassword .button .weui-btn{
-          border-radius: 50px;
-      }
-  </style>
+<style lang='less' scoped>
+    .changePassword .password-input .weui-cell {
+        padding: 20px 10px;
+    }
+
+    .changePassword {
+        .button {
+            margin-top: 40px;
+            padding: 0 50px;
+
+            /deep/ .weui-btn_default {
+                color: white;
+                background-color: #2B7FF3FF;
+                font-weight: bold;
+            }
+
+            .weui-btn {
+                border-radius: 50px;
+                margin-top: 40px;
+            }
+        }
+    }
+</style>

@@ -9,7 +9,7 @@
                 
             </div>
         </div>
-    </template>
+</template>
       
       <script>
       import { XHeader,Group,XTextarea,XButton } from "vux";
@@ -36,5 +36,7 @@
           .address .weui-btn {
               font-size: 14px;
               line-height: 28px;
+              color: white;
+              background-color: #2B7FF3FF;
           }
       </style>

@@ -11,7 +11,7 @@
           <cell :title="cellData.department" :value='cellValue.department' is-link></cell>
         </Group>
         <Group>
-            <cell :title="cellData.area" :value='cellValue.area' is-link ></cell>
+            <cell :title="cellData.area" :value='cellValue.area' is-link :link="{path:'/region'}"></cell>
             <cell :title="cellData.address" :value='cellValue.address' is-link :link="{path:'/address'}"></cell>
         </Group>
       </div>

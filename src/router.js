@@ -14,6 +14,8 @@ import personal from './views/index5/personal.vue'
 import nickname from './views/index5/nickname.vue'
 import address from './views/index5/address.vue'
 import search from './views/index1/search.vue'
+import region from './views/index5/region.vue'
+import version from './views/index5/version.vue'
 
 Vue.use(Router)
 
@@ -95,6 +97,16 @@ export default new Router({
             path: '/address',
             name: 'address',
             component: address
+        },
+        {
+            path: '/region',
+            name: 'region',
+            component: region
+        },
+        {
+            path: '/version',
+            name: 'version',
+            component: version
         },
     ]
 })
