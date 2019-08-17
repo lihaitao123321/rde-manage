@@ -16,6 +16,7 @@ import address from './views/index5/address.vue'
 import search from './views/index1/search.vue'
 import region from './views/index5/region.vue'
 import version from './views/index5/version.vue'
+import notice from './views/index1/noticeCenter.vue'
 
 Vue.use(Router)
 
@@ -107,6 +108,11 @@ export default new Router({
             path: '/version',
             name: 'version',
             component: version
+        },
+        {
+            path: '/notice',
+            name: 'notice',
+            component: notice
         },
     ]
 })

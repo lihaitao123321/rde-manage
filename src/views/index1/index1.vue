@@ -1,5 +1,5 @@
 <template>
-    <div class="t-page">
+    <div class="t_page">
         <div class="redBg">
             <div class="index-page">
                 <div class="index-top">
@@ -11,7 +11,7 @@
                                 <x-input class="search-con" readonly placeholder="从容智能运维云服务系统"></x-input>
                             </group>
                         </div>
-                        <x-icon class="white-x-icon" type="ios-ionic-outline" size="25"></x-icon>
+                        <x-icon class="white-x-icon" type="ios-ionic-outline" size="25" @click="toNoticeCenter"></x-icon>
                     </div>
                     <div class="index-action">
                         <div class="action-box">
@@ -331,6 +331,9 @@
             }
         },
         methods:{
+            toNoticeCenter(){
+                this.$router.push('notice')
+            },
             onCheckListChange(list,index){
                 console.log(list)
                 this.options[index].checklist=list;

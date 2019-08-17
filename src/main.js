@@ -5,9 +5,6 @@ import store from './store'
 import i18n from './plugins/i18n'        //引入vue-i18n
 
 // 引入Mint ui全部组件
-import Mint from 'mint-ui';
-import 'mint-ui/lib/style.css'
-Vue.use(Mint);
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'

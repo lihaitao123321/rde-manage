@@ -1,84 +1,104 @@
 <template>
-  <div class="t-page">
-    <div class="redBg">
+  <div class="t_page">
       <div class="search-page">
         <drawer
-            :show.sync="drawerVisibility"
-            :show-mode="showModeValue"
-            placement="right"
-            :drawer-style="{'background-color':'white', width: '330px', position: 'fixed'}">
+                :show.sync="drawerVisibility"
+                :show-mode="showModeValue"
+                placement="right"
+                :drawer-style="{'background-color':'white', width: '330px'}">
 
             <!-- drawer content -->
-            <div slot="drawer">
-                <div class="rightWarp">
-                    <div class="header">
-                        报警管理
-                    </div>
-                    <div>
-                        <el-select v-model="rightOptions.value" placeholder="请选择">
-                            <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </div>
-                </div>
+            <div slot="drawer" style="height: 100%;">
+              项目
             </div>
 
             <!-- main content -->
-            <view-box>
-                <x-header
-                        :left-options="{preventGoBack:true}"
-                        @on-click-back="$router.goBack()"
-                        @on-click-more="showDrawer"
-                        :right-options="{showMore: true}">
-                  <group>
-                    <x-input placeholder="输入搜索内容" v-model="seacrhText"></x-input>
-                  </group>
-                </x-header>
-            </view-box>
+            <div class="main_content">
+                <div class="header">
+                    <div class="left">
+                        <i class="el-icon-arrow-left" @click="$router.goBack()"></i>
+                    </div>
+                    <div class="search">
+                        <div class="input_warp">
+                            <div class="left_search_icon">
+                                <i class="el-icon-search"></i>
+                            </div>
+                            <div class="search_content">
+                                <input placeholder="请输入搜索内容" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <i class="fa fa-filter" @click="showDrawer"></i>
+                    </div>
+                </div>
+                <div class="search-box">
+                  <div class="search-history">
+                    <div class="title">
+                      <div class="history-title">历史记录</div>
+                      <div class="clear-btn">清空记录</div>
+                    </div>
+                  </div>
+                  <div class="search-list">
+                    <div class="search-con">
+                      <div class="search-info">
+                        <div class="info-box">电站名称：<span>123</span></div>
+                        <div class="info-box">电站位置：<span>123</span></div>
+                        <div class="info-box">电站类型：<span>123</span></div>
+                        <div class="info-box">装机容量：<span>123</span></div>
+                      </div>
+                      <div class="search-bottom">
+                        <div class="bottom-info">在线率：<span class="color-blue">35%</span></div>
+                        <div class="bottom-info">报警率：<span class="color-green">35%</span></div>
+                        <div class="bottom-info">报警率：<span class="color-red">35%</span></div>
+                      </div>
+                    </div>
+                    <div class="search-con">
+                      <div class="search-info">
+                        <div class="info-box">电站名称：<span>123</span></div>
+                        <div class="info-box">电站位置：<span>123</span></div>
+                        <div class="info-box">电站类型：<span>123</span></div>
+                        <div class="info-box">装机容量：<span>123</span></div>
+                      </div>
+                      <div class="search-bottom">
+                        <div class="bottom-info">在线率：<span class="color-blue">35%</span></div>
+                        <div class="bottom-info">报警率：<span class="color-green">35%</span></div>
+                        <div class="bottom-info">报警率：<span class="color-red">35%</span></div>
+                      </div>
+                    </div>
+                    <div class="search-con">
+                      <div class="search-info">
+                        <div class="info-box">电站名称：<span>123</span></div>
+                        <div class="info-box">电站位置：<span>123</span></div>
+                        <div class="info-box">电站类型：<span>123</span></div>
+                        <div class="info-box">装机容量：<span>123</span></div>
+                      </div>
+                      <div class="search-bottom">
+                        <div class="bottom-info">在线率：<span class="color-blue">35%</span></div>
+                        <div class="bottom-info">报警率：<span class="color-green">35%</span></div>
+                        <div class="bottom-info">报警率：<span class="color-red">35%</span></div>
+                      </div>
+                    </div>
+                    <div class="search-con">
+                      <div class="search-info">
+                        <div class="info-box">电站名称：<span>123</span></div>
+                        <div class="info-box">电站位置：<span>123</span></div>
+                        <div class="info-box">电站类型：<span>123</span></div>
+                        <div class="info-box">装机容量：<span>123</span></div>
+                      </div>
+                      <div class="search-bottom">
+                        <div class="bottom-info">在线率：<span class="color-blue">35%</span></div>
+                        <div class="bottom-info">报警率：<span class="color-green">35%</span></div>
+                        <div class="bottom-info">报警率：<span class="color-red">35%</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
         </drawer>
-        <div class="search-box">
-          <div class="search-history">
-            <div class="title">
-              <div class="history-title">历史记录</div>
-              <div class="clear-btn">清空记录</div>
-            </div>
-          </div>
-          <div class="search-list">
-            <div class="search-con">
-              <div class="search-info">
-                <div class="info-box">电站名称：<span>123</span></div>
-                <div class="info-box">电站位置：<span>123</span></div>
-                <div class="info-box">电站类型：<span>123</span></div>
-                <div class="info-box">装机容量：<span>123</span></div>
-              </div>
-              <div class="search-bottom">
-                <div class="bottom-info">在线率：<span class="color-blue">35%</span></div>
-                <div class="bottom-info">报警率：<span class="color-red">35%</span></div>
-                <div class="bottom-btn">未服务</div>
-              </div>
-            </div>
-            <div class="search-con">
-              <div class="search-info">
-                <div class="info-box">电站名称：<span>123</span></div>
-                <div class="info-box">电站位置：<span>123</span></div>
-                <div class="info-box">电站类型：<span>123</span></div>
-                <div class="info-box">装机容量：<span>123</span></div>
-              </div>
-              <div class="search-bottom">
-                <div class="bottom-info">在线率：<span class="color-blue">35%</span></div>
-                <div class="bottom-info">报警率：<span class="color-red">35%</span></div>
-                <div class="bottom-btn serveing">服务中</div>
-              </div>
-            </div>
-          </div>
-        </div>
+
 
       </div>
-    </div>
   </div>
 </template>
 <script>
@@ -124,6 +144,7 @@ export default {
   },
   data(){
     return{
+      tabActive:0,
       seacrhText:'',
       rightOptions: {
           value: ''
@@ -147,6 +168,7 @@ export default {
     }
   },
   methods:{
+
     showDrawer() {
         this.drawerVisibility = !this.drawerVisibility;
     },
