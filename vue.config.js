@@ -1,5 +1,5 @@
 module.exports = {
-    outputDir: 'D:\\project\\rde-cordova\\www\\',
+    outputDir: '//Users//lihaitao//Downloads//my//project//rde-cordova-mac//www//',
     publicPath: './',
     devServer: {
         proxy: {
