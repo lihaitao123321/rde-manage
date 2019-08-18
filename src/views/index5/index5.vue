@@ -30,7 +30,7 @@
         <cell :title="cellData.cell5" is-link :link="{path:'/version'}">
           <img slot="icon" width="20" style="margin: 6px 15px 0 0;" src="../../assets/images/index5/版本介绍@2x.png">
         </cell>
-        <cell :title="cellData.cell6" is-link>
+        <cell :title="cellData.cell6" is-link :link="{path:'/aboutUs'}">
           <img slot="icon" width="20" style="margin: 6px 15px 0 0;" src="../../assets/images/index5/关于我们(1)@2x.png">
         </cell>
       </Group>

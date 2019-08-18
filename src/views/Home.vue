@@ -146,7 +146,11 @@
                 if(index===2){
                     this.$router.push('index3');
                     return false;
-                }else{
+                }else if(index === 1){
+                    this.$router.push('index2');
+                    return false;
+                }
+                else{
                     this.tabActive=index;
                 }
             },

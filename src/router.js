@@ -5,6 +5,7 @@ import login from './views/login/login.vue'
 import register from './views/login/register.vue'
 import registerOk from './views/login/registerOk.vue'
 import selectCompany from './views/login/selectCompany.vue'
+import index2 from './views/index2/index2.vue'
 import index3 from './views/index3/index3.vue'
 import searchBaoJing from './views/index3/searchBaoJing.vue'
 import changePassword from './views/index5/changePassword.vue'
@@ -19,6 +20,8 @@ import version from './views/index5/version.vue'
 import notice from './views/index1/noticeCenter.vue'
 import retrievePw from './views/login/RetrievePw'
 import startPage from './views/login/startPage'
+import aboutUs from './views/index5/aboutUs.vue'
+import searchMap from './views/index2/searchMap.vue'
 
 Vue.use(Router)
 
@@ -65,6 +68,11 @@ export default new Router({
             path: '/home',
             name: 'home',
             component: Home
+        },
+        {
+            path: '/index2',
+            name: 'index2',
+            component: index2
         },
         {
             path: '/index3',
@@ -125,6 +133,16 @@ export default new Router({
             path: '/notice',
             name: 'notice',
             component: notice
+        },
+        {
+            path: '/aboutUs',
+            name: 'aboutUs',
+            component: aboutUs
+        },
+        {
+            path: '/searchMap',
+            name: 'searchMap',
+            component: searchMap
         },
     ]
 })
