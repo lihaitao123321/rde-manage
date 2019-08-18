@@ -30,6 +30,8 @@ import fadianbaobiao from './views/index1/fadianbaobiao.vue'
 import shishinengyuanbaobiao from './views/index1/shishinengyuanbaobiao.vue'
 import retrievePw from './views/login/RetrievePw'
 import startPage from './views/login/startPage'
+import aboutUs from './views/index5/aboutUs.vue'
+import searchMap from './views/index2/searchMap.vue'
 
 Vue.use(Router)
 
@@ -181,6 +183,16 @@ export default new Router({
             path: '/shishinengyuanbaobiao',
             name: 'shishinengyuanbaobiao',
             component: shishinengyuanbaobiao
+        },
+        {
+            path: '/aboutUs',
+            name: 'aboutUs',
+            component: aboutUs
+        },
+        {
+            path: '/searchMap',
+            name: 'searchMap',
+            component: searchMap
         },
     ]
 })
