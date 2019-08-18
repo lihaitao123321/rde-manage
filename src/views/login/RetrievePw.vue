@@ -1,7 +1,7 @@
 <template>
     <div class="t_page">
         <x-header
-                title="注册"
+                title="忘记密码"
                 :left-options="{preventGoBack:true}"
                 @on-click-back="$router.goBack()"
         >
@@ -9,49 +9,21 @@
         <div class="pageContent">
             <div class="padding_lrt15px">
                 <div class="t_tabs uf dr js jc ac">
-                    <div class="uf  jc ac dc"  @click="tabColor" v-bind:class="{activefont1:isActive}">手机注册</div>
-                    <div class="uf  jc ac" @click="tabColor1" v-bind:class="{activefont2:isTab}">邮箱注册</div>
+                    <div class="uf  jc ac dc"  @click="tabColor" v-bind:class="{activefont1:isActive}">通过手机找回</div>
+                    <div class="uf  jc ac" @click="tabColor1" v-bind:class="{activefont2:isTab}">通过邮箱找回</div>
                     <div class="uf t_ridus"  v-bind:class="{activeColor1:isActive}"></div>
                     <div class="uf t_ridus" v-bind:class="{activeColor2:isTab}"></div>
                 </div>
             </div>
             <group class="group_height" label-width="80px">
 
-                <div class="t_position">
-                    <el-input
-                            class="t_position_bottom"
-                            placeholder="请输入真实姓名"
-                            clearable
-                            v-model="input1">
-                        <i slot="prefix" class="el-input__icon t_margin_icon fa fa-user-o"></i>
-                    </el-input>
-                </div>
-                <div class="t_position">
-                    <el-input
-                            class="t_position_bottom"
-                            placeholder="请输入字母用户组合的用户名"
-                            clearable
-                            v-model="input2">
-                        <i slot="prefix" class="el-input__icon t_margin_icon el-icon-user"></i>
-                    </el-input>
-                </div>
-                <div class="t_position">
-                    <el-input
-                            class="t_position_bottom"
-                            placeholder="密码(6-20位，字母、数字、-或_)"
-                            clearable
-                            show-password
-                            v-model="input3">
-                        <i slot="prefix" class="el-input__icon t_margin_icon fa fa-lock"></i>
-                    </el-input>
-                </div>
                 <div class="t_position"  v-if="isActive">
                     <el-input placeholder="请输入手机号" class="t_position_bottom" v-model="input4" clearable>
-<!--                        <el-select v-model="select" slot="prepend" placeholder="请选择">-->
-<!--                            <el-option label="中国大陆+86" value="test"></el-option>-->
-<!--                            <el-option label="美国+86" value="test1"></el-option>-->
-<!--                            <el-option label="日本+23" value="test2"></el-option>-->
-<!--                        </el-select>-->
+                        <!--                        <el-select v-model="select" slot="prepend" placeholder="请选择">-->
+                        <!--                            <el-option label="中国大陆+86" value="test"></el-option>-->
+                        <!--                            <el-option label="美国+86" value="test1"></el-option>-->
+                        <!--                            <el-option label="日本+23" value="test2"></el-option>-->
+                        <!--                        </el-select>-->
                         <el-select v-model="select" slot="prepend" placeholder="请选择" style="width: 135px;">
                             <el-option
                                     v-for="item in options"
@@ -81,13 +53,18 @@
                         <el-button slot="append"  @click.stop="sendCode">{{codeText}}</el-button>
                     </el-input>
                 </div>
-                <div class="http_padding">
-                    <el-checkbox v-model="checked"></el-checkbox><span class="font_size">我已阅读并同意</span>
-                        <span class="font_color" @click="userHttp"><<用户协议>></span>
-
+                <div class="t_position">
+                    <el-input
+                            class="t_position_bottom"
+                            placeholder="密码(6-20位，字母、数字、-或_)"
+                            clearable
+                            show-password
+                            v-model="input3">
+                        <i slot="prefix" class="el-input__icon t_margin_icon fa fa-lock"></i>
+                    </el-input>
                 </div>
-                <div style="padding:15px;">
-                    <x-button type="primary" :disabled="!checked" @click.native="register">{{$t('register.ok')}}</x-button>
+                <div style="padding:15px;margin-bottom: 25px">
+                    <x-button type="primary" @click.native="register">{{$t('retrievePw.reset')}}</x-button>
                 </div>
             </group>
         </div>
@@ -164,8 +141,8 @@
                 this.$router.push('home');
             },
             tabColor(){
-                    this.isActive = true;
-                    this.isTab = false;
+                this.isActive = true;
+                this.isTab = false;
             },
             tabColor1(){
                 this.isActive = false;
@@ -345,7 +322,7 @@
         color: rgba(43, 127, 243, 1);
     }
     .activeColor1{
-       position: absolute;
+        position: absolute;
         bottom: 0px;
         width: 26px;
         height: 4px;
@@ -433,14 +410,12 @@
         padding: 15px 0px 0 0px;
         margin: 0px 10px;
     }
-    .group_height{
-        height: calc(100% - 68px);
-        background-color: white;
-        margin: 0px 10px;
-    }
     .font_color{
         color: rgba(43, 127, 243, 1)!important;
         font-size: 15px;
+    }
+    .group_height{
+        padding: 0px 10px;
     }
     .http_padding{
         margin-top: 40px;

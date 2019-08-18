@@ -2,7 +2,11 @@
     <div class="t_page">
         <x-header>{{$t('registerOk.title')}}</x-header>
         <div class="t_content">
+            <div class="success_icon">
+                <img style="height: 100px;width: 100px" src="../../assets/images/login/resisterSuccess@2x.png">
+            </div>
             <div class="success">{{$t('registerOk.success')}}</div>
+            <div class="success">{{$t('registerOk.successNext')}}</div>
             <div class="desc">{{$t('registerOk.desc')}}</div>
             <x-button type="primary" @click.native="">{{$t('registerOk.ok')}}</x-button>
         </div>
@@ -93,10 +97,28 @@
         font-size: 18px;
         font-weight: 600;
     }
+    .success{
+        text-align: center;
+        font-size: 18px;
+        font-weight: bolder;
+        font-family: PingFang-SC-Bold;
+        color: rgba(0, 0, 0, 1);
+    }
+    .success_icon{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 180px;
+    }
+    /deep/.weui-btn_primary{
+        background-color: rgba(43, 127, 243, 1);
+        border-radius: 30px;
+    }
     .desc{
+        text-align: center;
         margin-top: 20px;
         margin-bottom: 40px;
-        font-size: 14px;
+        font-size: 13px;
         color: #666666;
     }
 </style>
