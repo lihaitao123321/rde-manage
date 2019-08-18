@@ -3,9 +3,11 @@
         <div class="version">
             <XHeader :left-options="{preventGoBack:true}"
             @on-click-back="$router.goBack()" title="版本介绍" ></XHeader>
-           <div class="logo"></div>
+            <div class="logo"> 
+               <img style="height: 100%;width: 100%" src="../../assets/images/login/bluelogo@2x.png">
+            </div>
            <div class="version-code">当前版本V1.0</div>
-           <div class="Introduction">全新上线</div>
+           <div class="introduction">全新上线</div>
            <div class="text">从容智慧运维云平台是一家全球领先的光伏支架、系统解决方案及服务供应商，为全球客户提供安全，可靠，稳定，高效的太阳能支架以及整体解决方案服务。</div>
            <XButton class="button">检查更新</XButton>
         </div>
@@ -38,13 +40,12 @@
       }
 
       .t_page {
+          background-color: #FFFFFFFF;
           .version {
               .logo {
                   height: 80px;
                   width: 80px;
-                  background: linear-gradient(#57b6ffFF, #2b7ff3FF);
                   margin: 35px auto;
-                  border-radius: 12px;
               }
 
               .version-code {
@@ -56,7 +57,7 @@
                   font-weight: 500;
               }
 
-              .Introduction {
+              .introduction {
                   max-width: 68px;
                   margin: 20px auto;
                   margin-top: 60px;
