@@ -28,6 +28,8 @@ import jiankongbaobiao from './views/index1/jiankongbaobiao.vue'
 import shiyonggonglvbaobiao from './views/index1/shiyonggonglvbaobiao.vue'
 import fadianbaobiao from './views/index1/fadianbaobiao.vue'
 import shishinengyuanbaobiao from './views/index1/shishinengyuanbaobiao.vue'
+import retrievePw from './views/login/RetrievePw'
+import startPage from './views/login/startPage'
 
 Vue.use(Router)
 
