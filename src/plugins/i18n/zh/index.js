@@ -18,14 +18,26 @@ export default {
         phone:'手机号',
         code:'验证码',
         email:'邮箱',
-        ok:'同意协议并注册'
+        ok:'同意协议并注册',
+        RetrievePW:'重置密码',
     },
     //注册成功页
     registerOk:{
         title: '注册成功',
-        success:'恭喜您注册成功，平台管理员审核通过后即可登录！',
+        success:'恭喜您注册成功，平台管理员',
+        successNext:'审核通过后即可登录！',
         desc:'管理员在24小时内审核，并将审核结果发生给您！',
-        ok:'确定'
+        ok:'完成'
+    },
+    //找回密码页
+    retrievePw:{
+        reset:'重置密码',
+    },
+    //启动页
+    startPage:{
+        wordTitle:'从容智慧运维云平台',
+        letter:'CALM INTELLIGENT CLOUD PLATFORM',
+        wordLt:'Copyright@2018 南京从容信息科技有限公司',
     },
     map:{
         title:''

@@ -17,6 +17,8 @@ import search from './views/index1/search.vue'
 import region from './views/index5/region.vue'
 import version from './views/index5/version.vue'
 import notice from './views/index1/noticeCenter.vue'
+import retrievePw from './views/login/RetrievePw'
+import startPage from './views/login/startPage'
 
 Vue.use(Router)
 
@@ -43,6 +45,16 @@ export default new Router({
             path: '/registerOk',
             name: 'registerOk',
             component: registerOk
+        },
+        {
+            path: '/startPage',
+            name: 'startPage',
+            component: startPage
+        },
+        {
+            path: '/retrievePw',
+            name: 'retrievePw',
+            component: retrievePw
         },
         {
             path: '/selectCompany',
