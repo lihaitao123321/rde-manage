@@ -17,6 +17,12 @@ import search from './views/index1/search.vue'
 import region from './views/index5/region.vue'
 import version from './views/index5/version.vue'
 import notice from './views/index1/noticeCenter.vue'
+import projectNumber from './views/index1/projectNumber.vue'
+import baojingbaobiao from './views/index1/baojingbaobiao.vue'
+import jiankongbaobiao from './views/index1/jiankongbaobiao.vue'
+import shiyonggonglvbaobiao from './views/index1/shiyonggonglvbaobiao.vue'
+import fadianbaobiao from './views/index1/fadianbaobiao.vue'
+import shishinengyuanbaobiao from './views/index1/shishinengyuanbaobiao.vue'
 
 Vue.use(Router)
 
@@ -113,6 +119,36 @@ export default new Router({
             path: '/notice',
             name: 'notice',
             component: notice
+        },
+        {
+            path: '/projectNumber',
+            name: 'projectNumber',
+            component: projectNumber
+        },
+        {
+            path: '/baojingbaobiao',
+            name: 'baojingbaobiao',
+            component: baojingbaobiao
+        },
+        {
+            path: '/jiankongbaobiao',
+            name: 'jiankongbaobiao',
+            component: jiankongbaobiao
+        },
+        {
+            path: '/shiyonggonglvbaobiao',
+            name: 'shiyonggonglvbaobiao',
+            component: shiyonggonglvbaobiao
+        },
+        {
+            path: '/fadianbaobiao',
+            name: 'fadianbaobiao',
+            component: fadianbaobiao
+        },
+        {
+            path: '/shishinengyuanbaobiao',
+            name: 'shishinengyuanbaobiao',
+            component: shishinengyuanbaobiao
         },
     ]
 })
