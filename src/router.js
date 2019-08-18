@@ -32,6 +32,12 @@ import retrievePw from './views/login/RetrievePw'
 import startPage from './views/login/startPage'
 import aboutUs from './views/index5/aboutUs.vue'
 import searchMap from './views/index2/searchMap.vue'
+import projectNumber from './views/index1/projectNumber.vue'
+import baojingbaobiao from './views/index1/baojingbaobiao.vue'
+import jiankongbaobiao from './views/index1/jiankongbaobiao.vue'
+import shiyonggonglvbaobiao from './views/index1/shiyonggonglvbaobiao.vue'
+import fadianbaobiao from './views/index1/fadianbaobiao.vue'
+import shishinengyuanbaobiao from './views/index1/shishinengyuanbaobiao.vue'
 
 Vue.use(Router)
 
@@ -193,6 +199,36 @@ export default new Router({
             path: '/searchMap',
             name: 'searchMap',
             component: searchMap
+        },
+        {
+            path: '/projectNumber',
+            name: 'projectNumber',
+            component: projectNumber
+        },
+        {
+            path: '/baojingbaobiao',
+            name: 'baojingbaobiao',
+            component: baojingbaobiao
+        },
+        {
+            path: '/jiankongbaobiao',
+            name: 'jiankongbaobiao',
+            component: jiankongbaobiao
+        },
+        {
+            path: '/shiyonggonglvbaobiao',
+            name: 'shiyonggonglvbaobiao',
+            component: shiyonggonglvbaobiao
+        },
+        {
+            path: '/fadianbaobiao',
+            name: 'fadianbaobiao',
+            component: fadianbaobiao
+        },
+        {
+            path: '/shishinengyuanbaobiao',
+            name: 'shishinengyuanbaobiao',
+            component: shishinengyuanbaobiao
         },
     ]
 })
