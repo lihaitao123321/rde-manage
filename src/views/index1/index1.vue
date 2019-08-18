@@ -14,7 +14,7 @@
                         <x-icon class="white-x-icon" type="ios-ionic-outline" size="25" @click="toNoticeCenter"></x-icon>
                     </div>
                     <div class="index-action">
-                        <div class="action-box">
+                        <div class="action-box" @click="jumpUrl('projectNumber')">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation1.png" >
                             <div class="action-name">项目数量<span>(座)</span></div>
                             <div class="action-number">1</div>
@@ -48,19 +48,16 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>总体监控预览</div>
-                            <div><span>进入监控</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
+                            <div @click="jumpUrl('jiankongbaobiao')"><span>进入监控</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="chart-box mb13">
-
-                        </div>
-                        <div class="chart-box">
 
                         </div>
                     </div>
                     <div class="all-mon">
                         <div class="title">
                             <div>报警动态</div>
-                            <div><span>进入报警</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
+                            <div @click="jumpUrl('baojingbaobiao')"><span>进入报警</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="pillar-box">
                             <v-chart
@@ -87,7 +84,7 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>实际用电功率</div>
-                            <div><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
+                            <div @click="jumpUrl('shiyonggonglvbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="pillar-box">
                             <v-chart 
@@ -109,7 +106,7 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>新能源发电功率</div>
-                            <div><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
+                            <div @click="jumpUrl('fadianbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="pillar-box">
                             <v-chart 
@@ -131,7 +128,7 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>绿色能源实时占比</div>
-                            <div><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
+                            <div @click="jumpUrl('shishinengyuanbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="pillar-box">
                             <v-chart
@@ -331,6 +328,9 @@
             }
         },
         methods:{
+            jumpUrl(url){
+                this.$router.push(url)
+            },
             toNoticeCenter(){
                 this.$router.push('notice')
             },
