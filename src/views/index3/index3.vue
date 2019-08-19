@@ -73,13 +73,15 @@
     import caoZuoDrawer from './caoZuoDrawer';
     import sheBeiDrawer from './sheBeiDrawer';
     import xiTongDrawer from './xiTongDrawer';
-    import dianZhanDrawer from './xiangMuDrawer';
+    import xiangMuDrawer from './xiangMuDrawer';
 
     import baoJingList from './baoJingList';
     import caoZuoList from './caoZuoList';
     import sheBeiList from './sheBeiList';
     import xiTongList from './xiTongList';
-    import dianZhanList from './xiangMuList';
+    import xiangMuList from './xiangMuList';
+
+
     import {mapState, mapActions} from 'vuex'
 
     export default {
@@ -107,13 +109,12 @@
             caoZuoDrawer,
             sheBeiDrawer,
             xiTongDrawer,
-            dianZhanDrawer,
+            xiangMuDrawer,
             baoJingList,
             caoZuoList,
             sheBeiList,
             xiTongList,
-            dianZhanList,
-
+            xiangMuList
 
 
 
@@ -167,7 +168,17 @@
 
         methods: {
             openSearchPage() {
-                this.$router.push('searchBaoJing');
+                if(this.tabActive===0){
+                    this.$router.push('baoJingSearch');
+                }else if(this.tabActive===1){
+                    this.$router.push('caoZuoSearch');
+                }else if(this.tabActive===2){
+                    this.$router.push('sheBeiSearch');
+                }else if(this.tabActive===3){
+                    this.$router.push('xiTongSearch');
+                }else if(this.tabActive===4){
+                    this.$router.push('xiangMuSearch');
+                }
             },
             tabPage(index) {
                 this.tabActive = index;
@@ -244,7 +255,7 @@
                 } else if (this.tabActive === 3) {
                     name = 'xiTongDrawer';
                 } else if (this.tabActive === 4) {
-                    name = 'dianZhanDrawer';
+                    name = 'xiangMuDrawer';
                 }
                 return name;
             },
@@ -259,7 +270,7 @@
                 } else if (this.tabActive === 3) {
                     name = 'xiTongList';
                 } else if (this.tabActive === 4) {
-                    name = 'dianZhanList';
+                    name = 'xiangMuList';
                 }
                 return name;
             }

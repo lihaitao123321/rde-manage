@@ -18,10 +18,6 @@ import search from './views/index1/search.vue'
 import region from './views/index5/region.vue'
 import version from './views/index5/version.vue'
 import notice from './views/index1/noticeCenter.vue'
-import retrievePw from './views/login/RetrievePw'
-import startPage from './views/login/startPage'
-import aboutUs from './views/index5/aboutUs.vue'
-import searchMap from './views/index2/searchMap.vue'
 import projectNumber from './views/index1/projectNumber.vue'
 import baojingbaobiao from './views/index1/baojingbaobiao.vue'
 import jiankongbaobiao from './views/index1/jiankongbaobiao.vue'
@@ -32,7 +28,11 @@ import retrievePw from './views/login/RetrievePw'
 import startPage from './views/login/startPage'
 import aboutUs from './views/index5/aboutUs.vue'
 import searchMap from './views/index2/searchMap.vue'
-
+import baoJingSearch from './views/index3/baoJingSearch';
+import caoZuoSearch from './views/index3/caoZuoSearch';
+import sheBeiSearch from './views/index3/sheBeiSearch';
+import xiangMuSearch from './views/index3/xiangMuSearch';
+import xiTongSearch from './views/index3/xiTongSearch';
 Vue.use(Router)
 
 export default new Router({
@@ -193,6 +193,31 @@ export default new Router({
             path: '/searchMap',
             name: 'searchMap',
             component: searchMap
+        },
+        {
+            path: '/baoJingSearch',
+            name: 'baoJingSearch',
+            component: baoJingSearch
+        },
+        {
+            path: '/caoZuoSearch',
+            name: 'caoZuoSearch',
+            component: caoZuoSearch
+        },
+        {
+            path: '/sheBeiSearch',
+            name: 'sheBeiSearch',
+            component: sheBeiSearch
+        },
+        {
+            path: '/xiangMuSearch',
+            name: 'xiangMuSearch',
+            component: xiangMuSearch
+        },
+        {
+            path: '/xiTongSearch',
+            name: 'xiTongSearch',
+            component: xiTongSearch
         }
     ]
 })

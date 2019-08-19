@@ -1,7 +1,7 @@
 <template>
     <div class="rightWarp">
         <div class="header">
-            系统
+            项目
         </div>
         <div class="footer">
             <div class="reset">重置</div>

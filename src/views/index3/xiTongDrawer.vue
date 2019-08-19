@@ -31,12 +31,7 @@
 </template>
 
 <script>
-    import baoJingDrawer from './baoJingDrawer';
     export default {
-        name: "baoJingDetails",
-        components: {
-            baoJingDrawer
-        },
         data(){
             return {
                 select:'',
