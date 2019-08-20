@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="content_item" v-for="item in 10">
+        <div class="content_item" v-for="item in 10" @click="openDetail(item)">
             <div class="item_top">
                 <div class="line">
                     <div class="label">报警描述:</div>
@@ -37,8 +37,14 @@
 </template>
 
 <script>
+
     export default {
-        name: "baoJingList"
+        name: "baoJingList",
+        methods:{
+            openDetail(item){
+                this.$router.push('baoJingDetail');
+            }
+        }
     }
 </script>
 

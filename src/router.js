@@ -33,6 +33,11 @@ import caoZuoSearch from './views/index3/caoZuoSearch';
 import sheBeiSearch from './views/index3/sheBeiSearch';
 import xiangMuSearch from './views/index3/xiangMuSearch';
 import xiTongSearch from './views/index3/xiTongSearch';
+import baoJingDetail from './views/index3/baoJingDetail';
+import caoZuoDetail from './views/index3/caoZuoDetail';
+import sheBeiDetail from './views/index3/sheBeiDetail';
+import xiangMuDetail from './views/index3/xiangMuDetail';
+import xiTongDetail from './views/index3/xiTongDetail';
 Vue.use(Router)
 
 export default new Router({
@@ -218,6 +223,31 @@ export default new Router({
             path: '/xiTongSearch',
             name: 'xiTongSearch',
             component: xiTongSearch
+        },
+        {
+            path: '/baoJingDetail',
+            name: 'baoJingDetail',
+            component: baoJingDetail
+        },
+        {
+            path: '/caoZuoDetail',
+            name: 'caoZuoDetail',
+            component: caoZuoDetail
+        },
+        {
+            path: '/sheBeiDetail',
+            name: 'sheBeiDetail',
+            component: sheBeiDetail
+        },
+        {
+            path: '/xiangMuDetail',
+            name: 'xiangMuDetail',
+            component: xiangMuDetail
+        },
+        {
+            path: '/xiTongDetail',
+            name: 'xiTongDetail',
+            component: xiTongDetail
         }
     ]
 })
