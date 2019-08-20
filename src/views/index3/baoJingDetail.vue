@@ -71,9 +71,6 @@
 </template>
 
 <script>
-    var G2 = require('g2');
-
-    // import G2 from 'g2';
     import {
         XHeader,
         Drawer,
@@ -111,55 +108,7 @@
         },
         methods: {
             init(){
-                var data = [{
-                    month: 'Jan',
-                    value: 51
-                }, {
-                    month: 'Feb',
-                    value: 91
-                }, {
-                    month: 'Mar',
-                    value: 34
-                }, {
-                    month: 'Apr',
-                    value: 47
-                }, {
-                    month: 'May',
-                    value: 63
-                }, {
-                    month: 'June',
-                    value: 58
-                }, {
-                    month: 'July',
-                    value: 56
-                }, {
-                    month: 'Aug',
-                    value: 77
-                }, {
-                    month: 'Sep',
-                    value: 99
-                }, {
-                    month: 'Oct',
-                    value: 106
-                }, {
-                    month: 'Nov',
-                    value: 88
-                }, {
-                    month: 'Dec',
-                    value: 56
-                }];
-                var chart = new G2.Chart({
-                    id: 'mountNode',
-                    width:document.getElementById('mountNode').offsetWidth,
-                    height: 200
-                });
-                chart.source(data, {
-                    month: {
-                        range: [0, 1]
-                    }
-                });
-                chart.line().position('month*value').shape('hv');
-                chart.render();
+
             },
             showDrawer() {
                 this.drawerVisibility = !this.drawerVisibility;
