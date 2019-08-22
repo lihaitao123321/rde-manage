@@ -9,7 +9,7 @@
 
             <!-- drawer content -->
             <div slot="drawer" style="height: 100%;">
-              项目
+              <SearchOptions></SearchOptions>
             </div>
 
             <!-- main content -->
@@ -103,6 +103,7 @@
 </template>
 <script>
   import { Select } from 'element-ui'
+  import SearchOptions from '@/views/index1/components/searchOptions'
   import {
       Radio,
       Group,
@@ -127,6 +128,7 @@ export default {
       "x-select":Select
   },
   components: {
+      SearchOptions,
       Radio,
       Group,
       Cell,
