@@ -39,6 +39,16 @@ export default {
         letter:'CALM INTELLIGENT CLOUD PLATFORM',
         wordLt:'Copyright@2018 南京从容信息科技有限公司',
     },
+    EchartsReport:{
+        Analysis:'分析',
+        startTime:'起始时间',
+        endTime:'终止时间',
+        serial:'序号',
+        time:'时间',
+        status:'报警状态',
+        seach:'查询',
+        acqCycle:'采集周期',
+    },
     map:{
         title:''
     }

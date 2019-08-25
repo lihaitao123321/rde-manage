@@ -39,6 +39,8 @@ import sheBeiDetail from './views/index3/sheBeiDetail';
 import xiangMuDetail from './views/index3/xiangMuDetail';
 import xiTongDetail from './views/index3/xiTongDetail';
 import shebeiDetail from './views/index3/sheBeiDetail';
+import EchartsAnl from './views/EchartsAnlasys/ElectricityAnalysis'
+import ReportAna from './views/EchartsAnlasys/ReportAnalysis'
 Vue.use(Router)
 
 export default new Router({
@@ -54,6 +56,16 @@ export default new Router({
             path: '/login',
             name: 'login',
             component: login
+        },
+        {
+            path: '/ReportAna',
+            name: 'ReportAna',
+            component: ReportAna
+        },
+        {
+            path: '/EchartsAnl',
+            name: 'EchartsAnl',
+            component: EchartsAnl
         },
         {
             path: '/register',
