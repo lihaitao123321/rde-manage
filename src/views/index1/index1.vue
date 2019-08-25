@@ -212,11 +212,7 @@
                     { name: '电站设备', title: '故障', nub: 18.9 },
                     { name: '电站设备', title: '报警', nub: 28.8 },
                     { name: '电站设备', title: '警告', nub: 39.3 },
-                    { name: '电站设备', title: '离线', nub: 81.4 },
-                    { name: '运维设备', title: '故障', nub: 12.4 },
-                    { name: '运维设备', title: '报警', nub: 23.2 },
-                    { name: '运维设备', title: '警告', nub: 34.5 },
-                    { name: '运维设备', title: '离线', nub: 99.7 }
+                    { name: '电站设备', title: '离线', nub: 81.4 }
                 ],
                 data5: [
                     { time: '2016-08-08 00:00:00', tem: 10 },
