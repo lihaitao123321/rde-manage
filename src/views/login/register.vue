@@ -347,20 +347,22 @@
     .activeColor1{
        position: absolute;
         bottom: 0px;
-        width: 26px;
-        height: 4px;
+        width: 18px;
+        height: 3px;
         left: calc(25% - 13px);
         background-color: rgba(43, 127, 243, 1);
-        border-radius: 26%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
     .activeColor2{
         position: absolute;
         bottom: 0px;
-        width: 26px;
-        height: 4px;
+        width: 18px;
+        height: 3px;
         left: calc(75% - 13px);
         background-color: rgba(43, 127, 243, 1);
-        border-radius: 26%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
     .t_tabs :nth-child(2){
         border: 0px;
