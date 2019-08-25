@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="content_item" v-for="item in 10">
+        <div class="content_item" v-for="(item, index) in 10" :key="index" @click="toDetail">
             <div class="item_top">
                 <div class="line">
                     <div class="label">设备名称:</div>
@@ -48,7 +48,12 @@
 
 <script>
     export default {
-        name: "baoJingList"
+        name: "baoJingList",
+        methods:{
+            toDetail(){
+                this.$router.push('shebeiDetail')
+            }
+        }
     }
 </script>
 

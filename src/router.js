@@ -38,6 +38,7 @@ import caoZuoDetail from './views/index3/caoZuoDetail';
 import sheBeiDetail from './views/index3/sheBeiDetail';
 import xiangMuDetail from './views/index3/xiangMuDetail';
 import xiTongDetail from './views/index3/xiTongDetail';
+import shebeiDetail from './views/index3/sheBeiDetail';
 Vue.use(Router)
 
 export default new Router({
@@ -248,6 +249,11 @@ export default new Router({
             path: '/xiTongDetail',
             name: 'xiTongDetail',
             component: xiTongDetail
+        },
+        {
+            path: '/shebeiDetail',
+            name: 'shebeiDetail',
+            component: shebeiDetail
         }
     ]
 })
