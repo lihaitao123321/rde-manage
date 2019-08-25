@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="content_item" v-for="item in 10">
+        <div class="content_item" v-for="item in 10" @click="openDetail(item)">
             <div class="item_top">
                 <div class="line">
                     <div class="label">项目名称:</div>
@@ -53,8 +53,19 @@
 
 <script>
     export default {
-        name: "baoJingList"
-    }
+            name: "xiangMuList",
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+                openDetail(item){
+                    this.$router.push('xiangMuDetail')
+                },
+            },
+
+        }
 </script>
 
 <style lang="less" scoped>
