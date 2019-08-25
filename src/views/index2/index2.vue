@@ -5,15 +5,32 @@
                 <img style="height: 100%;width: 100%" src="../../assets/images/index2/返回图标@2x.png">
             </div>
             <div class="search">
-                    <div class="input_warp">
-                        <div class="left_search_icon">
-                            <i class="el-icon-search"></i>
-                        </div>
-                        <div class="search_content">
-                            <input placeholder="搜索电站" readonly @click="openSearchPage"/>
-                        </div>
+                <div class="input_warp">
+                    <div class="left_search_icon">
+                        <i class="el-icon-search"></i>
+                    </div>
+                    <div class="search_content">
+                        <input placeholder="搜索电站" readonly @click="openSearchPage" />
                     </div>
                 </div>
+            </div>
+           
+        </div>
+        <div class="left">
+            <div class="blue">595</div>
+            <div class="text">项目数</div>
+
+            <div class="blue">65610</div>
+            <div class="text">设备数</div>
+
+            <div class="blue" style="color: #1ACC83FF;">100%</div>
+            <div class="text">在线率</div>
+
+            <div class="blue">89%</div>
+            <div class="text">运行率</div>
+
+            <div class="blue" style="color:#D22642FF;">5%</div>
+            <div class="text">报警率</div>
         </div>
         <baidu-map class="baidu" :center="center" :zoom="zoom" @ready="ready" ak="bLH7rG3fQ75DhH6dLkjhQbD7LV3rsmM7"></baidu-map>
     </div>
@@ -65,7 +82,7 @@
             .search {
                 display: flex;
                 align-items: center;
-                // flex-grow: 1;
+                /* flex-grow: 1; */
                 height: 50px;
                 width: 80%;
 
@@ -110,7 +127,30 @@
                 }
             }
         }
-
+        .left {
+            position: absolute;
+    z-index: 1;
+    top: 90px;
+    left: 10px;
+    width: 80px;
+    height: 326px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    text-align: center;
+    .text{
+        color: #888888FF;
+    font-size: 12px;
+    padding-bottom: 12px;
+    margin: 0 14px;
+    border-bottom: 1px solid #E8E8EBFF;
+    }
+    .blue {
+        color: #2B7FF2FF;
+        font-size:19px;
+        font-weight:700;
+        margin-top:10px;
+    }
+        }
         .baidu {
             width: 100%;
             height: 100%;

@@ -8,8 +8,34 @@
             <div class="ok">确认</div>
         </div>
         <div class="list">
+            <div class="little_title">项目位置:</div>
+            <el-select v-model="value" placeholder="国家" style="width: 90px;">
+                <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+            </el-select>
+            
+            <el-select v-model="value" placeholder="省份" style="width: 90px;">
+                <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+            </el-select>
+            <el-select v-model="value" placeholder="城市" style="width: 90px;">
+                <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+            </el-select>
             <div class="little_title">项目类型：</div>
-            <el-select v-model="select"  placeholder="通讯状态" style="width: 100%;">
+            <el-select v-model="value" placeholder="项目类型" style="width: 185px;">
                 <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -18,23 +44,18 @@
                 </el-option>
             </el-select>
             <div class="little_title">设计负荷：</div>
-            <div style="display: flex;align-items: center;">
-                <input class="inputClass" />
-                <span class="KW">KW</span>
-                <hr class="hr"/>
-                <input class="inputClass" />
-                <span class="KW">KW</span>
-            </div>
+           <el-input v-model='value' style="width:100px"></el-input><span class="KW">KW</span>一
+           <el-input v-model='value' style="width:100px"></el-input><span class="KW">KW</span>
         </div>
     </div>
 </template>
 
 <script>
-    import baoJingDrawer from './baoJingDrawer';
+    
     export default {
-        name: "baoJingDetails",
+        name: "xiangMuDrawer",
         components: {
-            baoJingDrawer
+            
         },
         data(){
             return {
@@ -85,6 +106,7 @@
                 checkedList1:[],
                 checkedList2:[],
                 checkedList3:[],
+                value:''
             }
         }
     }
@@ -165,27 +187,15 @@
             padding: 0 10px;
             color: #E3E3E6;
             overflow-y: auto;
-            .inputClass{
-                width:100px;
-                height:34px;
-                background:rgba(242,242,245,1);
-                border-radius:3px;
-                border: none;
-                outline: none;
-                padding-left: 8px;
-                margin-right: 9px;
-            }
+            
             .KW{
                 font-size:14px;
                 font-family:PingFangSCMedium;
                 font-weight:500;
                 color:rgba(33,33,33,1);
+                margin-left:5px;
             }
-            .hr{
-                color: #F2F2F5;
-                width: 12px;
-                opacity: 0.3;
-            }
+            
         }
     }
 </style>
