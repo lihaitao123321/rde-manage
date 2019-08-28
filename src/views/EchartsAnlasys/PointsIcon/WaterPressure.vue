@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 100%;width: 100%" id="test"></div>
+    <div style="height: 100%;width: 100%" id="WaterPressure"></div>
 </template>
 
 <script>
@@ -7,15 +7,27 @@
     import Vue from "vue";
     Vue.prototype.$echarts = echarts;
     export default {
-        name: "ElectricityAnalysis",
+        name: "WaterPressure",
         methods:{
             init(){
-                var myCharts = echarts.init(document.getElementById("test"));
-
-
+                var myCharts = echarts.init(document.getElementById("WaterPressure"));
                 myCharts.setOption({
                     tooltip: {
                         trigger: 'axis'
+                    },
+                    legend: {
+                        align:'left',
+                        top:10,
+                        left:20,
+                        data:[{
+                            name: '供水压力',
+                            icon:'circle',
+                            textStyle:{
+                            },
+                        }],
+                        itemWidth:9,
+                        itemHeight:9,
+                        fontSize:13,
                     },
                     grid: {
                         left: '3%',
@@ -28,10 +40,17 @@
                         // axisLabel:{
                         //     interval:1,
                         // },
-                        data: ['2017:07-10  13:00:00', '2', '3', '4', '5', '6', '7','8','9','10','11','12','13','14','15']
+                        data: ['2017:07-10  13:00:00', '2', '3', '4', '5', '6', '7','8','9','10','11','12','13','14','15'],
                     },
                     yAxis: {
-                        type: 'value'
+                        type: 'value',
+                        name:'Pa',
+                        nameGap:5,
+                        axisLabel:{
+                            formatter(val) {
+                                return (val) + "";
+                            }
+                        },
                     },
                     dataZoom:[
                         // {
@@ -55,10 +74,10 @@
                     ],
                     series: [
                         {
-                            name:'测试',
+                            name:'供水压力',
                             type:'line',
-                            step: 'middle',
-                            data:[10, 132, 10, 132, 10, 132, 10,132,10,132,10,132,10,132,10,132],
+                            data:[12, 21, 32, 30, 32, 10,12,10,13,10,14,34,22,12,23,34],
+                            smooth: true,
                             areaStyle: {}
                         }
                     ],
@@ -69,7 +88,7 @@
             }
         },
         mounted() {
-      this.init();
+            this.init();
         }
     }
 </script>

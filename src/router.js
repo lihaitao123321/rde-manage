@@ -41,6 +41,7 @@ import xiTongDetail from './views/index3/xiTongDetail';
 import shebeiDetail from './views/index3/sheBeiDetail';
 import EchartsAnl from './views/EchartsAnlasys/ElectricityAnalysis'
 import ReportAna from './views/EchartsAnlasys/ReportAnalysis'
+import WarnReport from './views/EchartsAnlasys/WarnPhotoReport';
 Vue.use(Router)
 
 export default new Router({
@@ -66,6 +67,11 @@ export default new Router({
             path: '/EchartsAnl',
             name: 'EchartsAnl',
             component: EchartsAnl
+        },
+        {
+            path: '/WarnReport',
+            name: 'WarnReport',
+            component: WarnReport
         },
         {
             path: '/register',
