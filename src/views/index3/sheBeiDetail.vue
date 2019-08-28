@@ -1,8 +1,12 @@
 <template>
     <div class="t_page">
+        <XHeader :left-options="{preventGoBack:true, backText: ''}"
+            @on-click-back="$router.goBack()"
+            title="x009循环水泵">
+        </XHeader>
         <div class="shebei-content">
             <div class="content_item">
-                <div class="item_top">
+                <div class="item_top" @click="jumpUrl('shebeishuxingDetail')">
                     <div class="line">
                         <div class="label">设备名称:</div>
                         <div class="value">
@@ -38,7 +42,7 @@
             <div class="all-mon">
                 <div class="title">
                     <div>模式状态</div>
-                    <div @click="jumpUrl('shishinengyuanbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
+                    <div @click="jumpUrl('moshizhuangtaiDetail')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                 </div>
                 <div class="pillar-box">
                     <div class="item-con">
@@ -112,7 +116,7 @@
             <div class="all-mon">
                 <div class="title">
                     <div>参数显示</div>
-                    <div @click="jumpUrl('shishinengyuanbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
+                    <div @click="jumpUrl('canshuDetail')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                 </div>
                 <div class="pillar-box">
                     <div class="item-con">
@@ -145,7 +149,7 @@
                         </div>
                         <div class="rights">
                             <span class="state-name blue">15</span>
-                            <span class="units">。c</span>
+                            <span class="units"> ℃</span>
                         </div>
                     </div>
                     <div class="item-con">
@@ -156,7 +160,7 @@
                         </div>
                         <div class="rights">
                             <span class="state-name blue">7.5</span>
-                            <span class="units">。c</span>
+                            <span class="units"> ℃</span>
                         </div>
                     </div>
                     <div class="item-con">
@@ -167,7 +171,7 @@
                         </div>
                         <div class="rights">
                             <span class="state-name blue">0.67</span>
-                            <span class="units">冷凝器高压压力</span>
+                            <span class="units">Bar</span>
                         </div>
                     </div>
                     <div class="item-con">
@@ -186,7 +190,11 @@
             <div class="all-mon">
                 <div class="title">
                     <div>报警</div>
-                    <div @click="jumpUrl('shishinengyuanbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
+                    <div class="rights">
+                        <div @click="jumpUrl('baojingbianliangDetail')"><span>报警变量</span></div>
+                        <div><span>进入报警</span></div>
+                    </div>
+                    
                 </div>
                 <div class="pillar-box">
                     <v-chart
@@ -211,7 +219,7 @@
         <div class="footer">
             <div>流程图监控</div>
             <div>模型图监控</div>
-            <div>操作</div>
+            <div @click="jumpUrl('caozuo')">操作</div>
         </div>
     </div>
 </template>
@@ -222,6 +230,7 @@
     export default {
         name: "sheBeiDetail",
         components: {
+            XHeader,
             Group,
             XInput,
             VChart,
@@ -245,6 +254,11 @@
                     { name: '电站设备', title: '离线', nub: 81.4 }
                 ],
             }
+        },
+        methods:{
+            jumpUrl(url){
+                this.$router.push(url)
+            },
         }
     }
 </script>
@@ -266,24 +280,45 @@
             align-items: center;
             padding-bottom: 18px;
             div{
-            &:nth-child(1){
-                font-size: 21px;
-                font-weight: bold;
-            }
-            &:nth-child(2){
-                padding: 6px 13px;
-                border-radius: 13px;
-                background: #ffffff;
-                font-size: 13px;
-                color: #2B7FF3;
-                display: flex;
-                align-items: center;
-                padding-right: 8px;
-                .back-icon{
-                    fill: #2B7FF3;
+                &:nth-child(1){
+                    font-size: 21px;
+                    font-weight: bold;
+                }
+                &:nth-child(2){
+                    padding: 6px 13px;
+                    border-radius: 13px;
+                    background: #ffffff;
+                    font-size: 13px;
+                    color: #2B7FF3;
+                    display: flex;
+                    align-items: center;
+                    padding-right: 8px;
+                    .back-icon{
+                        fill: #2B7FF3;
+                    }
+                }
+                &.rights{
+                    padding: 0;
+                    border-radius: 0;
+                    background: none;
+
+                    div{
+                        padding: 6px 16px;
+                        border-radius: 13px;
+                        background: #ffffff;
+                        font-size: 13px;
+                        color: #2B7FF3;
+                        display: flex;
+                        align-items: center;
+                        &:nth-child(2){
+                            background: #2B7FF3;
+                            color: #ffffff;
+                            margin-left: 22px;
+                        }
+                    }
                 }
             }
-            }
+            
         }
         .chart-box{
             height: 140px;

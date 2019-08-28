@@ -41,6 +41,13 @@ import xiTongDetail from './views/index3/xiTongDetail';
 import shebeiDetail from './views/index3/sheBeiDetail';
 import EchartsAnl from './views/EchartsAnlasys/ElectricityAnalysis'
 import ReportAna from './views/EchartsAnlasys/ReportAnalysis'
+import baojingbianliangDetail from './views/index3/baojingbianliangDetail';
+import canshuDetail from './views/index3/canshuDetail';
+import moshizhuangtaiDetail from './views/index3/moshizhuangtaiDetail';
+import shebeishuxingDetail from './views/index3/shebeishuxingDetail';
+import caozuo from './views/index3/caozuo';
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -266,6 +273,31 @@ export default new Router({
             path: '/shebeiDetail',
             name: 'shebeiDetail',
             component: shebeiDetail
+        },
+        {
+            path: '/baojingbianliangDetail',
+            name: 'baojingbianliangDetail',
+            component: baojingbianliangDetail
+        },
+        {
+            path: '/canshuDetail',
+            name: 'canshuDetail',
+            component: canshuDetail
+        },
+        {
+            path: '/moshizhuangtaiDetail',
+            name: 'moshizhuangtaiDetail',
+            component: moshizhuangtaiDetail
+        },
+        {
+            path: '/shebeishuxingDetail',
+            name: 'shebeishuxingDetail',
+            component: shebeishuxingDetail
+        },
+        {
+            path: '/caozuo',
+            name: 'caozuo',
+            component: caozuo
         }
     ]
 })
