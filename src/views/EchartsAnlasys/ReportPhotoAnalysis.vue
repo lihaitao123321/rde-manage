@@ -12,7 +12,7 @@
                     <div class="total_font uf f1 jc ac">{{$t('EchartsReport.timeKW')}}</div>
                 </div>
                 <div class="total_content_right">
-                    <div total_font uf f1 jc ac>{{$t('EchartsReport.dataTwo')}}</div>
+                    <div class="total_font uf f1 jc ac">{{$t('EchartsReport.dataTwo')}}</div>
                 </div>
                 <div class="total_right">
                     <div class="total_font uf f1 jf ac">{{$t('EchartsReport.dataThree')}}</div>
