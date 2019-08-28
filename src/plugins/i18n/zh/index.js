@@ -48,6 +48,9 @@ export default {
         status:'报警状态',
         seach:'查询',
         acqCycle:'采集周期',
+        timeKW:'实时功率(KW)',
+        dataTwo:'据点2(单位)',
+        dataThree:'据点3(单位)',
     },
     map:{
         title:''

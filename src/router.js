@@ -46,8 +46,7 @@ import canshuDetail from './views/index3/canshuDetail';
 import moshizhuangtaiDetail from './views/index3/moshizhuangtaiDetail';
 import shebeishuxingDetail from './views/index3/shebeishuxingDetail';
 import caozuo from './views/index3/caozuo';
-
-
+import WarnReport from './views/EchartsAnlasys/WarnPhotoReport';
 Vue.use(Router)
 
 export default new Router({
@@ -73,6 +72,11 @@ export default new Router({
             path: '/EchartsAnl',
             name: 'EchartsAnl',
             component: EchartsAnl
+        },
+        {
+            path: '/WarnReport',
+            name: 'WarnReport',
+            component: WarnReport
         },
         {
             path: '/register',
