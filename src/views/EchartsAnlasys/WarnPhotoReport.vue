@@ -1,7 +1,7 @@
 <template>
     <div class="t_page">
         <x-header
-                title="报警折线图"
+                :title="actTitle"
                 :left-options="{preventGoBack:true}"
                 @on-click-back="$router.goBack()"
         >
@@ -116,7 +116,7 @@
                 minuteListValue1:'2017-06-12 09:00',
                 minuteListValue2:'2017-06-12 09:00',
                 minuteListValue:'05',
-
+                actTitle:'报警快照分析',
 
             }
         },
@@ -127,10 +127,12 @@
             tabColor(){
                 this.isActive = true;
                 this.isTab = false;
+                this.actTitle='报警快照分析'
             },
             tabColor1(){
                 this.isActive = false;
                 this.isTab = true;
+                this.actTitle='报警折线图'
             },
             tabColorFun(){
                 this.tabsActive = true;
