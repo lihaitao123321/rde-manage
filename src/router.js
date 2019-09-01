@@ -47,6 +47,11 @@ import moshizhuangtaiDetail from './views/index3/moshizhuangtaiDetail';
 import shebeishuxingDetail from './views/index3/shebeishuxingDetail';
 import caozuo from './views/index3/caozuo';
 import WarnReport from './views/EchartsAnlasys/WarnPhotoReport';
+import CycleWaterWarn from './views/EchartsAnlasys/CycleWaterWarn'
+import baojingList from './views/index3/baoJingList'
+import BoxRadio from './views/EchartsAnlasys/BoxRadio'
+import CancelAlarm from './views/EchartsAnlasys/CancelAlarm'
+import RemoveRecord from './views/EchartsAnlasys/RemoveRecord'
 Vue.use(Router)
 
 export default new Router({
@@ -64,9 +69,29 @@ export default new Router({
             component: login
         },
         {
+            path:'/BoxRadio',
+            name:'BoxRadio',
+            component:BoxRadio
+        },
+        {
+            path: '/baojingList',
+            name: 'baojingList',
+            component: baojingList
+        },
+        {
             path: '/ReportAna',
             name: 'ReportAna',
             component: ReportAna
+        },
+        {
+            path: '/CancelAlarm',
+            name: 'CancelAlarm',
+            component: CancelAlarm
+        },
+        {
+            path: '/RemoveRecord',
+            name: 'RemoveRecord',
+            component: RemoveRecord
         },
         {
             path: '/EchartsAnl',
@@ -87,6 +112,11 @@ export default new Router({
             path: '/registerOk',
             name: 'registerOk',
             component: registerOk
+        },
+        {
+            path: '/CycleWaterWarn',
+            name: 'CycleWaterWarn',
+            component: CycleWaterWarn
         },
         {
             path: '/startPage',
