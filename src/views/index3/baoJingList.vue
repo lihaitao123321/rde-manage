@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="content_item" v-for="item in 10" @click="openDetail(item)">
+<!--        <div class="content_item" v-for="item in 10" @click="openDetail(item)">-->
+            <div class="content_item" v-for="(item,index) in 10" @click="CycleWater(index)">
             <div class="item_top">
                 <div class="line">
                     <div class="label">报警描述:</div>
@@ -43,7 +44,10 @@
         methods:{
             openDetail(item){
                 this.$router.push('baoJingDetail');
-            }
+            },
+            CycleWater(val){
+                this.$router.push({path:'/CycleWaterWarn'});
+            },
         }
     }
 </script>
