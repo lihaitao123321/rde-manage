@@ -29,7 +29,7 @@
                 </div>
                 <div class="top_bottom_word uf dr js">
                     <div class="router_warn">报警折线图</div>
-                    <div class="detail_word uf ac jc">详情<span>></span></div>
+                    <div class="detail_word uf ac jc" @click="WarnDetailFun">详情<span>></span></div>
                 </div>
                 <div class="ReportEcharts">
                     <div class="position_button uf dr">
@@ -42,7 +42,7 @@
                     <div class="photo_warn">报警快照分析(n条)</div>
                     <div class="uf dr">
                         <span class="point">已选：{{counter}}</span>
-                        <div class="detail_analysis uf ac jc">分析</div>
+                        <div class="detail_analysis uf ac jc" @click="WarnPhotoAna">分析</div>
                     </div>
                 </div>
 
@@ -62,7 +62,7 @@
             </div>
             <div class="position_bottom uf dr ac">
                 <div class="repair uf ac jc">报修</div>
-                <div class="remove_repair uf ac jc">解除报警</div>
+                <div class="remove_repair uf ac jc" @click="RemoveWarn">解除报警</div>
             </div>
         </div>
     </div>
@@ -153,6 +153,25 @@
                 ]
             }
         },
+        watch:{
+            counter:function () {
+                let count = 0;let countNum = 0;
+                for(let i=0;i<this.checkListData.length;i++){
+                    if(this.checkListData[i].active){
+                        count++
+                    }else {
+                        countNum++
+                    }
+                }
+               for(let i=0;i<this.checkListData.length;i++){
+                   if(count>3){
+                       return false;
+                   }else if(!this.checkListData[i].active){
+                       return count--;
+                   }
+               }
+            }
+        },
         methods: {
             getBackgroouImage(item,index) {
                 let isLeft=null;
@@ -173,6 +192,15 @@
                         'margin-left':isLeft?'7px':0
                     };
                 }
+            },
+            WarnPhotoAna(){
+                this.$router.push({path: '/WarnReport'});
+            },
+            WarnDetailFun(){
+              this.$router.push({path:'/ReportAna'});
+            },
+            RemoveWarn(){
+                this.$router.push({path:'/CancelAlarm'});
             },
             BoxWarnFun(index) {
                 if(!this.checkListData[index].active){

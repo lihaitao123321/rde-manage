@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="content_item" v-for="item in 10">
+        <div class="content_item" v-for="item in 10" @click="CycleWater(index)">
             <div class="item_top">
                 <div class="line">
                     <div class="label">操作内容:</div>
@@ -45,7 +45,17 @@
 
 <script>
     export default {
-        name: "baoJingList"
+        name: "baoJingList",
+        data(){
+            return{
+
+            }
+        },
+        methods:{
+            CycleWater(val){
+                this.$router.push({path:'/CycleWaterWarn'});
+            },
+        }
     }
 </script>
 
