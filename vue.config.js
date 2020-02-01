@@ -3,8 +3,8 @@ module.exports = {
     publicPath: './',
     devServer: {
         proxy: {
-            'organ/api': {
-                target: 'http://106.12.37.142/'
+            '/cloud': {
+                target: 'http://106.12.36.121:9080'
             }
         }
     },

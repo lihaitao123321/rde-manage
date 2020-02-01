@@ -60,8 +60,8 @@
         },
         data () {
             return {
-                telephone:'15261872169',
-                password:'87654321',
+                telephone:'15051665680',
+                password:'11076038',
                 td:false,
                 input1:'',
                 input2:'',
@@ -77,15 +77,11 @@
                     this.$vux.toast.text('请输入密码');
                     return false;
                 }
-
-                let pwd=encrypt.encrypt(this.password);
-                this.$router.push('home');
-                return false;
                 this.Tools.ajax({
-                    method: '/appLogin',
+                    method: '/cloud/api/appLogin',
                     data: {
                         "telephone": this.telephone,
-                        "passwd":pwd
+                        "passwd":encrypt.encrypt(this.password),
                     }
                 }).then(data => {
                     if (data.status === 1) {
@@ -97,14 +93,13 @@
                     localStorage.setItem("prevToken", data.token);
                     localStorage.setItem("userCompanyNum", data.num);
                     localStorage.setItem("userCurrentCompanyStatus", data.companyStatus);
-                    // if (data.num > 1) {
-                    //     this.$router.push('selectCompany');
-                    // } else {
-                    //     localStorage.setItem("userToken", data.token);
-                    //     this.$router.push('home');
-                    // }
-                    this.$router.push('home');
 
+                    if (data.num > 1) {
+                        this.$router.push('selectCompany');
+                        localStorage.setItem("userToken", data.token);
+                    } else {
+                        this.$router.push('home');
+                    }
                 });
             },
             register(){
