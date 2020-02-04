@@ -9,7 +9,7 @@ let isTest = false;
 export default {
     isPhone: '',
     config: {
-        host: 'http://106.12.36.121:9080',
+        host: 'https://106.12.36.121:9080',
         imageFtpUrl: isTest ? host + '/images/test/ftproot/tempupload/0/' : '/images/test/ftproot/tempupload/0/',
     },
     codeMessage: {
@@ -41,7 +41,7 @@ export default {
         }
         let defaultHeaders = {
             'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
             // Authorization: 'Basic c3dvcmQ6c3dvcmRfc2VjcmV0',
             Authorization: token,
             // "blade-auth": token
@@ -84,11 +84,11 @@ export default {
             return error.response.data || {};
         });
         let postData = obj.data;
-        if(obj.headers && obj.headers['Content-type']){
-            postData=JSON.stringify(obj.data);
-        }else{
-            postData = Qs.stringify(obj.data);
-        }
+        // if(obj.headers && obj.headers['Content-type']){
+        //     postData=JSON.stringify(obj.data);
+        // }else{
+        //     postData = Qs.stringify(obj.data);
+        // }
         return service({
             data: postData
         });

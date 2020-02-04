@@ -4,7 +4,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/cloud': {
-                target: 'http://106.12.36.121:9080'
+                target: 'https://iot.congrongyun.com'
             }
         }
     },
