@@ -166,7 +166,8 @@ export default {
       showMode: 'push',
       showModeValue: 'push',
       showPlacement: 'left',
-      showPlacementValue: 'left'
+      showPlacementValue: 'left',
+      pageList: []
     }
   },
   methods:{
@@ -198,6 +199,21 @@ export default {
     ...mapActions([
         'updateDemoPosition'
     ])
+  },
+  created(){
+    this.Tools.ajax({
+      method: '/cloud/api/app/firstpage/getHistoryData',
+      data: {
+        "token": "",
+        "app_id": "",
+        "data": "",
+        "timestamp": "",
+        "sign": "",
+      }
+    }).then((res)=>{
+      //不通
+      this.pageList = res
+    })
   },
   mounted() {
       this.handler = () => {
