@@ -35,7 +35,7 @@ export default {
         let userToken = localStorage.getItem('userToken');
         let token = '';
         if (userToken) {
-            token = userToken;
+            token = `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMTZhYjNjMTdlNTA4ODM3OTQxYjY5YmQ1ODBkMDA0NSIsImF1dGgiOiJST0xFX0FOT05ZTU9VUyIsIlVTRVJUWVBFIjowLCJjb21wIjoiIiwiZXhwIjoxNTgyNTQ3MjA5fQ.9GaoVeCSgdbq4--etqieHriRv0t3B5uYYZtQampq84PcJMeWVir4k-G00eV6HY4CsOaiP7zPX-EzsU36TMqJ-A`;
         } else {
             token = '';
         }

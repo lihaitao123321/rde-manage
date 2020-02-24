@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+    <!--    禁用ios自动识别手机号-->
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="x-rim-auto-match" content="none">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>rde-vue</title>
   </head>
@@ -13,6 +16,9 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-  <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=7f9268b4d096a83db426455b6c86e0da&plugin=AMap.PolyEditor,AMap.CircleEditor,AMap.ToolBar,AMap.Scale,AMap.ControlBar,AMap.Geolocation"></script>
   </body>
 </html>
+
+
