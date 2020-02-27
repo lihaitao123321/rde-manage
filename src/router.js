@@ -39,19 +39,19 @@ import sheBeiDetail from './views/index3/sheBeiDetail';
 import xiangMuDetail from './views/index3/xiangMuDetail';
 import xiTongDetail from './views/index3/xiTongDetail';
 import shebeiDetail from './views/index3/sheBeiDetail';
-import EchartsAnl from './views/EchartsAnlasys/ElectricityAnalysis'
-import ReportAna from './views/EchartsAnlasys/ReportAnalysis'
+import EchartsAnl from './views/index3/ElectricityAnalysis'
+import ReportAna from './views/index3/ReportAnalysis'
 import baojingbianliangDetail from './views/index3/baojingbianliangDetail';
 import canshuDetail from './views/index3/canshuDetail';
 import moshizhuangtaiDetail from './views/index3/moshizhuangtaiDetail';
 import shebeishuxingDetail from './views/index3/shebeishuxingDetail';
 import caozuo from './views/index3/caozuo';
-import WarnReport from './views/EchartsAnlasys/WarnPhotoReport';
-import CycleWaterWarn from './views/EchartsAnlasys/CycleWaterWarn'
+import WarnReport from './views/index3/WarnPhotoReport';
+import CycleWaterWarn from './views/index3/CycleWaterWarn'
 import baojingList from './views/index3/baoJingList'
-import BoxRadio from './views/EchartsAnlasys/BoxRadio'
-import CancelAlarm from './views/EchartsAnlasys/CancelAlarm'
-import RemoveRecord from './views/EchartsAnlasys/RemoveRecord'
+import BoxRadio from './views/index3/BoxRadio'
+import CancelAlarm from './views/index3/CancelAlarm'
+import RemoveRecord from './views/index3/RemoveRecord'
 Vue.use(Router)
 
 export default new Router({
