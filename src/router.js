@@ -49,6 +49,7 @@ import caozuo from './views/index3/caozuo';
 import WarnReport from './views/index3/WarnPhotoReport';
 import CycleWaterWarn from './views/index3/CycleWaterWarn'
 import baojingList from './views/index3/baoJingList'
+import baojingListNew from './views/index3/baojingListNew'
 import BoxRadio from './views/index3/BoxRadio'
 import CancelAlarm from './views/index3/CancelAlarm'
 import RemoveRecord from './views/index3/RemoveRecord'
@@ -77,6 +78,11 @@ export default new Router({
             path: '/baojingList',
             name: 'baojingList',
             component: baojingList
+        },
+        {
+            path:'./baojingListNew',
+            name:'baojingListNew',
+            component:baojingListNew
         },
         {
             path: '/ReportAna',

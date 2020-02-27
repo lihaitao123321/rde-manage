@@ -76,6 +76,7 @@
     import xiangMuDrawer from './xiangMuDrawer';
 
     import baoJingList from './baoJingList';
+    import baoJingListNew from './baojingListNew'
     import caoZuoList from './caoZuoList';
     import sheBeiList from './sheBeiList';
     import xiTongList from './xiTongList';
@@ -110,7 +111,7 @@
             sheBeiDrawer,
             xiTongDrawer,
             xiangMuDrawer,
-            baoJingList,
+            baoJingListNew,
             caoZuoList,
             sheBeiList,
             xiTongList,
@@ -262,7 +263,7 @@
             getList(){
                 let name = '';
                 if (this.tabActive === 0) {
-                    name = 'baoJingList';
+                    name = 'baoJingListNew';
                 } else if (this.tabActive === 1) {
                     name = 'caoZuoList';
                 } else if (this.tabActive === 2) {

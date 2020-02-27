@@ -1,19 +1,19 @@
 <template>
     <div>
 <!--        <div class="content_item" v-for="item in 10" @click="openDetail(item)">-->
-            <div class="content_item" v-for="(item,index) in 10" @click="CycleWater(index)">
+            <div class="content_item" v-for="(item,index) in warnList" @click="CycleWater(index)">
             <div class="item_top">
                 <div class="line">
                     <div class="label">报警描述:</div>
-                    <div class="value">越上限报警</div>
+                    <div class="value">{{item.cause}}</div>
                 </div>
                 <div class="line">
                     <div class="label">报警变量:</div>
-                    <div class="value">X001 CPU工作温度</div>
+                    <div class="value">{{item.name}}</div>
                 </div>
                 <div class="line">
                     <div class="label">报警对象:</div>
-                    <div class="value">B001逆变器</div>
+                    <div class="value">{{item.deviceName}}</div>
                 </div>
                 <div class="line">
                     <div class="label">所属电站:</div>
@@ -38,10 +38,26 @@
 </template>
 
 <script>
-
+import warn from '../Warn/warn.js'
     export default {
         name: "baoJingList",
+        data(){
+            return{
+                warnList:[],
+            }
+        },
+        created(){
+            // this.getWarnFun();
+        },
         methods:{
+            // getWarnFun(){
+            //     this.warnList = [];
+            //     warn.warnReportFun().then(respont=>{
+            //         if(respont.code === 0 && Array.isArray(respont.data.data) && respont.data.data.length > 0){
+            //             this.warnList = respont.data.data;
+            //         }
+            //     }).catch()
+            // },
             openDetail(item){
                 this.$router.push('baoJingDetail');
             },
