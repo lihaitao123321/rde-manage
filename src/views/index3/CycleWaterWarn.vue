@@ -71,6 +71,7 @@
 <script>
     import {
         XHeader,
+        XButton,
     } from 'vux'
     import echartsTotal from './echartsTotal'
     import  warns  from '../Warn/warn.js'

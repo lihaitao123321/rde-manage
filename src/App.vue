@@ -1,9 +1,9 @@
 <template>
     <div id="app">
         <transition :name="transitionName">
-            <keep-alive>
+            <!-- <keep-alive> -->
                 <router-view class="keep-alive-position"></router-view>
-            </keep-alive>
+            <!-- </keep-alive> -->
         </transition>
     </div>
 </template>

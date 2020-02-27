@@ -48,74 +48,20 @@ export default {
       });
     },
     selectCompany(item){
-        localStorage.setItem("userCompany", item.id);
-        this.$router.push('home');
+        this.Tools.ajax({
+            method: "/cloud/api/company/changeAppToken",
+            data: {
+              companyId:item.id
+            }
+        }).then(res => {
+            if(res.code === 0){
+                localStorage.setItem("userToken", res.data);
+                this.$router.push('home');
+            }else{
+                this.$vux.toast.text('选择公司失败');
+            }
+        });
     },
-    register() {
-      console.log(666, this);
-      if (!this.username) {
-        this.$vux.toast.text("请输入用户名");
-        return false;
-      }
-      if (!this.Tools.RegExp.Phone.test(this.telephone)) {
-        this.$vux.toast.text("请输入正确的手机号码");
-        return false;
-      }
-      if (!this.Tools.RegExp.password.test(this.password)) {
-        this.$vux.toast.text("请输入正确的密码，4~20位字母、数字、 _的组合");
-        return false;
-      }
-      if (this.password !== this.repassword) {
-        this.$vux.toast.text("两次密码不一致");
-        return false;
-      }
-      if (!this.code) {
-        this.$vux.toast.text("验证码不能为空");
-        return false;
-      }
-
-      this.Tools.ajax({
-        method: "/register",
-        headers: {
-          "Content-type": "application/json"
-        },
-        data: {
-          username: this.username.trim(),
-          telephone: this.telephone.trim(),
-          passwd: md5(this.password.trim()),
-          code: this.code.trim()
-        }
-      }).then(res => {
-        switch (res.status) {
-          case "0":
-            // 注册成功
-            this.$vux.toast.text("注册成功");
-            setTimeout(() => {
-              this.$router.goBack();
-            }, 1500);
-            break;
-          case "2":
-            this.$vux.toast.text("验证码错误");
-            break;
-          case "3":
-            this.$vux.toast.text("验证码过期");
-            break;
-          case "4":
-            this.$vux.toast.text("用户已存在");
-            break;
-          default:
-            // 1：失败 或者其他情况
-            this.$vux.toast.text("注册失败，请重试");
-            break;
-        }
-      });
-    },
-    clearPhone() {
-      this.telephone = "";
-    },
-    clearPassword() {
-      this.password = "";
-    }
   }
 };
 </script>

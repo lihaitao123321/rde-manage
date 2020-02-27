@@ -32,8 +32,47 @@
             <div class="blue" style="color:#D22642FF;">{{leftModel.alarmRate*100}}%</div>
             <div class="text">报警率</div>
         </div>
-        <div class="goodsInfo" v-if="showProduct" @click="openSiteInfo">
-
+        <div class="goodsInfo" v-if="showProduct" >
+            <div class="header">
+                <x-icon type="ios-close-empty" size="30" @click="showProduct=false"></x-icon>
+                <div class="navigation">
+                    导航
+                </div>
+            </div>
+            <div class="content_item" @click="openSiteInfo">
+                <div class="item_top">
+                    <div class="line">
+                        <div class="label">项目名称:</div>
+                        <div class="value">{{productModel.name}}</div>
+                    </div>
+                    <div class="line">
+                        <div class="label">项目位置:</div>
+                        <div class="value">{{productModel.address}}</div>
+                    </div>
+                    <div class="line">
+                        <div class="label">项目类型 :</div>
+                        <div class="value">{{productModel.projectType}}</div>
+                    </div>
+                    <div class="line">
+                        <div class="label">设计负荷:</div>
+                        <div class="value">{{productModel.designLoad}}</div>
+                    </div>
+                </div>
+                <div class="item_bottom">
+                    <div class="online">
+                        <span class="label">在线率：</span>
+                        <span class="color">{{productModel.onlineRate*100}}%</span>
+                    </div>
+                    <div class="run">
+                            <span class="label">运行率：</span>
+                            <span>{{productModel.runingRate*100}}%</span>
+                    </div>
+                    <div class="warn">
+                            <span class="label">报警率：</span>
+                            <span>{{productModel.alarmRate*100}}%</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="content" id="index1_content_map"></div>
     </div>
@@ -51,7 +90,7 @@
                 locationMark: [],
                 markerList: [],
                 checkedList: [],
-                showProduct: true,
+                showProduct: false,
                 leftModel:{
                     projectCount: 0,
                     deviceCount: 0,
@@ -66,12 +105,12 @@
             }
         },
         async mounted() {
-            // this.t_loading.show('加载地图中');
+            this.t_loading.show('加载地图中');
             await this.initMap();
             await this.startLocation();
             await this.initData();
-            // this.t_loading.hide();
-            // this.onSetZoomAndCenter();
+            this.t_loading.hide();
+            this.onSetZoomAndCenter();
         },
         methods: {
             openSearchPage() {
@@ -140,12 +179,16 @@
             initData() {
                 return this.Tools.ajax({
                     method: '/cloud/api/app/map/getMapProject',
-                    data: {}
+                    data: {
+                        longitude:121.469652,
+                        latitude:31.230121,
+                        radius:9999999
+                    }
                 }).then(data => {
                     console.log(data)
                     if (data.code === 0) {
                         this.leftModel = data.data;
-                        this.addMarker(data.data);
+                        this.addMarker(data.data.appProjectModels);
                     }
                 });
             },
@@ -192,14 +235,15 @@
                     if (obj[i].siteType === 0) {
                         markerContent =
                             `<div class="custom-content-marker" style="background-image: url(${require('../../assets/images/index2/blueMarker.png')});background-size: 100% 100%;">
-                                <div class="custom-content-marker-yuan-blue">${obj[i].totalQty}</div>
+                                <div class="custom-content-marker-yuan-blue"></div>
                             </div>`;
                     } else {
                         markerContent =
-                            `<div class="custom-content-marker" style="background-image: url(${require('../../assets/images/index2/redMarker.png')});background-size: 100% 100%;">
-                                <div class="custom-content-marker-yuan-red">${obj[i].totalQty}</div>
+                            `<div class="custom-content-marker">
+                                <div class="custom-content-marker-yuan-red"></div>
                             </div>`;
                     }
+                    
                     let marker = new AMap.Marker({
                         position: [obj[i].gdLongitude, obj[i].gdLatitude],
                         zoom: 10,
@@ -223,9 +267,23 @@
                     this.showProduct = false;
                 }
             },
-            onClickMarker(res) {
-                this.productModel = res.target.B.extData;
+            async onClickMarker(res) {
+                this.productModel = res.target.getExtData();
+                await this.Tools.ajax({
+                    method: '/cloud/api/app/map/getProjectById',
+                    data: {
+                        projectId:this.productModel.id
+                    }
+                }).then(data => {
+                    if (data.code === 0) {
+                        this.productModel = {
+                            ...this.productModel,
+                            ...data.data
+                        }
+                    }
+                });
                 this.showProduct = true;
+                
             },
             openAmap() {
                 let location = this.$store.state.location;
@@ -235,7 +293,6 @@
                 this.$bus.on('onSetZoomAndCenter', res => {
                     this.map.setZoomAndCenter(13, [res.gdLongitude, res.gdLatitude]);
                     this.productModel = res;
-
                     setTimeout(() => {
                         this.showProduct = true;
                     }, 500);
@@ -341,192 +398,128 @@
         .goodsInfo {
             position: absolute;
             z-index: 10000;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
-            width: calc(100% - 20px);
-            height: 159px;
-            background: rgba(255, 255, 255, 1);
+            bottom: 0px;
+            left: 0px;
+            width:375px;
+            height:224px;
+            background:rgba(255,255,255,1);
+            border-radius:10px;
             box-shadow: 0px 0px 6px 0px rgba(221, 221, 221, 1);
-            border-radius: 4px;
-            padding: 0 10px;
-
-            .detail {
-                display: flex;
-                width: 100%;
-                height: 114px;
-                border-bottom: 0.3px solid rgba(0, 0, 0, 0.1);
-                padding: 10px 0;
-
-                .left {
-                    width: 60px;
-
-                    img {
-                        width: 60px;
-                        height: 60px;
-                    }
-                }
-
-                .right {
-                    padding-left: 10px;
-
-                    .title {
-                        max-width: 250px;
-                        height: 22px;
-                        font-size: 16px;
-                        font-family: PingFangSC;
-                        font-weight: 500;
-                        color: rgba(51, 51, 51, 1);
-                        line-height: 22px;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                    }
-
-                    .address {
-                        display: flex;
-                        align-items: center;
-                        height: 24px;
-                        font-size: 12px;
-                        font-family: PingFangSC;
-                        font-weight: 400;
-                        color: rgba(102, 102, 102, 1);
-
-                        .km {
-                            height: 14px;
-                            line-height: 14px;
-                            padding-right: 7px;
-                            border-right: 1px solid rgba(0, 0, 0, 0.5);
-                        }
-
-                        .addr {
-                            max-width: 200px;
-                            padding-left: 7px;
-                            overflow: hidden;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;
-                        }
-                    }
-
-                    .type {
-                        display: flex;
-                        align-items: center;
-                        height: 24px;
-                        font-size: 12px;
-                        font-family: PingFangSC;
-                        font-weight: 400;
-                        color: rgba(102, 102, 102, 1);
-
-                        .one {
-                            font-size: 16px;
-                            font-family: DIN;
-                            font-weight: 500;
-                            color: rgba(255, 44, 38, 1);
-                            padding: 0 2px;
-                        }
-
-                        .two {
-                            font-size: 16px;
-                            font-family: DIN;
-                            font-weight: 500;
-                            color: rgba(102, 102, 102, 1);
-                            padding: 0 2px;
-                        }
-
-                        .three {
-                            font-size: 16px;
-                            font-family: DIN;
-                            font-weight: 500;
-                            color: rgba(62, 124, 247, 1);
-                            padding: 0 2px;
-                        }
-                    }
-
-                    .other {
-                        display: flex;
-                        align-items: center;
-                        height: 24px;
-                        font-size: 12px;
-                        font-family: PingFangSC, serif;
-                        font-weight: 400;
-                        color: rgba(102, 102, 102, 1);
-
-                        .label {
-                            color: rgba(201, 151, 86, 1);
-                            background: rgba(255, 255, 255, 1);
-                            border-radius: 1px;
-                            border: 1px solid rgba(201, 151, 86, 1);
-                            padding: 1px 6px;
-                            margin-right: 6px;
-                        }
-
-                        .time {
-                            font-size: 11px;
-                            font-family: PingFangSC;
-                            font-weight: 400;
-                            background: rgba(255, 255, 255, 1);
-                            border-radius: 1px;
-                            border: 1px solid rgba(204, 204, 204, 1);
-                            color: rgba(102, 102, 102, 1);
-                            padding: 1px 6px;
-                        }
-                    }
-
-                }
-            }
-
-            .handle {
+            padding: 0 15px;
+            .header{
                 display: flex;
                 align-items: center;
-                height: 45px;
-
-                .item1 {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-grow: 1;
-                    height: 20px;
+                justify-content: space-between;
+                height: 50px;
+                border-bottom:1px solid rgba(230,230,230,1);
+                .close{
+                    width:13px;
+                    height:13px;
+                    background:rgba(187,187,187,1);
+                    border-radius:1px;
+                }
+                .navigation{
+                    width:70px;
+                    height:28px;
+                    line-height: 28px;
                     text-align: center;
-                    font-size: 14px;
-                    font-family: PingFangSC;
-                    font-weight: 400;
-                    color: rgba(51, 51, 51, 1);
-
-                    img {
-                        width: 18px;
-                        height: 18px;
-                        margin-right: 4px;
+                    background:rgba(43,127,243,1);
+                    box-shadow:0px 1px 11px 0px rgba(0, 0, 0, 0.2);
+                    border-radius:14px;
+                    color: white;
+                }
+            }
+            .content_item{
+                height:176px;
+                background:rgba(255,255,255,1);
+                border-radius:10px;
+                // margin-top: 15px;
+                .item_top{
+                    height: 128px;
+                    padding: 0 17px;
+                    border-bottom: 1px solid rgba(0,0,0,0.1);
+                    .line{
+                        display: flex;
+                        padding-top: 8px;
+                        .label{
+                            font-size:14px;
+                            font-family:PingFangSCMedium;
+                            font-weight:500;
+                            color:rgba(153,153,153,1);
+                        }
+                        .value{
+                            font-size:14px;
+                            font-family:PingFangSCMedium;
+                            color:#212121;
+                            padding-left: 10px;
+                        }
                     }
                 }
-
-                .item2 {
+                .item_bottom {
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    flex-grow: 1;
-                    height: 20px;
-                    text-align: center;
-                    font-size: 14px;
-                    font-family: PingFangSC;
-                    font-weight: 400;
-                    color: rgba(51, 51, 51, 1);
+                    justify-content: space-between;
+                    height: 47px;
+                    padding: 0 17px;
 
-                    img {
-                        width: 14px;
-                        height: 16px;
-                        margin-right: 4px;
+                    .label {
+                        font-size: 14px;
+                        font-family: PingFangSCMedium;
+                        font-weight: 500;
+                        color: rgba(153, 153, 153, 1);
                     }
-                }
 
-                div:nth-child(1) {
-                    border-right: 0.5px solid rgba(0, 0, 0, 0.1);
+                    .online {
+                        .color {
+                            color: #1ACC83FF;
+                            font-weight: 700;
+                        }
+                    }
+
+                    .run {
+                        color: #2B7FF3FF;
+                        font-weight: 700;
+                    }
+
+                    .warn {
+                        color: #D42843FF;
+                        font-weight: 700;
+                    }
                 }
             }
         }
+            
 
         #index1_content_map {
             width: 100%;
             height: 100%;
+        }
+    }
+
+      /*自定义标签*/
+    /deep/ .custom-content-marker {
+        width:20px;
+        height:20px;
+
+        .custom-content-marker-yuan-blue {
+            width:100%;
+            height:100%;
+            background-image: url("../../assets/images/index2/blueMarker.png");
+            background-size: cover;
+        }
+
+        .custom-content-marker-yuan-red {
+            width:100%;
+            height:100%;
+            background-image: url("../../assets/images/index2/redMarker.png");
+            background-size: cover;
+        }
+
+        .custom-content-marker-yuan-black {
+            width:100%;
+            height:100%;
+            background-image: url("../../assets/images/index2/blackMarker.png");
+            background-size: cover;
         }
     }
 </style>
