@@ -73,6 +73,7 @@
         XHeader,
     } from 'vux'
     import echartsTotal from './echartsTotal'
+    import  warns  from '../Warn/warn.js'
 
     export default {
         components: {
@@ -172,7 +173,26 @@
                }
             }
         },
+        created(){
+            this.CycleWaterFunOne();
+        },
         methods: {
+            CycleWaterFunOne(){
+                // console.log('没有这个函数',warns);
+                // warns.CycleWaterFun().then(respont=>{
+                //     console.log("输出接果");
+                // }).catch()
+                this.Tools.ajax({
+                    method: '/cloud/api/app/monitor/alarmDetail',
+                    data: {
+                        "thingId":"dv_1",
+                        "variableId":"01704398b77b00047c1a704398b70002",
+                        "abbreviate":"r4025"
+                    }
+                }).then(respont=>{
+                    console.log("天",respont);
+                })
+            },
             getBackgroouImage(item,index) {
                 let isLeft=null;
                 if(index%2===0){
