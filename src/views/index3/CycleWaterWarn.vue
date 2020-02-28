@@ -9,14 +9,44 @@
         <div class="pageContent">
             <div class="padding_lrt15px">
                 <div class="warter_cycle">
-                    <div class="uf dr" v-for="item in list">
-                        <div class="warn_problem uf ac jf">{{item.problem}}</div>
-                        <div class="warn_describe uf ac jf f1">{{item.Describe}}</div>
+                    <div class="uf dr">
+                        <div class="warn_problem uf ac jf">报警描述</div>
+                        <div class="warn_describe uf ac jf f1">{{detailObj.cause}}</div>
+                    </div>
+                    <div class="uf dr">
+                        <div class="warn_problem uf ac jf">报警变量</div>
+                        <div class="warn_describe uf ac jf f1">{{detailObj.name}}</div>
+                    </div>
+                    <div class="uf dr">
+                        <div class="warn_problem uf ac jf">报警对象</div>
+                        <div class="warn_describe uf ac jf f1">{{detailObj.deviceName}}</div>
+                    </div>
+                    <div class="uf dr">
+                        <div class="warn_problem uf ac jf">所属系统</div>
+                        <div class="warn_describe uf ac jf f1">{{detailObj.subProjectName}}</div>
+                    </div>
+                    <div class="uf dr">
+                        <div class="warn_problem uf ac jf">所属项目</div>
+                        <div class="warn_describe uf ac jf f1">{{detailObj.projectName}}</div>
+                    </div>
+                    <div class="uf dr">
+                        <div class="warn_problem uf ac jf">解除时间</div>
+                        <div class="warn_describe uf ac jf f1">{{detailObj.relieveTime}}</div>
+                    </div>
+                    <div class="uf dr">
+                        <div class="warn_problem uf ac jf">恢复时间</div>
+                        <div class="warn_describe uf ac jf f1">{{detailObj.recoverTime}}</div>
                     </div>
                 </div>
                 <div class="item_bottom">
                     <div class="icons">
-                        <div class="item1">
+                        <div class="item1" v-if="Number(detailObj.level) === 1">
+                            <img src="../../assets/images/index3/warning@2x.png">报警
+                        </div>
+                        <div class="item11" v-else-if="Number(detailObj.level) === 0">
+                            <img src="../../assets/images/index3/warning@2x.png">警告
+                        </div>
+                        <div class="item12" v-else-if="Number(detailObj.level) === 2">
                             <img src="../../assets/images/index3/warning@2x.png">故障
                         </div>
                         <div class="item2">
@@ -36,7 +66,7 @@
                         <div>1:报警</div>
                         <div>0:正常</div>
                     </div>
-                    <echartsTotal></echartsTotal>
+                    <echartsTotal :detailList="detailList"></echartsTotal>
                 </div>
                 <div class="top_bottom_word uf dr js">
                     <div class="photo_warn">报警快照分析(n条)</div>
@@ -84,6 +114,8 @@
         name: "CycleWaterWarn",
         data() {
             return {
+                detailObj:{},
+                detailList:[],
                 checkListData: [{
                     title_word: '运行速度',
                     warn_status: '500',
@@ -121,7 +153,7 @@
                 isFore: true,
                 isFive: true,
                 isSix: true,
-                counter: 0,
+                // counter: 0,
                 unit:'',
                 list: [
                     {
@@ -155,44 +187,33 @@
                 ]
             }
         },
-        watch:{
-            counter:function () {
-                let count = 0;let countNum = 0;
-                for(let i=0;i<this.checkListData.length;i++){
-                    if(this.checkListData[i].active){
-                        count++
-                    }else {
-                        countNum++
+        computed:{
+            counter(){
+                let count = 0;
+                    for(let i=0;i<this.checkListData.length;i++){
+                        if(this.checkListData[i].active){
+                            count++
+                        }else {
+
+                        }
                     }
-                }
-               for(let i=0;i<this.checkListData.length;i++){
-                   if(count>3){
-                       return false;
-                   }else if(!this.checkListData[i].active){
-                       return count--;
-                   }
-               }
+                return count;
             }
         },
-        created(){
+        mounted(){
             this.CycleWaterFunOne();
         },
         methods: {
             CycleWaterFunOne(){
-                // console.log('没有这个函数',warns);
-                // warns.CycleWaterFun().then(respont=>{
-                //     console.log("输出接果");
-                // }).catch()
-                this.Tools.ajax({
-                    method: '/cloud/api/app/monitor/alarmDetail',
-                    data: {
-                        "thingId":"dv_1",
-                        "variableId":"01704398b77b00047c1a704398b70002",
-                        "abbreviate":"r4025"
+                this.detailObj = {};
+                warns.warnManageDetailFun().then(respont=>{
+                    if(respont.code === 0 && respont.data.detail instanceof Object){
+                        this.detailObj = respont.data.detail;
+                    };
+                    if(respont.code === 0 && Array.isArray(respont.data.lineChart) && respont.data.lineChart.length > 0){
+                        this.detailList = respont.data.lineChart;
                     }
-                }).then(respont=>{
-                    console.log("天",respont);
-                })
+                }).catch()
             },
             getBackgroouImage(item,index) {
                 let isLeft=null;
@@ -556,6 +577,44 @@
                 font-size: 13px;
                 font-weight: bold;
                 color: rgba(248, 146, 0, 1);
+
+                img {
+                    width: 14px;
+                    height: 12px;
+                    margin-right: 6px;
+                }
+            }
+        .item11{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 26px;
+            border-radius: 13px;
+            margin-right: 16px;
+            background:rgba(255,94,57,0.1);
+            font-size: 13px;
+            font-weight: bold;
+            color:rgba(255,94,57,1);
+
+            img {
+                width: 14px;
+                height: 12px;
+                margin-right: 6px;
+            }
+        }
+            .item12{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 64px;
+                height: 26px;
+                border-radius: 13px;
+                margin-right: 16px;
+                background:rgba(210,38,66,0.1);
+                font-size: 13px;
+                font-weight: bold;
+                color:#D22642;
 
                 img {
                     width: 14px;

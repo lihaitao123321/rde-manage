@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div  v-if="isActive"  class="ReportEcharts">
-                <ReportAna></ReportAna>
+                <ReportAna :chartsList="chartsList"></ReportAna>
             </div>
             <Group v-if="isActive"  class="data_width">
                 <div class="t_position">
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+    import  warns  from '../Warn/warn.js'
     import {
         XHeader,
         Group,
@@ -91,6 +92,7 @@
         },
         data() {
             return {
+                chartsList:[],
                 isActive:true,
                 isTab:false,
                 itemColor:false,
@@ -98,7 +100,7 @@
                 value2:'',
                 hColor:'',
                 minuteListValue1:'2017-06-12 09:00',
-                minuteListValue2:'2017-06-12 09:00',
+                minuteListValue2:'2020-06-12 09:00',
                 minuteListValue:'05',
                 list: [{
                     label: 'Apple',
@@ -115,7 +117,18 @@
                 }],
             }
         },
+        created(){
+            this.warnBroken();
+        },
         methods: {
+            warnBroken(){
+                this.chartsList = [];
+                    warns.warnBrokenFun(this.minuteListValue1,this.minuteListValue2).then(respont=>{
+                     if(respont.code === 0 && Array.isArray(respont.data.charts) && respont.data.charts.length > 0){
+                         this.chartsList = respont.data.charts;
+                     }
+                }).catch()
+            },
             consoleIndex() {
 
             },

@@ -8,10 +8,23 @@
     Vue.prototype.$echarts = echarts;
     export default {
         name: "ElectricityAnalysis",
+        props:{
+            chartsList:{
+                type:Array,
+                default:function () {
+                    return []
+                }
+            }
+        },
         methods:{
             init(){
                 var myCharts = echarts.init(document.getElementById("test"));
-
+                let chartsList = [];
+                let chartsTimeList = [];
+                this.chartsList.forEach(item=>{
+                    chartsList.push(item.level);
+                    chartsTimeList.push(item.date);
+                });
 
                 myCharts.setOption({
                     tooltip: {
@@ -28,7 +41,7 @@
                         // axisLabel:{
                         //     interval:1,
                         // },
-                        data: ['2017:07-10  13:00:00', '2', '3', '4', '5', '6', '7','8','9','10','11','12','13','14','15']
+                        data: chartsTimeList
                     },
                     yAxis: {
                         type: 'value'
@@ -58,7 +71,7 @@
                             name:'测试',
                             type:'line',
                             step: 'middle',
-                            data:[10, 132, 10, 132, 10, 132, 10,132,10,132,10,132,10,132,10,132],
+                            data:chartsList,
                             areaStyle: {}
                         }
                     ],
