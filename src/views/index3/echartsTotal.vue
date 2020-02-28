@@ -8,10 +8,30 @@
     Vue.prototype.$echarts = echarts;
     export default {
         name: "echartsTotal",
+        props:{
+            detailList:{
+                type:Array,
+                default:function () {
+                    return []
+                }
+            }
+        },
+        watch:{
+            detailList(){
+                this.init();
+            }
+        },
         methods:{
             init(){
                 var myCharts = echarts.init(document.getElementById("echartsTotal"));
-
+                let detailList = [];
+                let detailTime = [];
+                if(Array.isArray(this.detailList) && this.detailList.length > 0){
+                    this.detailList.forEach(item=>{
+                        detailList.push(item.level);
+                        detailTime.push(item.date);
+                    })
+                }
 
                 myCharts.setOption({
                     tooltip: {
@@ -28,7 +48,7 @@
                         // axisLabel:{
                         //     interval:1,
                         // },
-                        data: ['2017:07-10  13:00:00', '2', '3', '4', '5', '6', '7','8','9','10','11','12','13','14','15']
+                        data: detailTime
                     },
                     yAxis: {
                         type: 'value'
@@ -58,7 +78,7 @@
                             name:'测试',
                             type:'line',
                             step: 'middle',
-                            data:[10, 132, 10, 132, 10, 132, 10,132,10,132,10,132,10,132,10,132],
+                            data:detailList,
                             areaStyle: {}
                         }
                     ],

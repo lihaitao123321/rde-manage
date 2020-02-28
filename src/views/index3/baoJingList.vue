@@ -1,19 +1,19 @@
 <template>
     <div>
 <!--        <div class="content_item" v-for="item in 10" @click="openDetail(item)">-->
-            <div class="content_item" v-for="(item,index) in warnList" @click="CycleWater(index)">
+            <div class="content_item" v-for="(item,index) in 10" @click="CycleWater(index)">
             <div class="item_top">
                 <div class="line">
                     <div class="label">报警描述:</div>
-                    <div class="value">{{item.cause}}</div>
+                    <div class="value">111</div>
                 </div>
                 <div class="line">
                     <div class="label">报警变量:</div>
-                    <div class="value">{{item.name}}</div>
+                    <div class="value">111</div>
                 </div>
                 <div class="line">
                     <div class="label">报警对象:</div>
-                    <div class="value">{{item.deviceName}}</div>
+                    <div class="value">111</div>
                 </div>
                 <div class="line">
                     <div class="label">所属电站:</div>

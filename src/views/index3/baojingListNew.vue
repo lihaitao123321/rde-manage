@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="content_item" v-for="(item, index) in warnList" :key="index" @click="toDetail">
+        <div class="content_item" v-for="(item, index) in warnList" :key="index" @click="toDetail(item)">
             <div class="item_top">
                 <div class="line">
                     <div class="label">报警描述:</div>
@@ -22,11 +22,11 @@
                 </div>
                 <div class="line">
                     <div class="label">所属系统:</div>
-                    <div class="value">{{item.subProjectId}}</div>
+                    <div class="value">{{item.subProjectName}}</div>
                 </div>
                 <div class="line">
                     <div class="label">所属项目:</div>
-                    <div class="value">{{item.projectId}}</div>
+                    <div class="value">{{item.projectName}}</div>
                 </div>
             </div>
             <div class="item_bottom">
@@ -81,6 +81,7 @@
         },
         methods:{
             getWarnFun(){
+                console.log("执行了=====》");
                 this.warnList = [];
                 warn.warnReportFun().then(respont=>{
                     if(respont.code === 0 && Array.isArray(respont.data.data) && respont.data.data.length > 0){
@@ -88,8 +89,10 @@
                     }
                 }).catch()
             },
-            toDetail(){
-                this.$router.push('shebeiDetail')
+            toDetail(param){
+                sessionStorage.setItem('thingId',param.thingId);
+                sessionStorage.setItem('abbreviate',param.abbreviate)
+                this.$router.push({path:'/CycleWaterWarn'});
             }
         }
     }

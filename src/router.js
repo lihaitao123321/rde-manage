@@ -80,7 +80,7 @@ export default new Router({
             component: baojingList
         },
         {
-            path:'./baojingListNew',
+            path:'/baojingListNew',
             name:'baojingListNew',
             component:baojingListNew
         },
