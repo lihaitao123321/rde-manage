@@ -18,7 +18,8 @@ let store = new Vuex.Store({
       messageNum:{
 
       }
-    }
+    },
+
   },
   mutations: {
     setLocation(state, payload) {
@@ -34,39 +35,18 @@ let store = new Vuex.Store({
         state.loginInfo[key] = payload[key];
       }
     },
-    //设置keep-alive要缓存的页面
-    catchPage(state, data) {
-      if(state.includedComponents.every(item=>item!==data)){
-        state.includedComponents.push(data);
-      }
-      state.excludedComponents.forEach((item,index)=>{
-        if(item===data){
-          state.excludedComponents.splice(index,1);
-        }
-      })
-    },
-    //设置keep-alive要取消缓存的页面
-    removeCatchPage(state, data){
-      if(state.excludedComponents.every(item=>item!==data)){
-        state.excludedComponents.push(data);
-      }
-      state.includedComponents.forEach((item,index)=>{
-        if(item===data){
-          state.includedComponents.splice(index,1);
-        }
-      })
-    },
     setLogout(state, data){
       state.isLogout=data;
     },
     setPushNum(state, data){
       state.jPush.messageNum = data;
     }
+
   },
   actions: {
-    getUserInfo() {
-
-    }
+    getUserInfo({ commit, state }, products) {
+        return state.userInfo;
+    },
   },
   modules: {
     i18n: vuexI18n.store

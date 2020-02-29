@@ -8,7 +8,7 @@
             </keep-alive>
         </div>
         <tabbar @on-index-change="tabPage">
-            <tabbar-item  v-for="(item,index) in this.menus" :selected="index===0">
+            <tabbar-item  v-for="(item,index) in this.menus" :key="index" :selected="index===0">
                 <img class="tabbar_image" slot="icon" :src="tabActive===index?item.activeIcon:item.icon" />
                 <span class="tabbar_label" slot="label">{{item.title}}</span>
             </tabbar-item>

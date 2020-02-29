@@ -105,11 +105,11 @@
             }
         },
         async mounted() {
-            this.t_loading.show('加载地图中');
+            this.$vux.loading.show('加载地图中');
             await this.initMap();
             await this.startLocation();
             await this.initData();
-            this.t_loading.hide();
+            this.$vux.loading.hide();
             this.onSetZoomAndCenter();
         },
         methods: {

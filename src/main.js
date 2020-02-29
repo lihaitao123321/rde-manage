@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import i18n from './plugins/i18n'        //引入vue-i18n
-
+//bus
+import VueBus from 'vue-bus'
+Vue.use(VueBus);
 // 引入Mint ui全部组件
 
 import ElementUI from 'element-ui'
@@ -23,6 +25,9 @@ Vue.component('PopMask',PopMask);
 //公用筛选组件
 import Condition from './components/condition/Condition.vue'
 Vue.component('Condition',Condition);
+//加载中组件
+import  { LoadingPlugin } from 'vux'
+Vue.use(LoadingPlugin)
 //自定义路由方法
 router.goBack = function () {
   this.isBack = true;

@@ -68,7 +68,7 @@
                                 <i class="el-icon-search"></i>
                             </div>
                             <div class="search_content">
-                                <input placeholder="请输入搜索内容" />
+                                <input placeholder="请输入搜索内容" @change="onSearch"/>
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
         },
         data() {
             return {
-        
+                isLoading:false,
                 options: [{
                     value: '选项1',
                     label: '黄金糕'
@@ -194,7 +194,36 @@
                 showPlacementValue: 'left'
             }
         },
+        async mounted(){
+            this.initData();
+        },
         methods: {
+            onSearch(){
+                if(this.isLoading){
+                    return false;
+                }
+                this.initData();
+            },
+            initData(){
+                return this.Tools.ajax({
+                    method: '/cloud/api/app/firstpage/getHistoryData',
+                    data: {
+                        areaId:null,//项目地点
+                        projectType:null,//项目类型
+                        beginDesignLoad:null,//负载下限
+                        endDesignLoad:null,//负载上限
+                        pageNum:1,
+                        pageSize:10
+                    }
+                }).then(data => {
+                    console.log(data)
+                    if (data.code === 0) {
+                        this.isLoading = false;
+                        this.leftModel = data.data;
+                        this.addMarker(data.data.appProjectModels);
+                    }
+                });
+            },
             openSearchPage(){
                 this.$router.push('searchBaoJing');
             },
@@ -228,42 +257,7 @@
             ...mapActions([
                 'updateDemoPosition'
             ])
-        },
-        mounted() {
-            this.handler = () => {
-                if (this.path === '/demo') {
-                    this.box = document.querySelector('#demo_list_box')
-                    this.updateDemoPosition(this.box.scrollTop)
-                }
-            }
-        },
-        beforeDestroy() {
-            this.box && this.box.removeEventListener('scroll', this.handler, false)
-        },
-        watch: {},
-        computed: {
-            ...mapState({
-                route: state => state.route,
-                deviceready: state => state.app.deviceready,
-                demoTop: state => state.vux.demoScrollTop,
-            }),
-            isShowBar() {
-                if (this.entryUrl.indexOf('hide-tab-bar') > -1) {
-                    return false
-                }
-                return true
-            },
-            isShowNav() {
-                if (this.entryUrl.indexOf('hide-nav') > -1) {
-                    return false
-                }
-                return true
-            },
-            isTabbarDemo() {
-                return /tabbar/.test(this.route.path)
-            }
-        },
-
+        }
     }
 </script>
 
