@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="time">
-                        2019-08-12 15:00
+                        {{detailObj.operationTime}}
                     </div>
                 </div>
                 <div class="top_bottom_word uf dr js">
@@ -641,7 +641,7 @@
             font-family: PingFangSCMedium;
             font-weight: 500;
             color: rgba(153, 153, 153, 1);
-            width: 127px;
+            width: 140px;
             height: 20px;
         }
     }
