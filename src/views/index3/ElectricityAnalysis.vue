@@ -16,16 +16,24 @@
                 }
             }
         },
+        watch:{
+            chartsList(val){
+                if(Array.isArray(this.chartsList) && this.chartsList.length > 0){
+                    this.init();
+                }
+            }
+        },
         methods:{
             init(){
                 var myCharts = echarts.init(document.getElementById("test"));
                 let chartsList = [];
                 let chartsTimeList = [];
-                this.chartsList.forEach(item=>{
-                    chartsList.push(item.level);
-                    chartsTimeList.push(item.date);
-                });
-
+               if(Array.isArray(this.chartsList) && this.chartsList.length > 0){
+                   this.chartsList.forEach(item=>{
+                       chartsList.push(item.level);
+                       chartsTimeList.push(item.date);
+                   });
+               }
                 myCharts.setOption({
                     tooltip: {
                         trigger: 'axis'

@@ -33,7 +33,7 @@
                 </div>
             </Group >
             <div v-if="isActive" style="padding:15px;margin-bottom: 25px">
-                <x-button type="primary" @click="">{{$t('EchartsReport.Analysis')}}</x-button>
+                <x-button type="primary" @click.native="searchDetailFun">{{$t('EchartsReport.Analysis')}}</x-button>
             </div>
             <Group v-if="!isActive"  class="analysis_width">
                 <div class="total_num">
@@ -42,15 +42,16 @@
                     <div class="total_font uf f1 je ac">{{$t('EchartsReport.status')}}</div>
                 </div>
                 <div class="total_num" v-for="(item,index) in list" :class="funColor(index)">
-                    <div class="total_left">{{item.label}}</div>
-                    <div class="total_content">{{item.time}}</div>
-                    <div class="total_right">{{item.value}}</div>
+                    <div class="total_left">{{`${index + 1}`}}</div>
+                    <div class="total_content">{{item.date}}</div>
+                    <div class="total_right" v-if="Number(item.level) === 0">正常</div>
+                    <div class="total_right" v-else>报警</div>
                 </div>
             </Group>
             <Group v-if="!isActive"  class="data_width1">
                 <div class="t_position">
                     <div class="data_bottom">
-                        <datetime v-model="minuteListValue" format="mm" :minute-list="['05', '10', '15']" @on-change="change" :title="$t('EchartsReport.acqCycle')"></datetime>
+                        <datetime v-model="minuteListValue" format="mm" :minute-row="minuteListValue" :minute-list="['05', '10']" @on-change="change" :title="$t('EchartsReport.acqCycle')"></datetime>
             </div>
                     <div class="data_bottom">
                         <datetime v-model="minuteListValue1" format="YYYY-MM-DD HH:mm" :minute-list="['00', '15', '30', '45']" @on-change="change" :title="$t('EchartsReport.startTime')"></datetime>
@@ -61,7 +62,7 @@
                 </div>
             </Group >
             <div v-if="!isActive" style="padding:15px;margin-bottom: 25px">
-                <x-button type="primary" @click="">{{$t('EchartsReport.seach')}}</x-button>
+                <x-button type="primary" @click.native="searchRepotFun">{{$t('EchartsReport.seach')}}</x-button>
             </div>
         </div>
     </div>
@@ -117,15 +118,18 @@
                 }],
             }
         },
-        created(){
+        mounted(){
             this.warnBroken();
         },
         methods: {
-            warnBroken(){
-                this.chartsList = [];
-                    warns.warnBrokenFun(this.minuteListValue1,this.minuteListValue2).then(respont=>{
+            searchDetailFun(){
+                this.warnBroken();
+            },
+           async warnBroken(){
+             this.chartsList = [];
+                   await warns.warnBrokenFun(this.minuteListValue1,this.minuteListValue2).then(respont=>{
                      if(respont.code === 0 && Array.isArray(respont.data.charts) && respont.data.charts.length > 0){
-                         this.chartsList = respont.data.charts;
+                         this.chartsList = JSON.parse(JSON.stringify(respont.data.charts));
                      }
                 }).catch()
             },
@@ -133,12 +137,31 @@
 
             },
             tabColor(){
+                this.warnBroken();
                 this.isActive = true;
                 this.isTab = false;
             },
             tabColor1(){
+                this.warnReport();
                 this.isActive = false;
                 this.isTab = true;
+            },
+            searchRepotFun(){
+                this.warnReport();
+            },
+            warnReport(){
+                let proid = 1;
+                if(this.minuteListValue.toString() === '05' && this.minuteListValue.toString() === '00'){
+                    proid = 1;
+                }else if(this.minuteListValue.toString() === '10'){
+                    proid = 2;
+                }
+                this.list = [];
+                warns.warnLineReportFun(this.minuteListValue1,this.minuteListValue2,proid).then(respont=>{
+                        if(Array.isArray(respont.data.data) && respont.data.data.length > 0){
+                           this.list = respont.data.data;
+                        }
+                }).catch()
             },
             change (value) {
                 console.log('change', value)
