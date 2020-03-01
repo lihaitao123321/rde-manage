@@ -17,32 +17,32 @@
                         <div class="action-box" @click="jumpUrl('projectNumber')">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation1.png" >
                             <div class="action-name">项目数量<span>(座)</span></div>
-                            <div class="action-number">1</div>
+                            <div class="action-number">{{ pageData.projectCount || 0 }}</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation2.png" >
                             <div class="action-name">设备数量<span>(套)</span></div>
-                            <div class="action-number">268</div>
+                            <div class="action-number">{{ pageData.deviceCount || 0  }}</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation3.png" >
                             <div class="action-name">负荷容量<span>(KW)</span></div>
-                            <div class="action-number">1000</div>
+                            <div class="action-number">{{ pageData.designLoad || 0  }}</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation4.png" >
                             <div class="action-name">新能源装机容量<span>(KW)</span></div>
-                            <div class="action-number">500</div>
+                            <div class="action-number">{{ pageData.newEnergyCapacity || 0  }}</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation5.png" >
                             <div class="action-name">实用用电功率<span>(KW)</span></div>
-                            <div class="action-number">56</div>
+                            <div class="action-number">{{ pageData.projectCount || 0  }}</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation6.png" >
                             <div class="action-name">新能源发电功率<span>(KW)</span></div>
-                            <div class="action-number">35</div>
+                            <div class="action-number">{{ pageData.projectCount || 0  }}</div>
                         </div>
                     </div>
                     <div class="all-mon">
@@ -185,143 +185,145 @@
             VPoint
         },
         data () {
-            return {
-                map,
-                htmlOptions: {
-                    position: [ '50%', '50%' ],
-                    html: `
-                    <div style="width: 250px;height: 40px;text-align: center;">
-                        <div style="font-size: 24px; color:#212121;">49999</div>
-                        <div style="font-size: 13px; color:#999999;">总数</div>
-                    </div>`
-                },
-                legendOptions: {
-                    position: 'bottom',
-                    itemFormatter (val) {
-                        return val + '  ' + map[val]
-                    }
-                },
-                yOptions: {
-                    formatter (val) {
-                        return val * 100 + '%'
-                    }
-                },
-                data6,
-                //双柱型
-                data3: [
-                    { name: '电站设备', title: '故障', nub: 18.9 },
-                    { name: '电站设备', title: '报警', nub: 28.8 },
-                    { name: '电站设备', title: '警告', nub: 39.3 },
-                    { name: '电站设备', title: '离线', nub: 81.4 }
-                ],
-                data5: [
-                    { time: '2016-08-08 00:00:00', tem: 10 },
-                    { time: '2016-08-08 00:10:00', tem: 22 },
-                    { time: '2016-08-08 00:30:00', tem: 20 },
-                    { time: '2016-08-09 00:35:00', tem: 26 },
-                    { time: '2016-08-09 01:00:00', tem: 20 },
-                    { time: '2016-08-09 01:20:00', tem: 26 },
-                    { time: '2016-08-10 01:40:00', tem: 28 },
-                    { time: '2016-08-10 02:00:00', tem: 20 },
-                    { time: '2016-08-10 02:20:00', tem: 18 }
-                ],
-                options: [
-                    {
-                        key: 1,
-                        value: '设备型号',
-                        //弹框显示的内容和类型
-                        type:1,
-                        checklist:[],
-                        source: [{
-                            key: 'value1',
-                            value: '全部',
-                            inlineDesc: ''
-                        }, {
-                            key: 'value2',
-                            value: '故障',
-                            inlineDesc: ''
-                        }, {
-                            key: 'value3',
-                            value: '报警',
-                            inlineDesc: ''
-                        }, {
-                            key: 'value4',
-                            value: '警告',
-                            inlineDesc: ''
-                        }]
-                    },{
-                        key: 2,
-                        value: '报警级别',
-                        type:2,
-                        checklist:[],
-                        source: [{
-                            key: 'value1',
-                            value: '全部',
-                            inlineDesc: ''
-                        }, {
-                            key: 'value2',
-                            value: '故障',
-                            inlineDesc: ''
-                        }, {
-                            key: 'value3',
-                            value: '报警',
-                            inlineDesc: ''
-                        }, {
-                            key: 'value4',
-                            value: '警告',
-                            inlineDesc: ''
-                        }]
-                    },{
-                        key: 3,
-                        value: '报警状态',
-                        type:3,
-                        checklist:[],
-                        source: [{
-                            key: 'value1',
-                            value: '全部',
-                            inlineDesc: '',
-                            children:[{
-                                key: 'value1',
-                                value: '全部',
-                                inlineDesc: ''
-                            }, {
-                                key: 'value2',
-                                value: '故障',
-                                inlineDesc: ''
-                            }, {
-                                key: 'value3',
-                                value: '报警',
-                                inlineDesc: ''
-                            }, {
-                                key: 'value4',
-                                value: '警告',
-                                inlineDesc: ''
-                            }]
-                        }, {
-                            key: 'value2',
-                            value: '故障',
-                            inlineDesc: '',
-                            children:[{
-                                key: 'value1',
-                                value: '666',
-                                inlineDesc: ''
-                            }, {
-                                key: 'value2',
-                                value: '888',
-                                inlineDesc: ''
-                            }]
-                        }, {
-                            key: 'value3',
-                            value: '报警',
-                            inlineDesc: ''
-                        }, {
-                            key: 'value4',
-                            value: '警告',
-                            inlineDesc: ''
-                        }]
-                    }
-                ]
-            }
+          return {
+            map,
+            htmlOptions: {
+              position: [ '50%', '50%' ],
+              html: `
+              <div style="width: 250px;height: 40px;text-align: center;">
+                  <div style="font-size: 24px; color:#212121;">49999</div>
+                  <div style="font-size: 13px; color:#999999;">总数</div>
+              </div>`
+            },
+            legendOptions: {
+              position: 'bottom',
+              itemFormatter (val) {
+                return val + '  ' + map[val]
+              }
+            },
+            yOptions: {
+              formatter (val) {
+                return val * 100 + '%'
+              }
+            },
+            data6,
+            //双柱型
+            data3: [
+              { name: '电站设备', title: '故障', nub: 18.9 },
+              { name: '电站设备', title: '报警', nub: 28.8 },
+              { name: '电站设备', title: '警告', nub: 39.3 },
+              { name: '电站设备', title: '离线', nub: 81.4 }
+            ],
+            data5: [
+              { time: '2016-08-08 00:00:00', tem: 10 },
+              { time: '2016-08-08 00:10:00', tem: 22 },
+              { time: '2016-08-08 00:30:00', tem: 20 },
+              { time: '2016-08-09 00:35:00', tem: 26 },
+              { time: '2016-08-09 01:00:00', tem: 20 },
+              { time: '2016-08-09 01:20:00', tem: 26 },
+              { time: '2016-08-10 01:40:00', tem: 28 },
+              { time: '2016-08-10 02:00:00', tem: 20 },
+              { time: '2016-08-10 02:20:00', tem: 18 }
+            ],
+            options: [
+              {
+                key: 1,
+                value: '设备型号',
+                //弹框显示的内容和类型
+                type:1,
+                checklist:[],
+                source: [{
+                  key: 'value1',
+                  value: '全部',
+                  inlineDesc: ''
+                }, {
+                  key: 'value2',
+                  value: '故障',
+                  inlineDesc: ''
+                }, {
+                  key: 'value3',
+                  value: '报警',
+                  inlineDesc: ''
+                }, {
+                  key: 'value4',
+                  value: '警告',
+                  inlineDesc: ''
+                }]
+            },{
+              key: 2,
+              value: '报警级别',
+              type:2,
+              checklist:[],
+              source: [{
+                key: 'value1',
+                value: '全部',
+                inlineDesc: ''
+              }, {
+                key: 'value2',
+                value: '故障',
+                inlineDesc: ''
+              }, {
+                key: 'value3',
+                value: '报警',
+                inlineDesc: ''
+              }, {
+                key: 'value4',
+                value: '警告',
+                inlineDesc: ''
+              }]
+            },{
+                key: 3,
+                value: '报警状态',
+                type:3,
+                checklist:[],
+                source: [{
+                    key: 'value1',
+                    value: '全部',
+                    inlineDesc: '',
+                    children:[{
+                        key: 'value1',
+                        value: '全部',
+                        inlineDesc: ''
+                    }, {
+                        key: 'value2',
+                        value: '故障',
+                        inlineDesc: ''
+                    }, {
+                        key: 'value3',
+                        value: '报警',
+                        inlineDesc: ''
+                    }, {
+                        key: 'value4',
+                        value: '警告',
+                        inlineDesc: ''
+                    }]
+                }, {
+                    key: 'value2',
+                    value: '故障',
+                    inlineDesc: '',
+                    children:[{
+                        key: 'value1',
+                        value: '666',
+                        inlineDesc: ''
+                    }, {
+                        key: 'value2',
+                        value: '888',
+                        inlineDesc: ''
+                    }]
+                }, {
+                    key: 'value3',
+                    value: '报警',
+                    inlineDesc: ''
+                }, {
+                    key: 'value4',
+                    value: '警告',
+                    inlineDesc: ''
+                }]
+              }
+            ],
+            //页面数据
+            pageData:{}
+          }
         },
         methods:{
             jumpUrl(url){
@@ -337,6 +339,16 @@
             seachDetail(){
                 this.$router.push('search')
             }
+        },
+        created(){
+          this.Tools.ajax({
+            method: '/cloud/api/app/firstpage/getFirstPageData',
+            data: {
+              "telephone": this.telephone
+            }
+          }).then((res)=>{
+            this.pageData = res
+          })
         }
     }
 </script>
