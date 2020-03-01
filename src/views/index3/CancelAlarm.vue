@@ -14,23 +14,24 @@
             <div class="group_style">
                 <group>
                     <x-input disabled :placeholder="$t('原因分析')"></x-input>
-                    <x-textarea :max="200" :show-counter="false" name="description" :placeholder="$t('请输入报警原因分析...')"></x-textarea>
+                    <x-textarea :max="200" v-model="reasonAnalysis" :show-counter="false" name="description" :placeholder="$t('请输入报警原因分析...')"></x-textarea>
                 </group>
             </div>
             <div class="group_style">
                 <group>
-                    <x-input disabled :placeholder="$t('原因分析')"></x-input>
-                    <x-textarea :max="200" :show-counter="false" name="description" :placeholder="$t('请输入报警原因分析...')"></x-textarea>
+                    <x-input disabled :placeholder="$t('修复方案')"></x-input>
+                    <x-textarea :max="200" v-model="repairPlan" :show-counter="false" name="description" :placeholder="$t('请输入修复方案...')"></x-textarea>
                 </group>
             </div>
         </div>
         <div class="bottom_buttton">
-            <x-button>提交</x-button>
+            <x-button @click.native="cancelAlarm">提交</x-button>
         </div>
     </div>
 </template>
 
 <script>
+    import warn from '../Warn/warn.js'
     import {
         XHeader,
         XTextarea,
@@ -46,7 +47,23 @@
             XInput,
             XButton
         },
-        name: "CancelAlarm"
+        name: "CancelAlarm",
+        data(){
+            return{
+                reasonAnalysis:'',
+                repairPlan:'',
+            }
+        },
+        created(){
+
+        },
+        methods:{
+            cancelAlarm(){
+                warn.cancelAlarmFun(this.reasonAnalysis,this.repairPlan).then(respont=>{
+                    console.log('天之蓝',respont);
+                }).catch(res=>{})
+            }
+        }
     }
 </script>
 

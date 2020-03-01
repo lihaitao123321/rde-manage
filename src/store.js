@@ -11,6 +11,7 @@ let store = new Vuex.Store({
       baseBgColor: 'white',
       mainBgColor: '#2B7FF3',
     },
+    checkList:[],
     loginInfo: {},
     userInfo: {},
     isLogout:false,
@@ -40,6 +41,9 @@ let store = new Vuex.Store({
     },
     setPushNum(state, data){
       state.jPush.messageNum = data;
+    },
+    checkListFun(state,data){
+      state.checkList = data
     }
 
   },

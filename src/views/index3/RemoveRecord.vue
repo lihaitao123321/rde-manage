@@ -8,13 +8,46 @@
         </x-header>
         <div class="pageContent">
             <div class="bgImg_position">
-                <div class="bgColor_position uf dc" v-for="(item,index) in removeList" :class="RemoveFun(index)">
+                <div class="bgColor_position uf dc" :class="RemoveFun(0)">
                     <div class="warn_reason uf dc">
-                        <div>{{item.warn_reason}}</div>
-                        <div>{{item.warn_describe}}</div>
+                        <div>报警原因</div>
+                        <div>{{reasonData.cause}}</div>
                         <div></div>
                     </div>
                 </div>
+
+                <div class="bgColor_position uf dc" :class="RemoveFun(1)">
+                    <div class="warn_reason uf dc">
+                        <div>原因分析</div>
+                        <div>{{reasonData.reasonAnalysis}}</div>
+                        <div></div>
+                    </div>
+                </div>
+
+                <div class="bgColor_position uf dc" :class="RemoveFun(2)">
+                    <div class="warn_reason uf dc">
+                        <div>修复方案</div>
+                        <div>{{reasonData.solution}}</div>
+                        <div></div>
+                    </div>
+                </div>
+
+                <div class="bgColor_position uf dc" :class="RemoveFun(3)">
+                    <div class="warn_reason uf dc">
+                        <div>操作人</div>
+                        <div>{{reasonData.operateUserName}}</div>
+                        <div></div>
+                    </div>
+                </div>
+
+                <div class="bgColor_position uf dc" :class="RemoveFun(4)">
+                    <div class="warn_reason uf dc">
+                        <div>处理时间</div>
+                        <div>{{reasonData.operateTime}}</div>
+                        <div></div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -28,6 +61,7 @@
         XInput,
         XButton
     } from 'vux'
+    import  warns  from '../Warn/warn.js'
     export default {
         components: {
             XHeader,
@@ -39,6 +73,7 @@
         name: "RemoveRecord",
         data(){
             return{
+                reasonData:{},
                 removeList:[{
                     warn_reason:'报警原因',
                     warn_describe:'机器人异常加速',
@@ -59,7 +94,18 @@
                 margin_top:'',
             }
         },
+        created(){
+            this.getRemoveFun();
+        },
         methods:{
+            getRemoveFun(){
+                this.reasonData = {};
+                warns.removeRecordFun().then(respont=>{
+                   if(respont.code === 0){
+                       this.reasonData = respont.data;
+                   }
+                }).catch()
+            },
             RemoveFun(val){
                if(val == 0){
                    return 'margin_top'
