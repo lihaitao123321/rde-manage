@@ -34,7 +34,7 @@
                             <div class="action-name">新能源装机容量<span>(KW)</span></div>
                             <div class="action-number">{{ pageData.newEnergyCapacity || 0  }}</div>
                         </div>
-                        <div class="action-box">
+                        <!-- <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation5.png" >
                             <div class="action-name">实用用电功率<span>(KW)</span></div>
                             <div class="action-number">{{ pageData.projectCount || 0  }}</div>
@@ -43,7 +43,7 @@
                             <img class="navigation-icon" src="../../assets/images/index1/navigation6.png" >
                             <div class="action-name">新能源发电功率<span>(KW)</span></div>
                             <div class="action-number">{{ pageData.projectCount || 0  }}</div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="all-mon">
                         <div class="title">
@@ -103,7 +103,7 @@
                             </v-chart>
                         </div>
                     </div>
-                    <div class="all-mon">
+                    <!-- <div class="all-mon">
                         <div class="title">
                             <div>新能源发电功率</div>
                             <div @click="jumpUrl('fadianbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
@@ -143,7 +143,7 @@
                                 <v-guide type="html" :options="htmlOptions" />
                             </v-chart>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
