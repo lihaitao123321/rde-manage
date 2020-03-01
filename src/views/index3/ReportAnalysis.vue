@@ -51,7 +51,7 @@
             <Group v-if="!isActive"  class="data_width1">
                 <div class="t_position">
                     <div class="data_bottom">
-                        <datetime v-model="minuteListValue" format="mm" :minute-row="minuteListValue" :minute-list="['05', '10']" @on-change="change" :title="$t('EchartsReport.acqCycle')"></datetime>
+                        <datetime v-model="minuteListValue" format="mm" :minute-list="['05', '10']" @on-change="change" :title="$t('EchartsReport.acqCycle')"></datetime>
             </div>
                     <div class="data_bottom">
                         <datetime v-model="minuteListValue1" format="YYYY-MM-DD HH:mm" :minute-list="['00', '15', '30', '45']" @on-change="change" :title="$t('EchartsReport.startTime')"></datetime>

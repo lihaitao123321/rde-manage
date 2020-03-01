@@ -23,25 +23,25 @@
             </div>
             <div  v-if="isActive">
                 <div  v-if="tabsActive" class="ReportEcharts">
-                <WarnReport></WarnReport>
+                <WarnReport :echartsList="echartsList"></WarnReport>
                 </div>
-                <div   v-if="!tabsActive" class="ReportEcharts">
-                <WaterTem ></WaterTem>
+                <div   v-if="!tabsActive && echartsList.length > 0" class="ReportEcharts">
+                <WaterTem :echartsList="echartsList[0]"></WaterTem>
                 </div>
-                <div  v-if="!tabsActive" class="ReportEcharts">
-                <WaterPre ></WaterPre>
+                <div  v-if="!tabsActive && echartsList.length > 1" class="ReportEcharts">
+                <WaterPre :echartsList="echartsList[1]"></WaterPre>
                 </div>
-                <div   v-if="!tabsActive" class="ReportEcharts">
-                <WaterTra ></WaterTra>
+                <div   v-if="!tabsActive && echartsList.length > 2" class="ReportEcharts">
+                <WaterTra :echartsList="echartsList[2]"></WaterTra>
                 </div>
-                <div   v-if="!tabsActive" class="ReportEcharts">
-                <BackwaterTem ></BackwaterTem>
+                <div   v-if="!tabsActive && echartsList.length > 3" class="ReportEcharts">
+                <BackwaterTem :echartsList="echartsList[3]"></BackwaterTem>
                 </div>
-                <div   v-if="!tabsActive" class="ReportEcharts">
-                <BackwaterPre></BackwaterPre>
+                <div   v-if="!tabsActive && echartsList.length > 4" class="ReportEcharts">
+                <BackwaterPre :echartsList="echartsList[4]"></BackwaterPre>
                 </div>
-                <div   v-if="!tabsActive" class="ReportEcharts">
-                <BackwaterTra ></BackwaterTra>
+                <div   v-if="!tabsActive && echartsList.length > 5" class="ReportEcharts">
+                <BackwaterTra :echartsList="echartsList[5]"></BackwaterTra>
                 </div>
                 <Group v-if="isActive"  class="data_width">
                     <div class="t_position">
@@ -54,7 +54,7 @@
                     </div>
                 </Group >
                 <div v-if="isActive" style="padding:15px;margin-bottom: 25px">
-                    <x-button type="primary" @click="">{{$t('EchartsReport.Analysis')}}</x-button>
+                    <x-button type="primary" @click.native="AnalysisFun">{{$t('EchartsReport.Analysis')}}</x-button>
                 </div>
             </div>
 
@@ -82,6 +82,7 @@
     import BackwaterPre from './PointsIcon/BackwaterPressure';
     import BackwaterTra from './PointsIcon/BackwaterTraffic';
     import ReportAnalysis from './ReportPhotoAnalysis'
+    import  warns  from '../Warn/warn.js'
     // 组件内使用
     export default {
         name: "WarnPhotoReport",
@@ -110,6 +111,7 @@
                 itemColor:false,
                 tabsActive:true,
                 tabsActive1:false,
+                echartsList:[],
                 value1: '',
                 value2:'',
                 hColor:'',
@@ -120,7 +122,18 @@
 
             }
         },
+        created(){
+            this.getRepontAnalysisFun();
+        },
         methods: {
+            getRepontAnalysisFun(){
+                this.echartsList = [];
+                warns.warnAnalysisFun(this.$store.state.checkList,this.minuteListValue1,this.minuteListValue2).then(respont=>{
+                   if(respont.code === 0 && Array.isArray(respont.data.alarmSnapshotModels) && respont.data.alarmSnapshotModels.length > 0){
+                       this.echartsList = respont.data.alarmSnapshotModels;
+                   }
+                }).catch(res=>{})
+            },
             consoleIndex() {
 
             },
@@ -128,11 +141,17 @@
                 this.isActive = true;
                 this.isTab = false;
                 this.actTitle='报警快照分析'
+                this.getRepontAnalysisFun();
             },
             tabColor1(){
                 this.isActive = false;
                 this.isTab = true;
                 this.actTitle='报警折线图'
+            },
+            AnalysisFun(){
+                if(!this.isTab){
+                    this.getRepontAnalysisFun();
+                }else {}
             },
             tabColorFun(){
                 this.tabsActive = true;

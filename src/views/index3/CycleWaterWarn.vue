@@ -190,13 +190,15 @@
         computed:{
             counter(){
                 let count = 0;
-                    for(let i=0;i<this.checkListData.length;i++){
-                        if(this.checkListData[i].active){
-                            count++
-                        }else {
+                  if(this.checkListData.length > 0){
+                      for(let i=0;i<this.checkListData.length;i++){
+                          if(this.checkListData[i].active){
+                              count++
+                          }else {
 
-                        }
-                    }
+                          }
+                      }
+                  }
                 return count;
             }
         },
@@ -206,12 +208,26 @@
         methods: {
             CycleWaterFunOne(){
                 this.detailObj = {};
+                this.checkListData = [];
+                this.detailList = [];
                 warns.warnManageDetailFun().then(respont=>{
                     if(respont.code === 0 && respont.data.detail instanceof Object){
                         this.detailObj = respont.data.detail;
                     };
                     if(respont.code === 0 && Array.isArray(respont.data.lineChart) && respont.data.lineChart.length > 0){
                         this.detailList = respont.data.lineChart;
+                    };
+                    if(respont.code === 0 && Array.isArray(respont.data.alarmVariable) && respont.data.alarmVariable.length > 0){
+                        let alarmVariableObj = {};
+                       respont.data.alarmVariable.forEach(item=>{
+                           alarmVariableObj = {};
+                           alarmVariableObj.title_word = item.name;
+                           alarmVariableObj.warn_status = item.value;
+                           alarmVariableObj.unit = item.unit;
+                           alarmVariableObj.active = false;
+                           alarmVariableObj.id = item.id;
+                           this.checkListData.push(JSON.parse(JSON.stringify(alarmVariableObj)));
+                       })
                     }
                 }).catch()
             },
@@ -236,6 +252,15 @@
                 }
             },
             WarnPhotoAna(){
+                let checkList = [];
+               if(Array.isArray(this.checkListData) &&  this.checkListData.length > 0){
+                   this.checkListData.forEach(item=>{
+                       if(item.active){
+                           checkList.push(item.id);
+                       }
+                   });
+               }
+                this.$store.commit('checkListFun', checkList);
                 this.$router.push({path: '/WarnReport'});
             },
             WarnDetailFun(){
