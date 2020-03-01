@@ -147,7 +147,10 @@ export default new Router({
         {
             path: '/index2',
             name: 'index2',
-            component: index2
+            component: index2,
+            meta:{
+                keepAlive:true
+            }
         },
         {
             path: '/index3',

@@ -87,7 +87,7 @@
           height="-80"
         >
           <div class="content">
-            <div class="content_item" v-for="item in dataList" :key="item.id">
+            <div class="content_item" v-for="item in dataList" :key="item.id" @click="onClick(item)">
               <div class="item_top">
                 <div class="line">
                   <div class="label">项目名称:</div>
@@ -131,44 +131,14 @@
 <script>
 import {
   Scroller,
-  Radio,
-  Group,
-  Cell,
-  Badge,
   Drawer,
-  Actionsheet,
-  ButtonTab,
-  ButtonTabItem,
-  ViewBox,
-  XHeader,
-  Tabbar,
-  TabbarItem,
-  Loading,
-  TransferDom,
-  Datetime
 } from "vux";
 import { mapState, mapActions } from "vuex";
 
 export default {
-  directives: {
-    TransferDom
-  },
   components: {
     Scroller,
-    Radio,
-    Group,
-    Cell,
-    Badge,
     Drawer,
-    ButtonTab,
-    ButtonTabItem,
-    ViewBox,
-    XHeader,
-    Tabbar,
-    TabbarItem,
-    Loading,
-    Actionsheet,
-    Datetime
   },
   data() {
     return {
@@ -222,8 +192,6 @@ export default {
       rightOptions: {
         value: ""
       },
-      entryUrl: document.location.href,
-      showMenu: false,
       drawerVisibility: false,
       showMode: "push",
       showModeValue: "push",
@@ -293,37 +261,13 @@ export default {
         }
       });
     },
-    openSearchPage() {
-      this.$router.push("searchBaoJing");
-    },
-    tabPage(index) {
-      this.tabActive = index;
+    onClick(item){
+      this.$bus.emit('oNSetOneProduct',item);
+      this.$router.goBack();
     },
     showDrawer() {
       this.drawerVisibility = !this.drawerVisibility;
     },
-    onShowModeChange(val) {
-      /** hide drawer before changing showMode **/
-      this.drawerVisibility = false;
-      setTimeout(one => {
-        this.showModeValue = val;
-      }, 400);
-    },
-    onPlacementChange(val) {
-      /** hide drawer before changing position **/
-      this.drawerVisibility = false;
-      setTimeout(one => {
-        this.showPlacementValue = val;
-      }, 400);
-    },
-    onClickMore() {
-      this.showMenu = true;
-    },
-    changeLocale(locale) {
-      this.$i18n.set(locale);
-      this.$locale.set(locale);
-    },
-    ...mapActions(["updateDemoPosition"])
   }
 };
 </script>

@@ -1,9 +1,50 @@
+<style scoped>
+    .child-view {
+        transition: all .3s cubic-bezier(.55, 0, .1, 1);
+    }
+
+    .slide-left-enter, .slide-right-leave-active {
+        opacity: 0;
+        -webkit-transform: translate(30px, 0);
+        transform: translate(30px, 0);
+    }
+
+    .slide-left-leave-active, .slide-right-enter {
+        opacity: 0;
+        -webkit-transform: translate(-30px, 0);
+        transform: translate(-30px, 0);
+    }
+
+    /*.keep-alive-position {*/
+    /*    position: absolute;*/
+    /*    left: 0;*/
+    /*    top: 0;*/
+    /*    width: 100%;*/
+    /*    transition: all .3s cubic-bezier(.55, 0, .1, 1);*/
+    /*}*/
+    /*.slide-left-enter, .slide-right-leave-active {*/
+    /*    opacity: 0;*/
+    /*    -webkit-transform: translate(100%, 0);*/
+    /*    transform: translate(100%, 0);*/
+    /*}*/
+
+    /*.slide-left-leave-active, .slide-right-enter {*/
+    /*    opacity: 0;*/
+    /*    -webkit-transform: translate(-100%, 0);*/
+    /*    transform: translate(-100%, 0);*/
+    /*}*/
+</style>
 <template>
-    <div id="app">
+    <div id="app" @touchstart.stop>
         <transition :name="transitionName">
-            <!-- <keep-alive> -->
-                <router-view class="keep-alive-position"></router-view>
-            <!-- </keep-alive> -->
+            <!-- 这里是会被缓存的视图组件，比如 home！ -->
+            <keep-alive>
+                <router-view v-if="$route.meta.keepAlive" class="child-view" @touchstart.stop></router-view>
+            </keep-alive>
+        </transition>
+        <transition :name="transitionName">
+            <!-- 这里是不被缓存的视图组件，比如 login！ -->
+            <router-view v-if="!$route.meta.keepAlive" class="child-view" @touchstart.stop></router-view>
         </transition>
     </div>
 </template>
