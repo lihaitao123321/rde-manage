@@ -10,7 +10,7 @@
                         <i class="el-icon-search"></i>
                     </div>
                     <div class="search_content">
-                        <input placeholder="搜索电站" readonly @click="openSearchPage"/>
+                        <input placeholder="搜索项目" readonly @click="openSearchPage"/>
                     </div>
                 </div>
             </div>

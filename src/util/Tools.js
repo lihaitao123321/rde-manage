@@ -56,7 +56,7 @@ export default {
         }
         // 配置默认值
         const service = axios.create({
-            baseURL: process.env.NODE_ENV === 'production' ?'http://106.12.36.121:9080/':'',
+            baseURL: process.env.NODE_ENV === 'production' ?'https://iot.congrongyun.com':'',
             url: '',
             method: 'post',
             timeout: 30000,
