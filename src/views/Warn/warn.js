@@ -1,12 +1,12 @@
 import Tools from '../../util/Tools'
 let warns = {
     //报警列表
-    warnReportFun(){
+    warnReportFun(page_num,page_size){
         return  Tools.ajax({
             method: '/cloud/api/app/monitor/pageAlarm',
             data: {
-                        "pageSize":10000,
-                        "pageNum":1
+                        "pageSize":page_size,
+                        "pageNum":page_num
             }
         })
     },
