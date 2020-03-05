@@ -1,5 +1,16 @@
 <template>
-    <div>
+        <Scroller
+                use-pullup
+                :pullup-config="pullupDefaultConfig"
+                @on-pullup-loading="loadMore"
+                use-pulldown
+                :pulldown-config="pulldownDefaultConfig"
+                @on-pulldown-loading="refresh"
+                lock-x
+                ref="scrollerBottom"
+                style="height: 100%"
+                height="-50">
+            <div class="">
         <div class="content_item" v-for="(item, index) in warnList" :key="index" @click="toDetail(item)">
             <div class="item_top">
                 <div class="line">
@@ -64,16 +75,46 @@
                 </div>
             </div>
         </div>
-    </div>
+            </div>
+        </Scroller>
 </template>
 
 <script>
     import warn from '../Warn/warn.js'
+    import { Scroller } from 'vux'
     export default {
+        components: {
+            Scroller
+        },
+        mounted(){
+
+        },
         name: "baoJingListNew",
         data(){
             return{
-                warnList:[]
+                warnList:[],
+                total:0,
+                    pullupDefaultConfig: {
+                    content: "上拉加载更多",
+                    pullUpHeight: 10,
+                    height: 10,
+                    autoRefresh: false,
+                    downContent: "释放后加载",
+                    upContent: "上拉加载更多",
+                    loadingContent: "加载中...",
+                    clsPrefix: "xs-plugin-pullup-"
+                },
+                pulldownDefaultConfig: {
+                    content: "下拉刷新",
+                    height: 40,
+                    autoRefresh: false,
+                    downContent: "下拉刷新",
+                    upContent: "释放后刷新",
+                    loadingContent: "正在刷新...",
+                    clsPrefix: "xs-plugin-pulldown-"
+                },
+                pageNum:1,
+                pageSize:10,
             }
         },
         created(){
@@ -81,13 +122,34 @@
         },
         methods:{
             getWarnFun(){
-                console.log("执行了=====》");
                 this.warnList = [];
-                warn.warnReportFun().then(respont=>{
+                warn.warnReportFun(this.pageNum,this.pageSize).then(respont=>{
                     if(respont.code === 0 && Array.isArray(respont.data.data) && respont.data.data.length > 0){
                         this.warnList = respont.data.data;
+                        this.total = respont.data.total
                     }
                 }).catch()
+            },
+
+            async loadMore() {
+                console.log("是否调用",this.total,this.pageSize * this.pageNum);
+                if (this.total < this.pageSize * this.pageNum) {
+                    return false;
+                }
+                this.$vux.loading.show("加载数据中");
+                this.pageNum++;
+                await   this.getWarnFun();
+                this.$refs.scrollerBottom.donePullup();
+                this.$vux.loading.hide();
+            },
+            async refresh() {
+                console.log("刷新",this.total,this.pageSize * this.pageNum);
+                this.$vux.loading.show("刷新数据中");
+                this.pageNum = 1;
+                await   this.getWarnFun();
+                this.$refs.scrollerBottom.enablePullup();
+                this.$refs.scrollerBottom.donePulldown();
+                this.$vux.loading.hide();
             },
             toDetail(param){
                 sessionStorage.setItem('thingId',param.thingId);
@@ -99,6 +161,9 @@
 </script>
 
 <style lang="less" scoped>
+    .content{
+        background-color: red;
+    }
     .content_item {
         background: rgba(255, 255, 255, 1);
         border-radius: 10px;

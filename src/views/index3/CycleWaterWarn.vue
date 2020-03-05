@@ -278,7 +278,7 @@
                             if(count>=3){
                                 return false;
                             }
-                            this.counter = count + 1;
+                            // this.counter = count + 1;
                         }
                     }
                 }
