@@ -124,10 +124,25 @@
             getWarnFun(){
                 this.warnList = [];
                 warn.warnReportFun(this.pageNum,this.pageSize).then(respont=>{
-                    if(respont.code === 0 && Array.isArray(respont.data.data) && respont.data.data.length > 0){
-                        this.warnList = respont.data.data;
-                        this.total = respont.data.total
+
+                    if (respont.code === 0 && Array.isArray(respont.data.data) && respont.data.data.length > 0 || true) {
+                        if (this.pageNum === 1) {
+                            this.warnList = respont.data.data;
+                            this.total = respont.data.total
+                        } else {
+                            this.warnList = this.warnList.concat(respont.data.data);
+                        }
+                        this.$nextTick(() => {
+                            this.$refs.scrollerBottom.reset();
+                        });
+                        if (this.total < this.pageSize * this.pageNum) {
+                            this.$refs.scrollerBottom.disablePullup();
+                            this.$vux.toast.text('没有更多数据了')
+                        } else {
+                            this.$refs.scrollerBottom.enablePullup();
+                        }
                     }
+
                 }).catch()
             },
 
@@ -143,6 +158,7 @@
                 this.$vux.loading.hide();
             },
             async refresh() {
+                console.log(this.$refs.scrollerBottom,'狗崽子');
                 console.log("刷新",this.total,this.pageSize * this.pageNum);
                 this.$vux.loading.show("刷新数据中");
                 this.pageNum = 1;
