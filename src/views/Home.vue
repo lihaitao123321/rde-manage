@@ -2,14 +2,13 @@
     <div class="t_page">
         <div class="t_content">
             <keep-alive>
-                <transition :name="transitionName">
-                    <component :is="'index'+(tabActive+1)"></component>
-                </transition>
+                <router-view/>
             </keep-alive>
         </div>
-        <tabbar @on-index-change="tabPage">
-            <tabbar-item  v-for="(item,index) in this.menus" :key="index" :selected="index===0">
-                <img class="tabbar_image" slot="icon" :src="tabActive===index?item.activeIcon:item.icon" />
+        <tabbar v-model="tabActive">
+            <tabbar-item  v-for="item in this.menus" :key="item.link" :link="item.link">
+                <img slot="icon" :src="item.icon">
+                <img slot="icon-active" :src="item.activeIcon">
                 <span class="tabbar_label" slot="label">{{item.title}}</span>
             </tabbar-item>
         </tabbar>
@@ -77,27 +76,27 @@
                 menus: [
                     {
                         title: '首页',
-                        value: 'index1',
+                        link: '/home/index1',
                         icon:require('../assets/images/index1/shouye_black@3x.png'),
                         activeIcon:require('../assets/images/index1/shouye_red@3x.png')
                     }, {
                         title: '地图',
-                        value: 'index2',
+                        link: '/home/index2',
                         icon:require('../assets/images/index1/ditu_black@3x.png'),
                         activeIcon:require('../assets/images/index1/ditu_red@3x.png')
                     }, {
                         title: '监控',
-                        value: 'index3',
+                        link: '/index3',
                         icon:require('../assets/images/index1/jiankong_black@3x.png'),
                         activeIcon:require('../assets/images/index1/jiankong_red@3x.png')
                     }, {
                         title: '业务',
-                        value: 'index4',
+                        link: '/home/index4',
                         icon:require('../assets/images/index1/yewu_black@3x.png'),
                         activeIcon:require('../assets/images/index1/yewu_red@3x.png')
                     }, {
                         title: '我的',
-                        value: 'index5',
+                        link: '/home/index5',
                         icon:require('../assets/images/index1/wode_black@3x.png'),
                         activeIcon:require('../assets/images/index1/wode_red@3x.png')
                     }
@@ -130,11 +129,26 @@
             }
         },
         created(){
-            console.log(666)
+            console.log(666,this.$route)
         },
         computed:{
             getTitle(){
                 return this.menus.find(item=>item.value===this.isActive).title;
+            }
+        },
+        watch: {
+            '$route'(to, from) {
+                if(to.name == 'index1'){
+                    this.tabActive = 0;
+                }else if(to.name == 'index2'){
+                    this.tabActive = 1;
+                }else if(to.name == 'index3'){
+                    this.tabActive = 2;
+                }else if(to.name == 'index4'){
+                    this.tabActive = 3;
+                }else if(to.name == 'index5'){
+                    this.tabActive = 4;
+                }
             }
         },
         methods: {

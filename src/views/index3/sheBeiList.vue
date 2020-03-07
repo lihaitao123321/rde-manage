@@ -12,7 +12,7 @@
           style="height:100%;"
         >
         <div class="content">
-        <div class="content_item" v-for="(item, index) in this.dataList" :key="index" @click="toDetail">
+        <div class="content_item" v-for="(item, index) in this.dataList" :key="index" @click="toDetail(item)">
             <div class="item_top">
                 <div class="line">
                     <div class="label">设备名称:</div>
@@ -87,13 +87,13 @@ export default {
     };
   },
   async mounted() {
-    this.$vux.loading.show("加载地图中");
+    this.$vux.loading.show("加载数据中");
     await this.initData();
     this.$vux.loading.hide();
   },
   methods: {
-    toDetail() {
-      this.$router.push("shebeiDetail");
+    toDetail(item) {
+      this.$router.push("/shebeiDetail/"+item.id);
     },
     onSearch() {
       this.refresh();
@@ -126,9 +126,9 @@ export default {
       }).then(data => {
         if (data.code === 0 || true) {
           if (this.pageNum === 1) {
-            this.dataList = data.data;
+            this.dataList = data.data.data;
           } else {
-            this.dataList = this.dataList.concat(data.data);
+            this.dataList = this.dataList.concat(data.data.data);
           }
           this.$nextTick(() => {
             this.$refs.scrollerBottom.reset();

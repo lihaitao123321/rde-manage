@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 import login from './views/login/login.vue'
 import register from './views/login/register.vue'
 import registerOk from './views/login/registerOk.vue'
 import selectCompany from './views/login/selectCompany.vue'
+import home from './views/Home.vue'
+import index1 from './views/index1/index1.vue'
 import index2 from './views/index2/index2.vue'
 import index3 from './views/index3/index3.vue'
+import index4 from './views/index4/index4.vue'
+import index5 from './views/index5/index5.vue'
 import searchBaoJing from './views/index3/searchBaoJing.vue'
 import changePassword from './views/index5/changePassword.vue'
 import message from './views/index5/message.vue'
@@ -38,7 +41,6 @@ import caoZuoDetail from './views/index3/caoZuoDetail';
 import sheBeiDetail from './views/index3/sheBeiDetail';
 import xiangMuDetail from './views/index3/xiangMuDetail';
 import xiTongDetail from './views/index3/xiTongDetail';
-import shebeiDetail from './views/index3/sheBeiDetail';
 import EchartsAnl from './views/index3/ElectricityAnalysis'
 import ReportAna from './views/index3/ReportAnalysis'
 import baojingbianliangDetail from './views/index3/baojingbianliangDetail';
@@ -142,20 +144,58 @@ export default new Router({
         {
             path: '/home',
             name: 'home',
-            component: Home
-        },
-        {
-            path: '/index2',
-            name: 'index2',
-            component: index2,
+            component: home,
             meta:{
                 keepAlive:true
-            }
+            },
+            children: [
+                {
+                    path: '',
+                    redirect: to => {
+                        return 'index1';
+                    }
+                },
+                {
+                    path: 'index1',
+                    name: 'index1',
+                    component: index1,
+                    meta:{
+                        keepAlive:true
+                    },
+                },
+                {
+                    path: 'index2',
+                    name: 'index2',
+                    component: index2,
+                    meta:{
+                        keepAlive:true
+                    },
+                },
+                {
+                    path: 'index4',
+                    name: 'index4',
+                    component: index4,
+                    meta:{
+                        keepAlive:true
+                    },
+                },
+                {
+                    path: 'index5',
+                    name: 'index5',
+                    component: index5,
+                    meta:{
+                        keepAlive:true
+                    },
+                }
+            ]
         },
         {
             path: '/index3',
             name: 'index3',
-            component: index3
+            component: index3,
+            meta:{
+                keepAlive:true
+            },
         },
         {
             path: '/searchBaoJing',
@@ -298,7 +338,7 @@ export default new Router({
             component: caoZuoDetail
         },
         {
-            path: '/sheBeiDetail',
+            path: '/sheBeiDetail/:deviceId',
             name: 'sheBeiDetail',
             component: sheBeiDetail
         },
@@ -311,11 +351,6 @@ export default new Router({
             path: '/xiTongDetail',
             name: 'xiTongDetail',
             component: xiTongDetail
-        },
-        {
-            path: '/shebeiDetail',
-            name: 'shebeiDetail',
-            component: shebeiDetail
         },
         {
             path: '/baojingbianliangDetail',

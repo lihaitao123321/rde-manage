@@ -69,6 +69,7 @@
         TransferDom,
         Datetime
     } from 'vux'
+    
     import baoJingDrawer from './baoJingDrawer';
     import caoZuoDrawer from './caoZuoDrawer';
     import sheBeiDrawer from './sheBeiDrawer';
