@@ -193,9 +193,6 @@ export default new Router({
             path: '/index3',
             name: 'index3',
             component: index3,
-            meta:{
-                keepAlive:true
-            },
         },
         {
             path: '/searchBaoJing',

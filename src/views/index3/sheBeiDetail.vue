@@ -4,6 +4,7 @@
       :left-options="{preventGoBack:true, backText: ''}"
       @on-click-back="$router.goBack()"
       title="x009循环水泵"
+      fixed
     ></XHeader>
     <div class="shebei-content">
       <div class="content_item">
@@ -41,74 +42,15 @@
           </div>
         </div>
         <div class="pillar-box">
-          <div
-            class="item-con"
-            v-for="(item,index) in this.pageData.deviceModeState"
-            :key="item.statusName"
-          >
+          <div class="item-con" v-for="(item,index) in pageData.deviceModes" :key="index">
             <div class="lefts">
-              <span class="indexs">{{index}}</span>
+              <span class="indexs">{{index+1}}</span>
               <span class="names">{{item.abbreviate}}</span>
-              <span class="titles">工作状态</span>
+              <span class="titles">{{item.abbreviateName}}</span>
             </div>
             <div class="rights">
-              <span class="state-name">{{getStatusName(item.status)}}</span>
-              <img class="icon-image" src="../../assets/images/index3/fresh.png" alt="">
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">2</span>
-              <span class="names">AA1</span>
-              <span class="titles">运行模式</span>
-            </div>
-            <div class="rights">
-              <span class="state-name">制冷</span>
-              <img class="icon-image" src="../../assets/images/index3/leng.png" alt="">
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">3</span>
-              <span class="names">AA1</span>
-              <span class="titles">节能模式</span>
-            </div>
-            <div class="rights">
-              <span class="state-name">节能启用</span>
-              <img class="icon-image" src="../../assets/images/index3/go.png" alt="">
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">4</span>
-              <span class="names">AA1</span>
-              <span class="titles">故障状态</span>
-            </div>
-            <div class="rights">
-              <span class="state-name">正常</span>
-              <img class="icon-image" src="../../assets/images/index3/zhengchang.png" alt="">
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">5</span>
-              <span class="names">AA1</span>
-              <span class="titles">风速</span>
-            </div>
-            <div class="rights">
-              <span class="state-name">中速</span>
-              <img class="icon-image" src="../../assets/images/index3/zhongsu.png" alt="">
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">6</span>
-              <span class="names">AA1</span>
-              <span class="titles">温控器模式</span>
-            </div>
-            <div class="rights">
-              <span class="state-name">远程</span>
-              <img class="icon-image" src="../../assets/images/index3/yuancheng.png" alt="">
+              <span class="state-name blue">{{item.value}}</span>
+              <span class="units">{{item.label}}</span>
             </div>
           </div>
         </div>
@@ -122,70 +64,15 @@
           </div>
         </div>
         <div class="pillar-box">
-          <div class="item-con">
+          <div class="item-con" v-for="(item,index) in pageData.deviceParams" :key="index">
             <div class="lefts">
-              <span class="indexs">1</span>
-              <span class="names">AA1</span>
-              <span class="titles">累计运行时间</span>
+              <span class="indexs">{{index+1}}</span>
+              <span class="names">{{item.abbreviate}}</span>
+              <span class="titles">{{item.abbreviateName}}</span>
             </div>
             <div class="rights">
-              <span class="state-name blue">1450</span>
-              <span class="units">H</span>
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">2</span>
-              <span class="names">AA1</span>
-              <span class="titles">实时功率</span>
-            </div>
-            <div class="rights">
-              <span class="state-name blue">26</span>
-              <span class="units">KW</span>
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">3</span>
-              <span class="names">AA1</span>
-              <span class="titles">供水温度</span>
-            </div>
-            <div class="rights">
-              <span class="state-name blue">15</span>
-              <span class="units">℃</span>
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">4</span>
-              <span class="names">AA1</span>
-              <span class="titles">回水温度</span>
-            </div>
-            <div class="rights">
-              <span class="state-name blue">7.5</span>
-              <span class="units">℃</span>
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">5</span>
-              <span class="names">AA1</span>
-              <span class="titles">冷凝器低压压力</span>
-            </div>
-            <div class="rights">
-              <span class="state-name blue">0.67</span>
-              <span class="units">Bar</span>
-            </div>
-          </div>
-          <div class="item-con">
-            <div class="lefts">
-              <span class="indexs">6</span>
-              <span class="names">AA1</span>
-              <span class="titles">温控器模式</span>
-            </div>
-            <div class="rights">
-              <span class="state-name blue">0.15</span>
-              <span class="units">Bar</span>
+              <span class="state-name blue">{{item.value}}</span>
+              <span class="units">{{item.unitName}}</span>
             </div>
           </div>
         </div>
@@ -250,7 +137,8 @@ import {
   VScale,
   VPoint
 } from "vux";
-import mqtt from 'mqtt'
+import mqtt from "mqtt";
+import _ from "lodash";
 export default {
   name: "sheBeiDetail",
   components: {
@@ -271,14 +159,16 @@ export default {
   },
   data() {
     return {
-      client:null,
+      client: null,
       pageData: {
-        deviceBaseInfo: {}
+        deviceBaseInfo: {},
+        deviceModes: [],
+        deviceParams: []
       },
       data3: [
         { name: "电站设备", title: "警告", nub: 18.9 },
         { name: "电站设备", title: "报警", nub: 28.8 },
-        { name: "电站设备", title: "故障", nub: 39.3 },
+        { name: "电站设备", title: "故障", nub: 39.3 }
         // { name: "电站设备", title: "离线", nub: 81.4 }
       ]
     };
@@ -286,6 +176,10 @@ export default {
   async mounted() {
     await this.initData();
     await this.initMqtt();
+  },
+  beforeRouteLeave(to, from, next){
+    this.client.end();
+    next();
   },
   methods: {
     //初始化数据
@@ -308,30 +202,64 @@ export default {
       });
     },
     //链接并监听mqtt
-    initMqtt(){
-      let once = true;
+    initMqtt() {
       let username = this.pageData.deviceBaseInfo.thingId;
       let password = this.pageData.deviceBaseInfo.thingKey;
-      this.client = mqtt.connect("mqtt://106.12.90.144:8884", {
-          username: 'dv_1',
-          password: 'dv_1',
+      this.client = mqtt.connect(
+        "mqtt://106.12.90.144:8884",
+        {
+          username: "dv_1",
+          password: "dv_1",
           keepalive: 60,
           connectTimeout: 30 * 1000,
-          clientId: 'mqttjs_cr_' + Math.random().toString(16).substr(2, 8)
+          clientId:
+            "mqttjs_cr_" +
+            Math.random()
+              .toString(16)
+              .substr(2, 8)
+        }
+      );
+      this.client.on("connect", () => {
+        console.log("mqtt链接成功");
+        this.client.subscribe("iot/realData/" + "dv_1", {
+          qos: 1
+        });
       });
-      this.client.on('connect',  () => {
-          console.log('mqtt链接成功');
-          this.client.subscribe("iot/realData/" + 'dv_1', {
-              qos: 1
-          })
-      });
-      this.client.on('message', function (topic, message, packet) {
-          if(once){
-              once = false;
-              console.log(55555555, JSON.parse(message));
-          }
+      this.client.on("message", (topic, message, packet) => {
+        message = JSON.parse(message);
+        if (message.state == 0) {
+          this.convertMessage(message);
+        }
       });
     },
+    convertMessage: _.debounce(function(message) {
+      console.log("收到消息", message);
+      let mt = message.mt;
+      //模式状态处理
+      let deviceModes = JSON.parse(JSON.stringify(this.pageData.deviceModes));
+      deviceModes.forEach(item => {
+        for (const key in mt) {
+          //找到本地和mqtt对应的数据
+          if (mt.hasOwnProperty(key) && key === item.abbreviate) {
+            item.value = mt[key];
+            //找到mqtt的值对应的枚举数据
+          }
+        }
+      });
+      this.pageData.deviceModes = deviceModes;
+      //参数显示处理
+      let deviceParams = JSON.parse(JSON.stringify(this.pageData.deviceParams));
+      deviceParams.forEach(item => {
+        for (const key in mt) {
+          //找到本地和mqtt对应的数据
+          if (mt.hasOwnProperty(key) && key === item.abbreviate) {
+            item.value = mt[key];
+            //找到mqtt的值对应的枚举数据
+          }
+        }
+      });
+      this.pageData.deviceParams = deviceParams;
+    }),
     getStatusName(status) {
       return "状态名称";
     },
@@ -344,246 +272,251 @@ export default {
 
 <style lang="less" scoped>
 .t_page {
-  overflow-y: scroll;
-}
-.shebei-content {
-  padding: 15px;
-  padding-bottom: 70px;
-  overflow-y: scroll;
-  .all-mon {
-    width: 345px;
-    margin: 15px auto;
-    .title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 18px;
-      div {
-        &:nth-child(1) {
-          font-size: 21px;
-          font-weight: bold;
+  .shebei-content {
+    position: absolute;
+    left:0;
+    top: 50px;
+    bottom: 0;
+    right: 0;
+    padding: 15px;
+    padding-bottom: 70px;
+    overflow-y: auto;
+    .content_item {
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    .item_top {
+      padding: 0 17px 8px 17px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+      .line {
+        display: flex;
+        padding-top: 8px;
+
+        .label {
+          font-size: 14px;
+          font-family: PingFangSCMedium;
+          font-weight: 500;
+          color: rgba(153, 153, 153, 1);
         }
-        &:nth-child(2) {
-          padding: 6px 13px;
-          border-radius: 13px;
-          background: #ffffff;
-          font-size: 13px;
-          color: #2b7ff3;
+
+        .value {
+          font-size: 14px;
+          font-family: PingFangSCMedium;
+          color: #212121;
+          padding-left: 10px;
+        }
+      }
+    }
+
+    .item_bottom {
+      display: flex;
+      align-items: center;
+      height: 47px;
+      padding: 0 17px;
+
+      .icons {
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 1;
+
+        .item1 {
           display: flex;
           align-items: center;
-          padding-right: 8px;
-          .back-icon {
-            fill: #2b7ff3;
+          justify-content: center;
+          width: 74px;
+          height: 26px;
+          background: rgba(26, 204, 131, 0.1);
+          border-radius: 13px;
+          font-family: PingFang-SC-Bold;
+          font-weight: bold;
+          color: rgba(26, 204, 131, 1);
+          .online {
+            width: 7px;
+            height: 7px;
+            background: rgba(26, 204, 131, 1);
+            border-radius: 50%;
+            margin-right: 5px;
           }
         }
-        &.rights {
-          padding: 0;
-          border-radius: 0;
-          background: none;
 
-          div {
-            padding: 6px 16px;
+        .item2 {
+          width: 74px;
+          height: 26px;
+          line-height: 26px;
+          text-align: center;
+          font-size: 13px;
+          background: rgba(43, 127, 243, 0.1);
+          border-radius: 13px;
+
+          font-family: PingFang-SC-Bold;
+          font-weight: bold;
+          color: rgba(43, 127, 243, 1);
+        }
+        .item3 {
+          width: 74px;
+          height: 26px;
+          line-height: 26px;
+          text-align: center;
+          font-size: 13px;
+          background: rgba(210, 38, 66, 0.1);
+          border-radius: 13px;
+          font-family: PingFang-SC-Bold;
+          font-weight: bold;
+          color: #d22642;
+        }
+        .item4 {
+          width: 74px;
+          height: 26px;
+          line-height: 26px;
+          text-align: center;
+          font-size: 13px;
+          background: #2b7ff3;
+          border-radius: 13px;
+          font-family: PingFang-SC-Bold;
+          color: #ffffff;
+        }
+      }
+
+      .time {
+        font-size: 13px;
+        font-family: PingFangSCMedium;
+        font-weight: 500;
+        color: rgba(153, 153, 153, 1);
+      }
+    }
+  }
+    .all-mon {
+      width: 345px;
+      margin: 15px auto;
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 18px;
+        div {
+          &:nth-child(1) {
+            font-size: 21px;
+            font-weight: bold;
+          }
+          &:nth-child(2) {
+            padding: 6px 13px;
             border-radius: 13px;
             background: #ffffff;
             font-size: 13px;
             color: #2b7ff3;
             display: flex;
             align-items: center;
-            &:nth-child(2) {
-              background: #2b7ff3;
-              color: #ffffff;
-              margin-left: 22px;
+            padding-right: 8px;
+            .back-icon {
+              fill: #2b7ff3;
+            }
+          }
+          &.rights {
+            padding: 0;
+            border-radius: 0;
+            background: none;
+
+            div {
+              padding: 6px 16px;
+              border-radius: 13px;
+              background: #ffffff;
+              font-size: 13px;
+              color: #2b7ff3;
+              display: flex;
+              align-items: center;
+              &:nth-child(2) {
+                background: #2b7ff3;
+                color: #ffffff;
+                margin-left: 22px;
+              }
+            }
+          }
+        }
+      }
+      .chart-box {
+        height: 140px;
+        margin: 0 auto;
+        border-radius: 5px;
+        background: #ffffff;
+        box-sizing: border-box;
+        &.mb13 {
+          margin-bottom: 13px;
+        }
+      }
+      .pillar-box {
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 5px;
+        background: #ffffff;
+        box-sizing: border-box;
+        font-size: 15px;
+        color: #666666;
+        .item-con {
+          border-bottom: 1px solid #d6d6d6;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 55px;
+          padding-left: 19px;
+          padding-right: 28px;
+          &:last-child {
+            border-bottom: none;
+          }
+          .lefts {
+            span {
+              margin-right: 15px;
+            }
+          }
+          .rights {
+            display: flex;
+            align-items: center;
+            color: #333333;
+            .blue {
+              color: #2b7ff3;
+              font-size: 16px;
+            }
+            .icon-image {
+              margin-left: 5px;
+              width: 18px;
+              height: 15px;
+            }
+            .units {
+              margin-left: 5px;
             }
           }
         }
       }
     }
-    .chart-box {
-      height: 140px;
-      margin: 0 auto;
-      border-radius: 5px;
-      background: #ffffff;
-      box-sizing: border-box;
-      &.mb13 {
-        margin-bottom: 13px;
-      }
-    }
-    .pillar-box {
-      margin: 0 auto;
-      overflow: hidden;
-      border-radius: 5px;
-      background: #ffffff;
-      box-sizing: border-box;
-      font-size: 15px;
-      color: #666666;
-      .item-con {
-        border-bottom: 1px solid #d6d6d6;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 55px;
-        padding-left: 19px;
-        padding-right: 28px;
-        &:last-child {
-          border-bottom: none;
-        }
-        .lefts {
-          span {
-            margin-right: 15px;
-          }
-        }
-        .rights {
-          display: flex;
-          align-items: center;
-          color: #333333;
-          .blue {
-            color: #2b7ff3;
-            font-size: 16px;
-          }
-          .icon-image {
-            margin-left: 5px;
-            width: 18px;
-            height: 15px;
-          }
-          .units {
-            margin-left: 5px;
-          }
-        }
-      }
-    }
   }
-}
-.footer {
-  height: 60px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background: #ffffff;
-  div {
-    width: 107px;
-    height: 38px;
-    border: 1px solid #2b7ff3;
-    line-height: 38px;
-    color: #2b7ff3;
-    text-align: center;
-    border-radius: 19px;
-    &:nth-child(1) {
-      background: #2b7ff3;
-      color: #ffffff;
-    }
-    &:nth-child(3) {
-      background: #1acc83;
-      border: 1px solid #1acc83;
-      color: #ffffff;
-    }
-  }
-}
-.content_item {
-  background: rgba(255, 255, 255, 1);
-  border-radius: 10px;
-  .item_top {
-    padding: 0 17px 8px 17px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
-    .line {
-      display: flex;
-      padding-top: 8px;
-
-      .label {
-        font-size: 14px;
-        font-family: PingFangSCMedium;
-        font-weight: 500;
-        color: rgba(153, 153, 153, 1);
-      }
-
-      .value {
-        font-size: 14px;
-        font-family: PingFangSCMedium;
-        color: #212121;
-        padding-left: 10px;
-      }
-    }
-  }
-
-  .item_bottom {
+  .footer {
+    height: 60px;
+    width: 100%;
     display: flex;
     align-items: center;
-    height: 47px;
-    padding: 0 17px;
-
-    .icons {
-      display: flex;
-      justify-content: space-between;
-      flex-grow: 1;
-
-      .item1 {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 74px;
-        height: 26px;
-        background: rgba(26, 204, 131, 0.1);
-        border-radius: 13px;
-        font-family: PingFang-SC-Bold;
-        font-weight: bold;
-        color: rgba(26, 204, 131, 1);
-        .online {
-          width: 7px;
-          height: 7px;
-          background: rgba(26, 204, 131, 1);
-          border-radius: 50%;
-          margin-right: 5px;
-        }
-      }
-
-      .item2 {
-        width: 74px;
-        height: 26px;
-        line-height: 26px;
-        text-align: center;
-        font-size: 13px;
-        background: rgba(43, 127, 243, 0.1);
-        border-radius: 13px;
-
-        font-family: PingFang-SC-Bold;
-        font-weight: bold;
-        color: rgba(43, 127, 243, 1);
-      }
-      .item3 {
-        width: 74px;
-        height: 26px;
-        line-height: 26px;
-        text-align: center;
-        font-size: 13px;
-        background: rgba(210, 38, 66, 0.1);
-        border-radius: 13px;
-        font-family: PingFang-SC-Bold;
-        font-weight: bold;
-        color: #d22642;
-      }
-      .item4 {
-        width: 74px;
-        height: 26px;
-        line-height: 26px;
-        text-align: center;
-        font-size: 13px;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #ffffff;
+    div {
+      width: 107px;
+      height: 38px;
+      border: 1px solid #2b7ff3;
+      line-height: 38px;
+      color: #2b7ff3;
+      text-align: center;
+      border-radius: 19px;
+      &:nth-child(1) {
         background: #2b7ff3;
-        border-radius: 13px;
-        font-family: PingFang-SC-Bold;
+        color: #ffffff;
+      }
+      &:nth-child(3) {
+        background: #1acc83;
+        border: 1px solid #1acc83;
         color: #ffffff;
       }
     }
-
-    .time {
-      font-size: 13px;
-      font-family: PingFangSCMedium;
-      font-weight: 500;
-      color: rgba(153, 153, 153, 1);
-    }
   }
+  
 }
 </style>
