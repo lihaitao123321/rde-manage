@@ -54,7 +54,7 @@
                     </div>
                 </Group >
                 <div v-if="isActive" style="padding:15px;margin-bottom: 25px">
-                    <x-button type="primary" @click.native="AnalysisFun">{{$t('EchartsReport.Analysis')}}</x-button>
+                    <x-button type="primary" @click.native="AnalysisFun">分析</x-button>
                 </div>
             </div>
 

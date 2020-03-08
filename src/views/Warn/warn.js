@@ -5,8 +5,8 @@ let warns = {
         return  Tools.ajax({
             method: '/cloud/api/app/monitor/pageAlarm',
             data: {
-                        "pageSize":page_size,
-                        "pageNum":page_num
+                "pageSize":page_size,
+                "pageNum":page_num
             }
         })
     },
@@ -58,11 +58,29 @@ let warns = {
                 "beginTime":param2 + ':00',
                 "endTime":param3 + ':00'
 
-            // "variableIds":["8aaa83ed644054090164406e8b01001f","8aaa83ed644054090164406e8ae20016"],
-            // "thingId":"dv_96",
-            // "beginTime":"2017-06-12 09:00:00",
-            // "endTime":"2020-06-12 09:00:00"
+                // "variableIds":["8aaa83ed644054090164406e8b01001f","8aaa83ed644054090164406e8ae20016"],
+                // "thingId":"dv_96",
+                // "beginTime":"2017-06-12 09:00:00",
+                // "endTime":"2020-06-12 09:00:00"
 
+            }
+        })
+    },
+    //报警快照分析报表
+    warnPhotoReportFun(param1,param2,param3,parame4){
+        return Tools.ajax({
+            method:'/cloud/api/app/monitor/analyzeAlarmSnapData',
+            data:{
+                "variableIds":param1,
+                "thingId":sessionStorage.getItem('thingId'),
+                "beginTime":param3,
+                "endTime":parame4,
+                "period":param2
+                // "variableIds":["8aaa83ed644054090164406e8b01001f","8aaa83ed644054090164406e8ae20016"],
+                // "thingId":"dv_96",
+                // "beginTime":"2020-02-06 09:00:00",
+                // "endTime":"2020-06-12 09:00:00",
+                // "period":"1"
             }
         })
     },
@@ -87,7 +105,28 @@ let warns = {
                 "abbreviate":sessionStorage.getItem('abbreviate'),
             }
         })
-    }
+    },
+    //项目
+    //获取项目搜索列表页数据
+    getProList(){
+        return Tools.ajax({
+            method:'/cloud/api/app/firstpage/getProjectData',
+            data:{
+                "pageNum": 1,
+                "pageSize": 10
+            }
+        })
+    },
+    //操作记录列表页
+    operationRecords(param1,param2){
+        return Tools.ajax({
+            method:'/cloud/api/monitor/record/pageOperationRecord',
+            data:{
+                "pageNum": param1,
+                "pageSize": param2
+            }
+        })
+    },
 }
 
 export default warns

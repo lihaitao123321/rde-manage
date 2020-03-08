@@ -33,7 +33,7 @@
                 </div>
             </Group >
             <div v-if="isActive" style="padding:15px;margin-bottom: 25px">
-                <x-button type="primary" @click.native="searchDetailFun">{{$t('EchartsReport.Analysis')}}</x-button>
+                <x-button type="primary" @click.native="searchDetailFun">分析</x-button>
             </div>
             <Group v-if="!isActive"  class="analysis_width">
                 <div class="total_num">
@@ -62,7 +62,7 @@
                 </div>
             </Group >
             <div v-if="!isActive" style="padding:15px;margin-bottom: 25px">
-                <x-button type="primary" @click.native="searchRepotFun">{{$t('EchartsReport.seach')}}</x-button>
+                <x-button type="primary" @click.native="searchRepotFun">查询</x-button>
             </div>
         </div>
     </div>

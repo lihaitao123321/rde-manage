@@ -9,21 +9,22 @@
                     <div class="total_font uf f1 jc ac">{{$t('EchartsReport.time')}}</div>
                 </div>
                 <div class="total_content">
-                    <div class="total_font uf f1 jc ac">{{$t('EchartsReport.timeKW')}}</div>
+                    <!--                    $t('EchartsReport.timeKW'-->
+                    <div class="total_font uf f1 jc ac">{{titleList[1]}}</div>
                 </div>
                 <div class="total_content_right">
-                    <div class="total_font uf f1 jc ac">{{$t('EchartsReport.dataTwo')}}</div>
+                    <div class="total_font uf f1 jc ac">{{titleList[2]}}</div>
                 </div>
-                <div class="total_right">
-                    <div class="total_font uf f1 jf ac">{{$t('EchartsReport.dataThree')}}</div>
-                </div>
+                <!--                <div class="total_right">-->
+                <!--                    <div class="total_font uf f1 jf ac">{{$t('EchartsReport.dataThree')}}</div>-->
+                <!--                </div>-->
             </div>
-            <div class="total_num" v-for="(item,index) in list" :class="funColor(index)">
-                <div class="total_left">{{item.label}}</div>
-                <div class="total_content_left">{{item.time}}</div>
-                <div class="total_content">{{item.timeKW}}</div>
-                <div class="total_content_right">{{item.dataTwo}}</div>
-                <div class="total_right">{{item.dataThree}}</div>
+            <div class="total_num" v-for="(item,index) in analyZeData" :class="funColor(index)">
+                <div class="total_left">{{index}}</div>
+                <div class="total_content_left">{{`${new Date(item.time).toLocaleString()}`}}</div>
+                <div class="total_content">{{item.r4}}</div>
+                <div class="total_content_right">{{item.r6}}</div>
+                <!--                <div class="total_right">{{item.dataThree}}</div>-->
             </div>
         </Group>
         <Group  class="data_width1">
@@ -40,7 +41,7 @@
             </div>
         </Group >
         <div  style="padding:15px;margin-bottom: 25px">
-            <x-button type="primary" @click="">{{$t('EchartsReport.seach')}}</x-button>
+            <x-button type="primary" @click="">查询</x-button>
         </div>
     </div>
 </template>
@@ -55,6 +56,7 @@
         ButtonTab,
         ButtonTabItem
     } from 'vux'
+    import  warns  from '../Warn/warn.js'
     export default {
         components:{
             Group,
@@ -87,9 +89,29 @@
                 minuteListValue1:'2017-06-12 09:00',
                 minuteListValue2:'2017-06-12 09:00',
                 minuteListValue:'05',
+                analyZeData:[],
+                titleList:[],
             }
         },
+        created(){
+            this.getPhotoReport();
+        },
         methods:{
+            getPhotoReport(){
+                let perid = 1;
+                if(this.minuteListValue.toString() === '05'){
+                    perid = 1;
+                }else if(this.minuteListValue.toString() === '10'){
+                    perid = 2;
+                }
+                warns.warnPhotoReportFun(this.$store.state.checkList,perid,this.minuteListValue1,this.minuteListValue2).then(respont=>{
+                    console.log('数据来',respont);
+                    if(respont.code === 0 && Array.isArray(respont.data.analyzeData) && respont.data.analyzeData.length > 0){
+                        this.analyZeData = respont.data.analyzeData;
+                        this.titleList = respont.data.title;
+                    }
+                }).catch()
+            },
             funColor(val){
                 if(val%2 === 0){
                     return 'hColor';
@@ -105,9 +127,9 @@
 </script>
 
 <style lang="less" scoped>
-.uf{
-    display: flex;
-}
+    .uf{
+        display: flex;
+    }
     .ac{
         align-items: center;
     }
@@ -129,87 +151,87 @@
     .js{
         justify-content: flex-start;
     }
-.analysis_width{
-    width: clac(100% - 30px);
-    margin: 0px 10px;
-    background-color: white;
-    border-radius: 5px;
-}
-.total_num{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 42px;
-}
-.total_font{
-    padding: 10px 10px;
-    font-size: 13px;
-    color: hsla(0, 0%, 60%, 1);
-}
-.total_left{
-    display: flex;
-    width: 70px;
-    justify-content: center;
-    justify-items: center;
-    padding: 10px 10px;
-    font-size: 13px;
-    color: hsla(0, 0%, 60%, 1);
-}
-.total_content_left{
-    display: flex;
-    flex:1;
-    justify-content: center;
-    justify-items: center;
-    padding: 10px 10px;
-    font-size: 13px;
-    color: hsla(0, 0%, 60%, 1);
-}
-.total_content{
-      display: flex;
-      flex:1;
-      justify-content: center;
-      justify-items: center;
-      padding: 10px 10px;
-      font-size: 13px;
-      color: hsla(0, 0%, 60%, 1);
-  }
-.total_content_right{
-    display: flex;
-    flex:1;
-    justify-content: center;
-    justify-items: center;
-    padding: 10px 10px;
-    font-size: 13px;
-    color: hsla(0, 0%, 60%, 1);
-}
-.total_right{
-    display: flex;
-    width: 20%;
-    justify-content: center;
-    justify-items: center;
-    padding: 10px 10px;
-    font-size: 13px;
-    color: hsla(0, 0%, 60%, 1);
-}
-.data_width1{
-    width: clac(100% - 30px);
-    margin: 0px 10px;
-    height: 150px;
-    background-color: white;
-    border-radius: 5px;
-}
-.hColor{
-    background:rgba(247,247,250,1);
-}
-.t_position{
-    position: relative;
-    height: 66px;
-    border: 0px !important;
-    background-color: white !important;
-    border-radius: 0px !important;
-}
-.data_bottom{
-    height: clac(45px - 1px);
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-}
+    .analysis_width{
+        width: clac(100% - 30px);
+        margin: 0px 10px;
+        background-color: white;
+        border-radius: 5px;
+    }
+    .total_num{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 42px;
+    }
+    .total_font{
+        padding: 10px 10px;
+        font-size: 13px;
+        color: hsla(0, 0%, 60%, 1);
+    }
+    .total_left{
+        display: flex;
+        width: 70px;
+        justify-content: center;
+        justify-items: center;
+        padding: 10px 10px;
+        font-size: 13px;
+        color: hsla(0, 0%, 60%, 1);
+    }
+    .total_content_left{
+        display: flex;
+        flex:1;
+        justify-content: center;
+        justify-items: center;
+        padding: 10px 10px;
+        font-size: 13px;
+        color: hsla(0, 0%, 60%, 1);
+    }
+    .total_content{
+        display: flex;
+        flex:1;
+        justify-content: center;
+        justify-items: center;
+        padding: 10px 10px;
+        font-size: 13px;
+        color: hsla(0, 0%, 60%, 1);
+    }
+    .total_content_right{
+        display: flex;
+        flex:1;
+        justify-content: center;
+        justify-items: center;
+        padding: 10px 10px;
+        font-size: 13px;
+        color: hsla(0, 0%, 60%, 1);
+    }
+    .total_right{
+        display: flex;
+        width: 20%;
+        justify-content: center;
+        justify-items: center;
+        padding: 10px 10px;
+        font-size: 13px;
+        color: hsla(0, 0%, 60%, 1);
+    }
+    .data_width1{
+        width: clac(100% - 30px);
+        margin: 0px 10px;
+        height: 150px;
+        background-color: white;
+        border-radius: 5px;
+    }
+    .hColor{
+        background:rgba(247,247,250,1);
+    }
+    .t_position{
+        position: relative;
+        height: 66px;
+        border: 0px !important;
+        background-color: white !important;
+        border-radius: 0px !important;
+    }
+    .data_bottom{
+        height: clac(45px - 1px);
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
 </style>
