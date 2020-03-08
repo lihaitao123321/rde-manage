@@ -6,7 +6,6 @@
                 <Group class="nickname-input">
                     <XInput  v-model="nickname" placeholder="请输入昵称"></XInput>
                 </Group>
-                <toast v-model="showPositionValue" type="text" :time="800" is-show-mask text="修改成功" :position="position"></toast>
             </div>
         </div>
     </template>
@@ -24,24 +23,24 @@
         },
         data() {
           return {
-           nickname:'阮高峰',
-           showPositionValue:false,
-           position:''
+           nickname:'',
           };
         },
+        mounted(){
+            this.nickname = this.$route.query.username
+        },
         methods: {
-            
             onSave() {
-                if (this.nickname !='') {
+                if (this.nickname !=='') {
                     this.Tools.ajax({
-                        method: '/user/update',
+                        method: 'cloud/api/app/my/updateUserName',
                         data: {
-                            "username": this.nickname,
-                            "imageUrl": ''
+                            username: this.nickname,
                         }
                     }).then(res => {
-                        this.showPositionValue = true;
-                        this.position = 'middle'
+                        if(res.code === 0){
+
+                        }
                     }).catch(() => { })
                 }
             }
