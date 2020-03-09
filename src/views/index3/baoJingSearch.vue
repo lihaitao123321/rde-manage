@@ -46,7 +46,9 @@
         Drawer
     } from 'vux'
     import baoJingDrawer from './baoJingDrawer';
-    import baoJingList from './baoJingList';
+    // import baoJingList from './baoJingList';
+    import baoJingList from './baojingListNew';
+    // baojingListNew
     export default {
         components: {
             Drawer,
