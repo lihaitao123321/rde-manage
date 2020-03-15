@@ -29,7 +29,7 @@
             </div>
             <div class="item2">R 运行</div>
             <div class="item3">F 报警</div>
-            <div class="item4">查看视频</div>
+            <div class="item4" @click="jumpUrl('video')">查看视频</div>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@
     <div class="footer">
       <div>流程图监控</div>
       <div>模型图监控</div>
-      <div @click="jumpUrl('caozuo')">操作</div>
+      <div @click="jumpUrl('/caozuo')">操作</div>
     </div>
   </div>
 </template>
@@ -177,7 +177,7 @@ export default {
     await this.initData();
     await this.initMqtt();
   },
-  beforeRouteLeave(to, from, next){
+  beforeRouteLeave(to, from, next) {
     this.client.end();
     next();
   },
@@ -197,6 +197,12 @@ export default {
             data3[index].nub = chartDataList[index].count;
           }
           this.data3 = data3;
+          if(data.data.deviceModes.length>10){
+              data.data.deviceModes = data.data.deviceModes.slice(0,9)
+          }
+          if(data.data.deviceParams.length>10){
+              data.data.deviceParams = data.data.deviceParams.slice(0,9)
+          }
           this.pageData = data.data;
         }
       });
@@ -220,7 +226,6 @@ export default {
         }
       );
       this.client.on("connect", () => {
-        console.log("mqtt链接成功");
         this.client.subscribe("iot/realData/" + "dv_1", {
           qos: 1
         });
@@ -233,7 +238,6 @@ export default {
       });
     },
     convertMessage: _.debounce(function(message) {
-      console.log("收到消息", message);
       let mt = message.mt;
       //模式状态处理
       let deviceModes = JSON.parse(JSON.stringify(this.pageData.deviceModes));
@@ -263,8 +267,13 @@ export default {
     getStatusName(status) {
       return "状态名称";
     },
-    jumpUrl(url) {
-      this.$router.push(url);
+    jumpUrl(name) {
+      this.$router.push({
+        name,
+        params: {
+          pageData: this.pageData
+        }
+      });
     }
   }
 };
@@ -274,7 +283,7 @@ export default {
 .t_page {
   .shebei-content {
     position: absolute;
-    left:0;
+    left: 0;
     top: 50px;
     bottom: 0;
     right: 0;
@@ -282,109 +291,109 @@ export default {
     padding-bottom: 70px;
     overflow-y: auto;
     .content_item {
-    background: rgba(255, 255, 255, 1);
-    border-radius: 10px;
-    .item_top {
-      padding: 0 17px 8px 17px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 1);
+      border-radius: 10px;
+      .item_top {
+        padding: 0 17px 8px 17px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
-      .line {
+        .line {
+          display: flex;
+          padding-top: 8px;
+
+          .label {
+            font-size: 14px;
+            font-family: PingFangSCMedium;
+            font-weight: 500;
+            color: rgba(153, 153, 153, 1);
+          }
+
+          .value {
+            font-size: 14px;
+            font-family: PingFangSCMedium;
+            color: #212121;
+            padding-left: 10px;
+          }
+        }
+      }
+
+      .item_bottom {
         display: flex;
-        padding-top: 8px;
+        align-items: center;
+        height: 47px;
+        padding: 0 17px;
 
-        .label {
-          font-size: 14px;
+        .icons {
+          display: flex;
+          justify-content: space-between;
+          flex-grow: 1;
+
+          .item1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 74px;
+            height: 26px;
+            background: rgba(26, 204, 131, 0.1);
+            border-radius: 13px;
+            font-family: PingFang-SC-Bold;
+            font-weight: bold;
+            color: rgba(26, 204, 131, 1);
+            .online {
+              width: 7px;
+              height: 7px;
+              background: rgba(26, 204, 131, 1);
+              border-radius: 50%;
+              margin-right: 5px;
+            }
+          }
+
+          .item2 {
+            width: 74px;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            font-size: 13px;
+            background: rgba(43, 127, 243, 0.1);
+            border-radius: 13px;
+
+            font-family: PingFang-SC-Bold;
+            font-weight: bold;
+            color: rgba(43, 127, 243, 1);
+          }
+          .item3 {
+            width: 74px;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            font-size: 13px;
+            background: rgba(210, 38, 66, 0.1);
+            border-radius: 13px;
+            font-family: PingFang-SC-Bold;
+            font-weight: bold;
+            color: #d22642;
+          }
+          .item4 {
+            width: 74px;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            font-size: 13px;
+            background: #2b7ff3;
+            border-radius: 13px;
+            font-family: PingFang-SC-Bold;
+            color: #ffffff;
+          }
+        }
+
+        .time {
+          font-size: 13px;
           font-family: PingFangSCMedium;
           font-weight: 500;
           color: rgba(153, 153, 153, 1);
         }
-
-        .value {
-          font-size: 14px;
-          font-family: PingFangSCMedium;
-          color: #212121;
-          padding-left: 10px;
-        }
       }
     }
-
-    .item_bottom {
-      display: flex;
-      align-items: center;
-      height: 47px;
-      padding: 0 17px;
-
-      .icons {
-        display: flex;
-        justify-content: space-between;
-        flex-grow: 1;
-
-        .item1 {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 74px;
-          height: 26px;
-          background: rgba(26, 204, 131, 0.1);
-          border-radius: 13px;
-          font-family: PingFang-SC-Bold;
-          font-weight: bold;
-          color: rgba(26, 204, 131, 1);
-          .online {
-            width: 7px;
-            height: 7px;
-            background: rgba(26, 204, 131, 1);
-            border-radius: 50%;
-            margin-right: 5px;
-          }
-        }
-
-        .item2 {
-          width: 74px;
-          height: 26px;
-          line-height: 26px;
-          text-align: center;
-          font-size: 13px;
-          background: rgba(43, 127, 243, 0.1);
-          border-radius: 13px;
-
-          font-family: PingFang-SC-Bold;
-          font-weight: bold;
-          color: rgba(43, 127, 243, 1);
-        }
-        .item3 {
-          width: 74px;
-          height: 26px;
-          line-height: 26px;
-          text-align: center;
-          font-size: 13px;
-          background: rgba(210, 38, 66, 0.1);
-          border-radius: 13px;
-          font-family: PingFang-SC-Bold;
-          font-weight: bold;
-          color: #d22642;
-        }
-        .item4 {
-          width: 74px;
-          height: 26px;
-          line-height: 26px;
-          text-align: center;
-          font-size: 13px;
-          background: #2b7ff3;
-          border-radius: 13px;
-          font-family: PingFang-SC-Bold;
-          color: #ffffff;
-        }
-      }
-
-      .time {
-        font-size: 13px;
-        font-family: PingFangSCMedium;
-        font-weight: 500;
-        color: rgba(153, 153, 153, 1);
-      }
-    }
-  }
     .all-mon {
       width: 345px;
       margin: 15px auto;
@@ -517,6 +526,5 @@ export default {
       }
     }
   }
-  
 }
 </style>

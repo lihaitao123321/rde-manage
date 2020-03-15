@@ -1,116 +1,122 @@
 <template>
     <div class="t_page">
-      <XHeader :left-options="{preventGoBack:true, backText: ''}"
-          @on-click-back="$router.goBack()"
-          title="参数显示详情">
-      </XHeader>
-      <div class="canshu-content">
-        <div class="pillar-box">
-            <div class="item-con">
-                <div class="lefts">
-                    <span class="indexs">1</span>
-                    <span class="names">AA1</span>
-                    <span class="titles">累计运行时间</span>
-                </div>
-                <div class="rights">
-                    <span class="state-name blue">1450</span>
-                    <span class="units">H</span>
-                </div>
-            </div>
-            <div class="item-con">
-                <div class="lefts">
-                    <span class="indexs">2</span>
-                    <span class="names">AA1</span>
-                    <span class="titles">实时功率</span>
-                </div>
-                <div class="rights">
-                    <span class="state-name blue">26</span>
-                    <span class="units">KW</span>
-                </div>
-            </div>
-            <div class="item-con">
-                <div class="lefts">
-                    <span class="indexs">3</span>
-                    <span class="names">AA1</span>
-                    <span class="titles">供水温度</span>
-                </div>
-                <div class="rights">
-                    <span class="state-name blue">15</span>
-                    <span class="units"> ℃</span>
-                </div>
-            </div>
-            <div class="item-con">
-                <div class="lefts">
-                    <span class="indexs">4</span>
-                    <span class="names">AA1</span>
-                    <span class="titles">回水温度</span>
-                </div>
-                <div class="rights">
-                    <span class="state-name blue">7.5</span>
-                    <span class="units"> ℃</span>
-                </div>
-            </div>
-            <div class="item-con">
-                <div class="lefts">
-                    <span class="indexs">5</span>
-                    <span class="names">AA1</span>
-                    <span class="titles">冷凝器低压压力</span>
-                </div>
-                <div class="rights">
-                    <span class="state-name blue">0.67</span>
-                    <span class="units">Bar</span>
-                </div>
-            </div>
-            <div class="item-con">
-                <div class="lefts">
-                    <span class="indexs">6</span>
-                    <span class="names">AA1</span>
-                    <span class="titles">温控器模式</span>
-                </div>
-                <div class="rights">
-                    <span class="state-name blue">0.15</span>
-                    <span class="units">Bar</span>
+        <XHeader
+            :left-options="{preventGoBack:true, backText: ''}"
+            @on-click-back="$router.goBack()"
+            title="模式状态详情"
+        ></XHeader>
+        <div class="detail-content">
+            <div class="pillar-box">
+                <div class="item-con" v-for="(item,index) in pageData.deviceParams" :key="index">
+                    <div class="lefts">
+                        <span class="indexs">{{index+1}}</span>
+                        <span class="names">{{item.abbreviate}}</span>
+                        <span class="titles">{{item.abbreviateName}}</span>
+                    </div>
+                    <div class="rights">
+                        <span class="state-name blue">{{item.value}}</span>
+                        <span class="units">{{item.label}}</span>
+                    </div>
                 </div>
             </div>
         </div>
-      </div>
-
     </div>
 </template>
 
 <script>
-  import { XHeader,Group,XInput,XButton,Toast } from "vux";
-    export default {
-        components: {
-          XHeader,
-          Group,
-          XInput,
-          XButton,
-          Toast
-        },
-        data() {
-          return {
-          
+import { XHeader } from "vux";
+import mqtt from "mqtt";
+import _ from "lodash";
+export default {
+  components: {
+    XHeader
+  },
+  data() {
+    return {
+      client: null,
+      pageData: {
+        deviceBaseInfo: {},
+        deviceModes: [],
+        deviceParams: []
+      }
+    };
+  },
+  created() {
+    this.pageData = this.$route.params.pageData;
+    this.initMqtt();
+  },
+  mounted() {},
+  beforeRouteLeave(to, from, next) {
+    this.client.end();
+    next();
+  },
+  methods: {
+    //链接并监听mqtt
+    initMqtt() {
+      let username = this.pageData.deviceBaseInfo.thingId;
+      let password = this.pageData.deviceBaseInfo.thingKey;
+      this.client = mqtt.connect(
+        "mqtt://106.12.90.144:8884",
+        {
+          username: "dv_1",
+          password: "dv_1",
+          keepalive: 60,
+          connectTimeout: 30 * 1000,
+          clientId:
+            "mqttjs_cr_" +
+            Math.random()
+              .toString(16)
+              .substr(2, 8)
+        }
+      );
+      this.client.on("connect", () => {
+        this.client.subscribe("iot/realData/" + "dv_1", {
+          qos: 1
+        });
+      });
+      this.client.on("message", (topic, message, packet) => {
+        message = JSON.parse(message);
+        if (message.state == 0) {
+          this.convertMessage(message);
+        }
+      });
+    },
+    convertMessage: _.debounce(function(message) {
+      let mt = message.mt;
+      //模式状态处理
+      let deviceModes = JSON.parse(JSON.stringify(this.pageData.deviceModes));
+      deviceModes.forEach(item => {
+        for (const key in mt) {
+          //找到本地和mqtt对应的数据
+          if (mt.hasOwnProperty(key) && key === item.abbreviate) {
+            item.value = mt[key];
+            //找到mqtt的值对应的枚举数据
           }
-        },
-        created(){
-
-        },
-        mounted(){
-        
-        },
-        methods: {
-
-        },
-
-    }
+        }
+      });
+      this.pageData.deviceModes = deviceModes;
+      //参数显示处理
+      let deviceParams = JSON.parse(JSON.stringify(this.pageData.deviceParams));
+      deviceParams.forEach(item => {
+        for (const key in mt) {
+          //找到本地和mqtt对应的数据
+          if (mt.hasOwnProperty(key) && key === item.abbreviate) {
+            item.value = mt[key];
+            //找到mqtt的值对应的枚举数据
+          }
+        }
+      });
+      this.pageData.deviceParams = deviceParams;
+    })
+  }
+};
 </script>
 
 <style lang="less" scoped>
-.canshu-content{
+.detail-content {
   padding: 15px;
-}
-.pillar-box{
+  overflow-y: auto;
+  .pillar-box {
     margin: 0 auto;
     overflow: hidden;
     border-radius: 5px;
@@ -118,40 +124,40 @@
     box-sizing: border-box;
     font-size: 15px;
     color: #666666;
-    .item-con{
-        border-bottom: 1px solid #D6D6D6;
+    .item-con {
+      border-bottom: 1px solid #d6d6d6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 55px;
+      padding-left: 19px;
+      padding-right: 28px;
+      &:last-child {
+        border-bottom: none;
+      }
+      .lefts {
+        span {
+          margin-right: 15px;
+        }
+      }
+      .rights {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        height: 55px;
-        padding-left: 19px;
-        padding-right: 28px; 
-        &:last-child{
-            border-bottom: none;
+        color: #333333;
+        .blue {
+          color: #2b7ff3;
+          font-size: 16px;
         }
-        .lefts{
-            span{
-                margin-right: 15px;
-            }
+        .icon-image {
+          margin-left: 5px;
+          width: 18px;
+          height: 15px;
         }
-        .rights{
-            display: flex;
-            align-items: center;
-            color: #333333;
-            .blue{
-                color: #2B7FF3;
-                font-size: 16px;
-            }
-            .icon-image{
-                margin-left: 5px;
-                width: 18px;
-                height: 15px;
-            }
-            .units{
-                margin-left: 5px;
-            }
+        .units {
+          margin-left: 5px;
         }
+      }
     }
+  }
 }
-
 </style>
