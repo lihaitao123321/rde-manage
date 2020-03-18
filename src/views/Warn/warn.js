@@ -110,10 +110,21 @@ let warns = {
     //获取项目搜索列表页数据
     getProList(){
         return Tools.ajax({
-            method:'/cloud/api/app/firstpage/getProjectData',
+            // method:'/cloud/api/app/firstpage/getProjectData',
+            method:'/cloud/api/app/monitor/listProject',
             data:{
                 "pageNum": 1,
                 "pageSize": 10
+            }
+        })
+    },
+    //获取项目详情页的数据
+    getProjectDetailFun(param){
+        return Tools.ajax({
+            method:'/cloud/api/app/monitor/projectDetail',
+            data:{
+               // "projectId":"8aaa645f62654b4d01626b420ba80000"
+                "projectId":param
             }
         })
     },

@@ -12,6 +12,7 @@ let store = new Vuex.Store({
       mainBgColor: '#2B7FF3',
     },
     checkList:[],
+    projectList:{},
     loginInfo: {},
     userInfo: {},
     isLogout:false,
@@ -44,6 +45,9 @@ let store = new Vuex.Store({
     },
     checkListFun(state,data){
       state.checkList = data
+    },
+    projectListFun(state,data){
+      state.projectList = data
     }
 
   },

@@ -5,19 +5,19 @@
             <div class="top">
                 <div class="line">
                     <img height="19" src="../../assets/images/index3/温度(2)@2x.png">
-                    <div><span class="number">32</span><span class="unit">°C</span></div>
+                    <div><span class="number">{{projectVo.temperature}}</span><span class="unit">°C</span></div>
                 </div>
                 <div class="line">
                     <img height="19" src="../../assets/images/index3/湿度@2x.png">
-                    <div><span class="number">56</span><span class="unit">%RH</span></div>
+                    <div><span class="number">{{projectVo.humidity}}</span><span class="unit">%RH</span></div>
                 </div>
-                <div class="line">
-                    <img height="19" src="../../assets/images/index3/空气质量@2x.png">
-                    <div><span class="number">18</span><span class="unit">μg/m3</span></div>
-                </div>
+<!--                <div class="line">-->
+<!--                    <img height="19" src="../../assets/images/index3/空气质量@2x.png">-->
+<!--                    <div><span class="number">18</span><span class="unit">μg/m3</span></div>-->
+<!--                </div>-->
                 <div class="line">
                     <img height="19" src="../../assets/images/index3/天气@2x.png">
-                    <div><span class="number">32</span><span class="unit">°C</span></div>
+                    <div><span class="number">{{projectVo.weather}}</span><span class="unit"></span></div>
                 </div>
             </div>
 
@@ -27,19 +27,19 @@
                         <div class="line">
                             <div class="label">项目位置:</div>
                             <div class="value">
-                                江苏省南京中山路北路10号
+                                {{projectVo.location}}
                             </div>
                         </div>
                         <div class="line">
                             <div class="label">项目类型:</div>
                             <div class="value">
-                                医院
+                                {{projectVo.projectType}}
                             </div>
                         </div>
                         <div class="line">
                             <div class="label">设计负荷:</div>
                             <div class="value">
-                                3600KW
+                                {{projectVo.designLoad}}
                             </div>
                         </div>
                     </div>
@@ -67,33 +67,33 @@
                         <div class="action-box" @click="jumpUrl('projectNumber')">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation1.png">
                             <div class="action-name">项目数量<span>(座)</span></div>
-                            <div class="action-number">1</div>
+                            <div class="action-number">{{projectVo.projectNum}}</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation2.png">
                             <div class="action-name">设备数量<span>(套)</span></div>
-                            <div class="action-number">268</div>
+                            <div class="action-number">{{projectVo.deviceNum}}</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation3.png">
                             <div class="action-name">负荷容量<span>(KW)</span></div>
-                            <div class="action-number">1000</div>
+                            <div class="action-number">{{projectVo.designLoad}}</div>
                         </div>
-                        <div class="action-box">
-                            <img class="navigation-icon" src="../../assets/images/index1/navigation4.png">
-                            <div class="action-name">新能源装机容量<span>(KW)</span></div>
-                            <div class="action-number">500</div>
-                        </div>
+<!--                        <div class="action-box">-->
+<!--                            <img class="navigation-icon" src="../../assets/images/index1/navigation4.png">-->
+<!--                            <div class="action-name">新能源装机容量<span>(KW)</span></div>-->
+<!--                            <div class="action-number">500</div>-->
+<!--                        </div>-->
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation5.png">
                             <div class="action-name">实用用电功率<span>(KW)</span></div>
-                            <div class="action-number">56</div>
+                            <div class="action-number">{{projectVo.realPower}}</div>
                         </div>
-                        <div class="action-box">
-                            <img class="navigation-icon" src="../../assets/images/index1/navigation6.png">
-                            <div class="action-name">新能源发电功率<span>(KW)</span></div>
-                            <div class="action-number">35</div>
-                        </div>
+<!--                        <div class="action-box">-->
+<!--                            <img class="navigation-icon" src="../../assets/images/index1/navigation6.png">-->
+<!--                            <div class="action-name">新能源发电功率<span>(KW)</span></div>-->
+<!--                            <div class="action-number">35</div>-->
+<!--                        </div>-->
                     </div>
                     <div class="all-mon">
                         <div class="title">
@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="pillar-box">
-                            <v-chart :data="data5" class="chart-box" :width="340">
+                            <v-chart :data="data5" class="chart-box" ref="dome5" :width="340">
                                 <v-scale x type="timeCat" />
                                 <v-scale y :min="0" alias="KW" />
                                 <v-point :style="{
@@ -165,7 +165,7 @@
                                         stroke: '#fff',
                                         lineWidth: 1
                                         }" shape="smooth" />
-                                <v-line shape="smooth" />
+                                <v-line shape="smooth"/>
                             </v-chart>
                         </div>
                     </div>
@@ -200,6 +200,7 @@
         XHeader, Actionsheet, TransferDom, ButtonTab, ButtonTabItem, Tabbar, TabbarItem, Group, Cell, XInput, XButton,
         VChart, VLine, VArea, VTooltip, VLegend, VPie, VGuide, VBar, VScale, VPoint
     } from 'vux'
+    import warn from '../Warn/warn.js'
     const data6 = [
         { name: '清扫机器人', percent: 83.59, a: '1' },
         { name: '接驳车机器人', percent: 2.17, a: '1' },
@@ -230,6 +231,9 @@
         },
         data() {
             return {
+                projectVo:{
+
+                },
                 map,
                 htmlOptions: {
                     position: ['50%', '50%'],
@@ -263,15 +267,15 @@
                     { name: '运维设备', title: '离线', nub: 99.7 }
                 ],
                 data5: [
-                    { time: '2016-08-08 00:00:00', tem: 10 },
-                    { time: '2016-08-08 00:10:00', tem: 22 },
-                    { time: '2016-08-08 00:30:00', tem: 20 },
-                    { time: '2016-08-09 00:35:00', tem: 26 },
-                    { time: '2016-08-09 01:00:00', tem: 20 },
-                    { time: '2016-08-09 01:20:00', tem: 26 },
-                    { time: '2016-08-10 01:40:00', tem: 28 },
-                    { time: '2016-08-10 02:00:00', tem: 20 },
-                    { time: '2016-08-10 02:20:00', tem: 18 }
+                    // { time: '2016-08-08 00:00:00', tem: 10 },
+                    // { time: '2016-08-08 00:10:00', tem: 22 },
+                    // { time: '2016-08-08 00:30:00', tem: 20 },
+                    // { time: '2016-08-09 00:35:00', tem: 26 },
+                    // { time: '2016-08-09 01:00:00', tem: 20 },
+                    // { time: '2016-08-09 01:20:00', tem: 26 },
+                    // { time: '2016-08-10 01:40:00', tem: 28 },
+                    // { time: '2016-08-10 02:00:00', tem: 20 },
+                    // { time: '2016-08-10 02:20:00', tem: 18 }
                 ],
                 options: [
                     {
@@ -371,7 +375,30 @@
                 ]
             }
         },
+        mounted(){
+            this.getProjectDetailFun();
+        },
         methods: {
+          async  getProjectDetailFun(){
+             // this.data5 = [];
+             await   warn.getProjectDetailFun(this.$store.state.projectList.id).then(res=>{
+                    // console.log("输出结果",res);
+                    if(res.code === 0){
+                        this.projectVo = res.data.projectVo;
+                        if(Array.isArray(res.data.userCablePower) && res.data.userCablePower.length > 0){
+                            let userPowerObj = {};let userPowerList = [];
+                            res.data.userCablePower.forEach(item=>{
+                                userPowerObj = {};
+                                userPowerObj.time = item.workHour;
+                                userPowerObj.tem = item.kwh;
+                                userPowerList.push(userPowerObj);
+                            });
+                            this.data5 = userPowerList;
+                            console.log('数据',this.$refs.dome5);
+                        }
+                    }
+                }).catch()
+            },
             jumpUrl(url) {
                 this.$router.push(url)
             },
