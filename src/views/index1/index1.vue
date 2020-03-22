@@ -19,7 +19,7 @@
                         ></x-icon>
                     </div>
                     <div class="index-action">
-                        <div class="action-box" @click="jumpUrl('projectNumber')">
+                        <div class="action-box" @click="jumpUrl('/projectNumber')">
                             <img
                                 class="navigation-icon"
                                 src="../../assets/images/index1/navigation1.png"
@@ -105,26 +105,13 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>报警动态</div>
-                            <div @click="jumpUrl('baojingbaobiao')">
+                            <div @click="jumpUrl('/baojingbaobiao')">
                                 <span>进入报警</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
                         </div>
                         <div class="pillar-box">
                             <pillar :dataList="[pageData.alarmlevel0,pageData.alarmlevel1,pageData.alarmlevel2,pageData.offlineCount]"></pillar>
-                            <!-- <v-chart class="chart-box" :width="340" ref="demo3" :data="data3">
-                                <v-scale x field="title"/>
-                                <v-scale y field="nub"/>
-                                <v-bar
-                                    series-field="name"
-                                    :adjust="{
-                                        type: 'dodge',
-                                        marginRatio: 0.05, // 设置分组间柱子的间距
-                                    }"
-                                    
-                                />
-                                <v-tooltip show-value-in-legend/>
-                            </v-chart> -->
                         </div>
                     </div>
                 </div>
@@ -132,19 +119,20 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>实际用电功率</div>
-                            <div @click="jumpUrl('shiyonggonglvbaobiao')">
+                            <div @click="jumpUrl('/shiyonggonglvbaobiao')">
                                 <span>详情</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
                         </div>
                         <div class="pillar-box">
-                            <v-chart :data="data5" class="chart-box" :width="340">
-                                <v-scale x type="timeCat"/>
+                            <v-chart v-if="pageData.powers.length>0" :data="pageData.powers" class="chart-box" :width="340">
+                                <v-scale x type="timeCat" :tick-count="3" :formatter="formatterSc"/>
                                 <v-scale y :min="0" alias="KW"/>
+                                <v-area colors="l(90) 0:#57B6FF 1:#fff" shape="smooth" />
                                 <v-point
                                     :style="{
                                     stroke: '#fff',
-                                    lineWidth: 1
+                                    lineWidth: 3
                                     }"
                                     shape="smooth"
                                 />
@@ -155,7 +143,7 @@
                     <!-- <div class="all-mon">
                         <div class="title">
                             <div>新能源发电功率</div>
-                            <div @click="jumpUrl('fadianbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
+                            <div @click="jumpUrl('/fadianbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="pillar-box">
                             <v-chart 
@@ -277,145 +265,6 @@ export default {
         }
       },
       data6,
-      //双柱型
-      data3: [
-        { name: "电站设备", title: "故障", nub: 18.9, colors:"#FF2553" },
-        { name: "电站设备", title: "报警", nub: 28.8 },
-        { name: "电站设备", title: "警告", nub: 39.3 },
-        { name: "电站设备", title: "离线", nub: 81.4 }
-      ],
-      data5: [
-        { time: "2016-08-08 00:00:00", tem: 10 },
-        { time: "2016-08-08 00:10:00", tem: 22 },
-        { time: "2016-08-08 00:30:00", tem: 20 },
-        { time: "2016-08-09 00:35:00", tem: 26 },
-        { time: "2016-08-09 01:00:00", tem: 20 },
-        { time: "2016-08-09 01:20:00", tem: 26 },
-        { time: "2016-08-10 01:40:00", tem: 28 },
-        { time: "2016-08-10 02:00:00", tem: 20 },
-        { time: "2016-08-10 02:20:00", tem: 18 }
-      ],
-      options: [
-        {
-          key: 1,
-          value: "设备型号",
-          //弹框显示的内容和类型
-          type: 1,
-          checklist: [],
-          source: [
-            {
-              key: "value1",
-              value: "全部",
-              inlineDesc: ""
-            },
-            {
-              key: "value2",
-              value: "故障",
-              inlineDesc: ""
-            },
-            {
-              key: "value3",
-              value: "报警",
-              inlineDesc: ""
-            },
-            {
-              key: "value4",
-              value: "警告",
-              inlineDesc: ""
-            }
-          ]
-        },
-        {
-          key: 2,
-          value: "报警级别",
-          type: 2,
-          checklist: [],
-          source: [
-            {
-              key: "value1",
-              value: "全部",
-              inlineDesc: ""
-            },
-            {
-              key: "value2",
-              value: "故障",
-              inlineDesc: ""
-            },
-            {
-              key: "value3",
-              value: "报警",
-              inlineDesc: ""
-            },
-            {
-              key: "value4",
-              value: "警告",
-              inlineDesc: ""
-            }
-          ]
-        },
-        {
-          key: 3,
-          value: "报警状态",
-          type: 3,
-          checklist: [],
-          source: [
-            {
-              key: "value1",
-              value: "全部",
-              inlineDesc: "",
-              children: [
-                {
-                  key: "value1",
-                  value: "全部",
-                  inlineDesc: ""
-                },
-                {
-                  key: "value2",
-                  value: "故障",
-                  inlineDesc: ""
-                },
-                {
-                  key: "value3",
-                  value: "报警",
-                  inlineDesc: ""
-                },
-                {
-                  key: "value4",
-                  value: "警告",
-                  inlineDesc: ""
-                }
-              ]
-            },
-            {
-              key: "value2",
-              value: "故障",
-              inlineDesc: "",
-              children: [
-                {
-                  key: "value1",
-                  value: "666",
-                  inlineDesc: ""
-                },
-                {
-                  key: "value2",
-                  value: "888",
-                  inlineDesc: ""
-                }
-              ]
-            },
-            {
-              key: "value3",
-              value: "报警",
-              inlineDesc: ""
-            },
-            {
-              key: "value4",
-              value: "警告",
-              inlineDesc: ""
-            }
-          ]
-        }
-      ],
       //页面数据
       pageData: {
         projectCount: 0,
@@ -428,7 +277,8 @@ export default {
         alarmlevel0: 0,
         alarmlevel1: 0,
         alarmlevel2: 0,
-        offlineCount: 0
+        offlineCount: 0,
+        powers:[]
       }
     };
   },
@@ -445,6 +295,9 @@ export default {
     },
     seachDetail() {
       this.$router.push("search");
+    },
+    formatterSc(data1){
+      return this.Tools.Date.TimeFormat(data1,'ymd')
     }
   },
   async created() {
@@ -453,8 +306,19 @@ export default {
       data: {}
     }).then(res => {
       if (res.code === 0) {
-        this.pageData = res.data;
+        let pageData = res.data;
+        let powers = pageData.powers;
+        let newList = []
+        for (let i = 0; i < powers.length; i++) {
+          newList.push({
+            time:powers[i].workHour,
+            tem:powers[i].kwh
+          })
+        }
+        pageData.powers = newList
+        this.pageData = pageData
       }
+      
     });
   }
 };
