@@ -16,7 +16,7 @@
                     <div class="line">
                         <div class="label">项目名称:</div>
                         <div class="value">
-                            {{item.name}}
+                            {{item.projectName}}
                         </div>
                     </div>
                     <div class="line">
@@ -28,7 +28,7 @@
                     <div class="line">
                         <div class="label">项目类型:</div>
                         <div class="value">
-                            {{item.projectType}}
+                            {{item.type}}
                         </div>
                     </div>
                     <div class="line">
@@ -42,19 +42,19 @@
                     <div class="item">
                         <div class="title">在线率:</div>
                         <div class="one">
-                            {{item.onlineRate}}%
+                            {{`${Number(item.onlineRate) * 1}`}}%
                         </div>
                     </div>
                     <div class="item">
                         <div class="title">运行率:</div>
                         <div class="two">
-                            {{item.runingRate}}%
+                            {{`${Number(item.runningRate)  * 1}`}}%
                         </div>
                     </div>
                     <div class="item">
                         <div class="title">报警率:</div>
                         <div class="three">
-                            {{item.alarmRate}}%
+                            {{`${Number(item.alarmRate) * 1}`}}%
                         </div>
                     </div>
                 </div>
@@ -103,6 +103,7 @@
         },
         methods: {
             openDetail(item){
+                this.$store.commit('projectListFun', item);
                 this.$router.push('xiangMuDetail')
             },
             getProListFun(){
