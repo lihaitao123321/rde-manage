@@ -42,19 +42,19 @@
                     <div class="item">
                         <div class="title">在线率:</div>
                         <div class="one">
-                            {{item.onlineRate}}%
+                            {{`${Number(item.onlineRate) * 1}`}}%
                         </div>
                     </div>
                     <div class="item">
                         <div class="title">运行率:</div>
                         <div class="two">
-                            {{item.runningRate}}%
+                            {{`${Number(item.runningRate)  * 1}`}}%
                         </div>
                     </div>
                     <div class="item">
                         <div class="title">报警率:</div>
                         <div class="three">
-                            {{item.alarmRate}}%
+                            {{`${Number(item.alarmRate) * 1}`}}%
                         </div>
                     </div>
                 </div>
