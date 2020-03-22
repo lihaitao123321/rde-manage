@@ -56,6 +56,7 @@ import BoxRadio from './views/index3/BoxRadio'
 import CancelAlarm from './views/index3/CancelAlarm'
 import RemoveRecord from './views/index3/RemoveRecord'
 import video from './views/index3/video'
+
 Vue.use(Router)
 
 export default new Router({

@@ -212,10 +212,10 @@ export default {
       let username = this.pageData.deviceBaseInfo.thingId;
       let password = this.pageData.deviceBaseInfo.thingKey;
       this.client = mqtt.connect(
-        "mqtt://106.12.90.144:8884",
+        this.$store.state.mqttUrl,
         {
-          username: "dv_1",
-          password: "dv_1",
+          username: username,
+          password: password,
           keepalive: 60,
           connectTimeout: 30 * 1000,
           clientId:
@@ -226,12 +226,13 @@ export default {
         }
       );
       this.client.on("connect", () => {
-        this.client.subscribe("iot/realData/" + "dv_1", {
+        this.client.subscribe("iot/realData/" + username, {
           qos: 1
         });
       });
       this.client.on("message", (topic, message, packet) => {
         message = JSON.parse(message);
+        console.log('message', message)
         if (message.state == 0) {
           this.convertMessage(message);
         }

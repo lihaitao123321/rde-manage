@@ -37,10 +37,17 @@
             </div>
             <div class="item_bottom">
                 <div class="icons">
-                    <div class="item1">
+                    <div class="item1" v-if="item.onLine == 0">
                         <div class="online"></div>在线
                     </div>
-                    <div class="item2">R 运行</div>
+                    <div class="item1_black" v-if="item.onLine == 1">
+                        <div class="outline"></div>离线
+                    </div>
+                    <div class="item2" v-if="item.status == 1">R 运行</div>
+                    <div class="item1_black" v-if="item.status == 2">S 停止</div>
+                    <div class="item1_black" v-if="item.status == 3">S 离线</div>
+                    <div class="item1_black" v-if="item.status == 4">S 离线</div>
+                    
                     <div class="item3">F 报警</div>
                 </div>
             </div>
@@ -208,6 +215,25 @@ export default {
           width: 7px;
           height: 7px;
           background: rgba(26, 204, 131, 1);
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+      }
+      .item1_black{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 74px;
+        height: 26px;
+        background:rgba(128,128,128,0.1);
+        border-radius: 13px;
+        font-family: PingFang-SC-Bold;
+        font-weight: bold;
+        color: #808080;
+        .outline {
+          width: 7px;
+          height: 7px;
+          background:rgba(128,128,128,1);
           border-radius: 50%;
           margin-right: 5px;
         }

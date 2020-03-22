@@ -2,6 +2,7 @@ import Vue from 'vue';
 import axios from 'axios';
 const Qs = require('qs');
 import router from '../router';
+import store from '@/store';
 //测试
 let isTest = false;
 //上线
@@ -56,7 +57,7 @@ export default {
         }
         // 配置默认值
         const service = axios.create({
-            baseURL: process.env.NODE_ENV === 'production' ?'https://iot.congrongyun.com':'',
+            baseURL: process.env.NODE_ENV === 'production' ?store.state.baseUrl:'',
             url: '',
             method: 'post',
             timeout: 30000,
