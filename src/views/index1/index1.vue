@@ -8,7 +8,7 @@
                         <div class="search-box" @click.stop="seachDetail">
                             <x-icon class="white-x-icon" type="ios-search" size="25"></x-icon>
                             <group>
-                                <x-input class="search-con" readonly placeholder="从容智能运维云服务系统"></x-input>
+                                <x-input class="search-con" readonly placeholder="德孚智能运维云服务系统"></x-input>
                             </group>
                         </div>
                         <x-icon
@@ -111,7 +111,8 @@
                             </div>
                         </div>
                         <div class="pillar-box">
-                            <v-chart class="chart-box" :width="340" ref="demo3" :data="data3">
+                            <pillar :dataList="[pageData.alarmlevel0,pageData.alarmlevel1,pageData.alarmlevel2,pageData.offlineCount]"></pillar>
+                            <!-- <v-chart class="chart-box" :width="340" ref="demo3" :data="data3">
                                 <v-scale x field="title"/>
                                 <v-scale y field="nub"/>
                                 <v-bar
@@ -123,7 +124,7 @@
                                     
                                 />
                                 <v-tooltip show-value-in-legend/>
-                            </v-chart>
+                            </v-chart> -->
                         </div>
                     </div>
                 </div>
@@ -223,6 +224,7 @@ import {
   VPoint
 } from "vux";
 import vCircle from "@/components/circle/index.vue";
+import pillar from "@/components/pillar/index.vue";
 const data6 = [
   { name: "清扫机器人", percent: 83.59, a: "1" },
   { name: "接驳车机器人", percent: 2.17, a: "1" },
@@ -249,7 +251,8 @@ export default {
     VPie,
     VScale,
     VPoint,
-    vCircle
+    vCircle,
+    pillar
   },
   data() {
     return {

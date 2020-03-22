@@ -3,7 +3,7 @@
         <div class="t_content">
             <div class="t_content_image">
                 <div class="t_content_image1">
-                    <img style="height: 100%;width: 100%" src="../../assets/images/login/bluelogo@2x.png">
+                    <img style="height: 100%;width: 100%" src="../../assets/images/login/96-96.png">
                 </div>
             </div>
             <group class="t_login">
