@@ -57,6 +57,11 @@ import CancelAlarm from './views/index3/CancelAlarm'
 import RemoveRecord from './views/index3/RemoveRecord'
 import video from './views/index3/video'
 
+import baoJingListNew from './views/index3/baojingListNew'
+import caoZuoList from './views/index3/caoZuoList';
+import sheBeiList from './views/index3/sheBeiList';
+import xiTongList from './views/index3/xiTongList';
+import xiangMuList from './views/index3/xiangMuList';
 Vue.use(Router)
 
 export default new Router({
@@ -195,6 +200,57 @@ export default new Router({
             path: '/index3',
             name: 'index3',
             component: index3,
+            meta:{
+                keepAlive:true
+            },
+            children: [
+                {
+                    path: '',
+                    redirect: to => {
+                        return 'baoJingListNew';
+                    }
+                },
+                {
+                    path: 'baoJingListNew',
+                    name: 'baoJingListNew',
+                    component: baoJingListNew,
+                    meta:{
+                        keepAlive:true
+                    },
+                },
+                {
+                    path: 'caoZuoList',
+                    name: 'caoZuoList',
+                    component: caoZuoList,
+                    meta:{
+                        keepAlive:true
+                    },
+                },
+                {
+                    path: 'sheBeiList',
+                    name: 'sheBeiList',
+                    component: sheBeiList,
+                    meta:{
+                        keepAlive:true
+                    },
+                },
+                {
+                    path: 'xiTongList',
+                    name: 'xiTongList',
+                    component: xiTongList,
+                    meta:{
+                        keepAlive:true
+                    },
+                },
+                {
+                    path: 'xiangMuList',
+                    name: 'xiangMuList',
+                    component: xiangMuList,
+                    meta:{
+                        keepAlive:true
+                    },
+                }
+            ]
         },
         {
             path: '/searchBaoJing',

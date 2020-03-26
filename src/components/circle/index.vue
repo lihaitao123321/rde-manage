@@ -27,8 +27,8 @@
     <canvas
       ref="container"
       id="container"
-      width="115"
-      height="115"
+      width="105"
+      height="105"
       style="width: 115px; height: 115px;"
     />
     <div class="title">{{this.title}}</div>

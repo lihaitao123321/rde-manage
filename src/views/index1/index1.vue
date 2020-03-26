@@ -77,7 +77,7 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>总体监控预览</div>
-                            <div @click="jumpUrl('/jiankongbaobiao')">
+                            <div @click="jumpUrl('/index3/sheBeiList')">
                                 <span>进入监控</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
