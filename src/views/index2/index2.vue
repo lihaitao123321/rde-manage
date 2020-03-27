@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     openSearchPage() {
-      this.$router.push("searchMap");
+      this.$router.push("/searchMap");
     },
     //开始定位
     startLocation() {

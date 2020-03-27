@@ -381,7 +381,7 @@
         methods: {
           async  getProjectDetailFun(){
              // this.data5 = [];
-             await   warn.getProjectDetailFun(this.$store.state.projectList.id).then(res=>{
+             await   warn.getProjectDetailFun(this.$route.params.id).then(res=>{
                     // console.log("输出结果",res);
                     if(res.code === 0){
                         this.projectVo = res.data.projectVo;

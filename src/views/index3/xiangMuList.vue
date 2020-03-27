@@ -103,8 +103,8 @@
         },
         methods: {
             openDetail(item){
-                this.$store.commit('projectListFun', item);
-                this.$router.push('xiangMuDetail')
+                // this.$store.commit('projectListFun', item);
+                this.$router.push('/xiangMuDetail/' + item.id)
             },
             getProListFun(){
                 warn.getProList().then(respont=>{

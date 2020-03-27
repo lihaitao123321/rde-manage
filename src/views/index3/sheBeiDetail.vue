@@ -178,7 +178,9 @@ export default {
     await this.initMqtt();
   },
   beforeRouteLeave(to, from, next) {
-    this.client.end();
+    if(this.client){
+      this.client.end();
+    }
     next();
   },
   methods: {

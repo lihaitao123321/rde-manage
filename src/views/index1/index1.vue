@@ -105,7 +105,7 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>报警动态</div>
-                            <div @click="jumpUrl('/baojingbaobiao')">
+                            <div @click="jumpUrl('/index3/sheBeiList')">
                                 <span>进入报警</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
@@ -119,7 +119,7 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>实际用电功率</div>
-                            <div @click="jumpUrl('/shiyonggonglvbaobiao')">
+                            <div @click="jumpUrl('/index3/sheBeiList')">
                                 <span>详情</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
@@ -294,7 +294,7 @@ export default {
       this.options[index].checklist = list;
     },
     seachDetail() {
-      this.$router.push("search");
+      this.$router.push("/search");
     },
     formatterSc(data1){
       return this.Tools.Date.TimeFormat(data1,'ymd')

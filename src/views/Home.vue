@@ -6,7 +6,7 @@
             </keep-alive>
         </div>
         <tabbar v-model="tabActive">
-            <tabbar-item  v-for="item in this.menus" :key="item.link" :link="item.link">
+            <tabbar-item  v-for="item in this.menus" :key="item.title" :link="item.link">
                 <img slot="icon" :src="item.icon">
                 <img slot="icon-active" :src="item.activeIcon">
                 <span class="tabbar_label" slot="label">{{item.title}}</span>
@@ -76,27 +76,42 @@
                 menus: [
                     {
                         title: '首页',
-                        link: '/home/index1',
+                        link: {
+                            path:'/home/index1',
+                            replace:true
+                        },
                         icon:require('../assets/images/index1/shouye_black@3x.png'),
                         activeIcon:require('../assets/images/index1/shouye_red@3x.png')
                     }, {
                         title: '地图',
-                        link: '/home/index2',
+                        link: {
+                            path:'/home/index2',
+                            replace:true
+                        },
                         icon:require('../assets/images/index1/ditu_black@3x.png'),
                         activeIcon:require('../assets/images/index1/ditu_red@3x.png')
                     }, {
                         title: '监控',
-                        link: '/index3',
+                        link: {
+                            path:'/index3',
+                            replace:false
+                        },
                         icon:require('../assets/images/index1/jiankong_black@3x.png'),
                         activeIcon:require('../assets/images/index1/jiankong_red@3x.png')
                     }, {
                         title: '业务',
-                        link: '/home/index4',
+                        link: {
+                            link: '/home/index4',
+                            replace:true
+                        },
                         icon:require('../assets/images/index1/yewu_black@3x.png'),
                         activeIcon:require('../assets/images/index1/yewu_red@3x.png')
                     }, {
                         title: '我的',
-                        link: '/home/index5',
+                        link: {
+                            link: '/home/index5',
+                            replace:true
+                        },
                         icon:require('../assets/images/index1/wode_black@3x.png'),
                         activeIcon:require('../assets/images/index1/wode_red@3x.png')
                     }

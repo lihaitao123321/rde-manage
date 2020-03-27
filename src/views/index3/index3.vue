@@ -6,7 +6,7 @@
             </keep-alive>
         </div>
         <tabbar v-model="tabActive">
-            <tabbar-item v-for="item in this.menus" :key="item.link" :link="item.link">
+            <tabbar-item v-for="item in this.menus" :key="item.title" :link="item.link">
                 <img slot="icon" :src="item.icon">
                 <img slot="icon-active" :src="item.activeIcon">
                 <span class="tabbar_label" slot="label">{{item.title}}</span>
@@ -28,31 +28,46 @@ export default {
       menus: [
         {
           title: "报警管理",
-          link: "/index3/baoJingListNew",
+          link: {
+              path:"/index3/baoJingListNew",
+              replace:true
+          },
           icon: require("../../assets/images/index3/bj_black@2x.png"),
           activeIcon: require("../../assets/images/index3/bj_red@2x.png")
         },
         {
           title: "操作记录",
-          link: "/index3/caoZuoList",
+          link: {
+              path: "/index3/caoZuoList",
+              replace:true
+          },
           icon: require("../../assets/images/index3/czjl_black@2x.png"),
           activeIcon: require("../../assets/images/index3/czjl_red@2x.png")
         },
         {
           title: "设备",
-          link: "/index3/sheBeiList",
+          link: {
+              path: "/index3/sheBeiList",
+              replace:true
+          },
           icon: require("../../assets/images/index3/dzsb_black@2x.png"),
           activeIcon: require("../../assets/images/index3/dzsb_red@2x.png")
         },
         {
           title: "系统",
-          link: "/index3/xiTongList",
+          link: {
+              path: "/index3/xiTongList",
+              replace:true
+          },
           icon: require("../../assets/images/index3/ywsb_black@2x.png"),
           activeIcon: require("../../assets/images/index3/ywsb_red@2x.png")
         },
         {
           title: "项目",
-          link: "/index3/xiangMuList",
+          link: {
+              path: "/index3/xiangMuList",
+              replace:true
+          },
           icon: require("../../assets/images/index3/dz_black@2x.png"),
           activeIcon: require("../../assets/images/index3/dz_red@2x.png")
         }

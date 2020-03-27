@@ -398,7 +398,7 @@ export default new Router({
             component: sheBeiDetail
         },
         {
-            path: '/xiangMuDetail',
+            path: '/xiangMuDetail/:id',
             name: 'xiangMuDetail',
             component: xiangMuDetail
         },
