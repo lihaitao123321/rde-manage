@@ -138,6 +138,17 @@ let warns = {
             }
         })
     },
+
+    //项目报警动态详情
+    analyzeProjectStatus(param1,param2){
+        return Tools.ajax({
+            method:'/cloud/api/app/monitor/analyzeProjectStatus',
+            data:{
+                "pageNum": param1,
+                "pageSize": param2
+            }
+        })
+    },
 }
 
 export default warns
