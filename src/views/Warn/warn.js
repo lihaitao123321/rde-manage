@@ -138,6 +138,39 @@ let warns = {
             }
         })
     },
+    //项目数量接口
+    projectNum(Num,pageNum,pageSize){
+        return Tools.ajax({
+            method:'/cloud/api/app/monitor/listProjectDetailReport',
+            data:{
+                type:Num,
+                pageSize:pageSize,
+                pageNum:pageNum
+            }
+        })
+    },
+    //项目动态分析
+    projectStatusAnl(param,param1){
+        return Tools.ajax({
+            method:'/cloud/api/app/monitor/analyzeProjectStatus',
+            data:{
+                "startTime":param,
+                "endTime":param1,
+                "type":4
+            }
+        })
+    },
+
+    //项目报警动态详情
+    analyzeProjectStatus(param1,param2){
+        return Tools.ajax({
+            method:'/cloud/api/app/monitor/analyzeProjectStatus',
+            data:{
+                "pageNum": param1,
+                "pageSize": param2
+            }
+        })
+    },
 }
 
 export default warns
