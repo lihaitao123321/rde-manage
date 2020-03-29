@@ -46,10 +46,10 @@
                 <Group v-if="isActive"  class="data_width">
                     <div class="t_position">
                         <div class="data_bottom">
-                            <datetime v-model="minuteListValue1" format="YYYY-MM-DD HH:mm" :minute-list="['00', '15', '30', '45']" @on-change="change" :title="$t('EchartsReport.startTime')"></datetime>
+                            <datetime v-model="minuteListValue1" format="YYYY-MM-DD HH:mm" :minute-list="['00', '15', '30', '45']" @on-change="change" :title="$t('起始时间')"></datetime>
                         </div>
                         <div>
-                            <datetime v-model="minuteListValue2" format="YYYY-MM-DD HH:mm" :minute-list="['00', '15', '30', '45']" @on-change="change" :title="$t('EchartsReport.endTime')"></datetime>
+                            <datetime v-model="minuteListValue2" format="YYYY-MM-DD HH:mm" :minute-list="['00', '15', '30', '45']" @on-change="change" :title="$t('终止时间')"></datetime>
                         </div>
                     </div>
                 </Group >

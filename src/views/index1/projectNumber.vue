@@ -1,8 +1,19 @@
 <template>
+  <Scroller
+          use-pullup
+          :pullup-config="pullupDefaultConfig"
+          @on-pullup-loading="loadMore"
+          use-pulldown
+          :pulldown-config="pulldownDefaultConfig"
+          @on-pulldown-loading="refresh"
+          lock-x
+          ref="scrollerBottom"
+          style="height: 100%"
+          height="-50">
     <div class="t_page">
       <div class="project-page">
         <XHeader class="header" :left-options="{ preventGoBack:true, backText: '' }" @on-click-back="$router.goBack()">
-          <el-select v-model="select" style="width: 116px;">
+          <el-select v-model="select" style="width: 116px;" @change="changSelect">
               <el-option
                       v-for="item in options"
                       :key="item.value"
@@ -26,34 +37,36 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>南京鼓楼医院</td>
-                <td>1</td>
-                <td>个</td>
+              <tr v-for="(item,index) in projectNumList">
+                <td>
+                {{index + 1}}
+                </td>
+                <td>{{item.name}}</td>
+                <td>{{item.num}}</td>
+                <td>{{item.unit}}</td>
               </tr>
-              <tr>
-                <td>2</td>
-                <td>南京鼓楼医院1</td>
-                <td>1</td>
-                <td>个</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>南京鼓楼医院1</td>
-                <td>1</td>
-                <td>个</td>
-              </tr>
+<!--              <tr>-->
+<!--                <td>2</td>-->
+<!--                <td>南京鼓楼医院1</td>-->
+<!--                <td>1</td>-->
+<!--                <td>个</td>-->
+<!--              </tr>-->
+<!--              <tr>-->
+<!--                <td>3</td>-->
+<!--                <td>南京鼓楼医院1</td>-->
+<!--                <td>1</td>-->
+<!--                <td>个</td>-->
+<!--              </tr>-->
             </tbody>
           </x-table>
-          <div class="table-footer">
-            电站数量汇总：<span>7</span>个
-          </div>
+<!--          <div class="table-footer">-->
+<!--            电站数量汇总：<span>7</span>个-->
+<!--          </div>-->
         </div>
-        <div class="timer">
-          <img src="../../assets/images/index1/timer-icon.png"/>
-          <span>2019-06-06  12:26:00</span>
-        </div>
+<!--        <div class="timer">-->
+<!--          <img src="../../assets/images/index1/timer-icon.png"/>-->
+<!--          <span>2019-06-06  12:26:00</span>-->
+<!--        </div>-->
 
 
 
@@ -61,10 +74,12 @@
 
       </div>
     </div>
+  </Scroller>
 </template>
 
 <script>
-  import { XHeader,Group,XInput,XButton,Toast,XTable } from "vux";
+  import { XHeader,Group,XInput,XButton,Toast,XTable,Scroller } from "vux";
+  import warn from '../Warn/warn.js'
   export default {
     components: {
         XHeader,
@@ -72,28 +87,102 @@
         XInput,
         XButton,
         Toast,
-        XTable
+        XTable,
+      Scroller
     },
     data(){
       return{
-        select: 0,
+        select: 1,
+        projectNumList:[],
+        pullupDefaultConfig: {
+          content: "上拉加载更多",
+          pullUpHeight: 10,
+          height: 10,
+          autoRefresh: false,
+          downContent: "释放后加载",
+          upContent: "上拉加载更多",
+          loadingContent: "加载中...",
+          clsPrefix: "xs-plugin-pullup-"
+        },
+        pulldownDefaultConfig: {
+          content: "下拉刷新",
+          height: 40,
+          autoRefresh: false,
+          downContent: "下拉刷新",
+          upContent: "释放后刷新",
+          loadingContent: "正在刷新...",
+          clsPrefix: "xs-plugin-pulldown-"
+        },
+        total:0,
+        pageNum:1,
+        pageSize:10,
         options: [{
-            value: 0,
+            value: 1,
             label: '项目数量'
         }, {
-            value: 1,
-            label: '项目数1'
-        }, {
             value: 2,
-            label: '项目数2'
+            label: '设备数量'
         }, {
             value: 3,
-            label: '项目数3'
+            label: '负荷容量'
+        }, {
+            value: 4,
+            label: '实时功率'
         }],
       }
     },
-    methods:{
 
+    mounted(){
+      this.init();
+    },
+    methods:{
+      init(){
+        this.getProjectNum(this.$route.params.serialNum);
+        this.select = this.$route.params.serialNum;
+      },
+      async loadMore() {
+        if (this.total < this.pageSize * this.pageNum) {
+          return false;
+        }
+        this.$vux.loading.show("加载数据中");
+        this.pageNum++;
+        await   this.getProjectNum(this.select);
+        this.$refs.scrollerBottom.donePullup();
+        this.$vux.loading.hide();
+      },
+      async refresh() {
+        this.$vux.loading.show("刷新数据中");
+        this.pageNum = 1;
+        await   this.getProjectNum(this.select);
+        this.$refs.scrollerBottom.enablePullup();
+        this.$refs.scrollerBottom.donePulldown();
+        this.$vux.loading.hide();
+      },
+      changSelect(){
+        this.getProjectNum(this.select);
+      },
+      getProjectNum(numSelect){
+        warn.projectNum(numSelect,this.pageNum,this.pageSize).then(res=>{
+            if(res.code === 0 && Array.isArray(res.data.data) && res.data.data.length > 0){
+
+              if (this.pageNum === 1) {
+                this.projectNumList = res.data.data;
+                this.total = res.data.total
+              } else {
+                this.warnList = this.warnList.concat(res.data.data);
+              }
+              this.$nextTick(() => {
+                this.$refs.scrollerBottom.reset();
+              });
+              if (this.total < this.pageSize * this.pageNum) {
+                this.$refs.scrollerBottom.disablePullup();
+                this.$vux.toast.text('没有更多数据了')
+              } else {
+                this.$refs.scrollerBottom.enablePullup();
+              }
+            }
+        }).catch()
+      }
     }
   }
 </script>

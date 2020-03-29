@@ -64,17 +64,17 @@
             <div class="index-page">
                 <div class="index-top">
                     <div class="index-action">
-                        <div class="action-box" @click="jumpUrl('projectNumber')">
+                        <div class="action-box" @click="jumpUrl('projectNumber',1)">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation1.png">
                             <div class="action-name">项目数量<span>(座)</span></div>
                             <div class="action-number">{{projectVo.projectNum}}</div>
                         </div>
-                        <div class="action-box">
+                        <div class="action-box" @click="jumpUrl('projectNumber',2)">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation2.png">
                             <div class="action-name">设备数量<span>(套)</span></div>
                             <div class="action-number">{{projectVo.deviceNum}}</div>
                         </div>
-                        <div class="action-box">
+                        <div class="action-box" @click="jumpUrl('projectNumber',3)">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation3.png">
                             <div class="action-name">负荷容量<span>(KW)</span></div>
                             <div class="action-number">{{projectVo.designLoad}}</div>
@@ -84,7 +84,7 @@
 <!--                            <div class="action-name">新能源装机容量<span>(KW)</span></div>-->
 <!--                            <div class="action-number">500</div>-->
 <!--                        </div>-->
-                        <div class="action-box">
+                        <div class="action-box" @click="jumpUrl('projectNumber',4)">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation5.png">
                             <div class="action-name">实用用电功率<span>(KW)</span></div>
                             <div class="action-number">{{projectVo.realPower}}</div>
@@ -380,9 +380,7 @@
         },
         methods: {
           async  getProjectDetailFun(){
-             // this.data5 = [];
              await   warn.getProjectDetailFun(this.$route.params.id).then(res=>{
-                    // console.log("输出结果",res);
                     if(res.code === 0){
                         this.projectVo = res.data.projectVo;
                         if(Array.isArray(res.data.userCablePower) && res.data.userCablePower.length > 0){
@@ -394,19 +392,18 @@
                                 userPowerList.push(userPowerObj);
                             });
                             this.data5 = userPowerList;
-                            console.log('数据',this.$refs.dome5);
                         };
                     }
                 }).catch()
             },
-            jumpUrl(url) {
-                this.$router.push(url)
+            jumpUrl(url,serialNum) {
+                // this.$router.push('/' + url);
+                this.$router.push({ name: url, params: { serialNum }})
             },
             toNoticeCenter() {
                 this.$router.push('notice')
             },
             onCheckListChange(list, index) {
-                console.log(list)
                 this.options[index].checklist = list;
             },
             seachDetail() {

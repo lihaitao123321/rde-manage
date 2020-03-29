@@ -117,32 +117,34 @@
           <div class="options">
             <div class="option-box">
               <div class="label-name">起始时间：</div>
-              <el-select v-model="select" class="select-box">
-                  <el-option
-                          v-for="item in options3"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">
-                  </el-option>
-              </el-select>
+              <datetime class="select-box" v-model="startTime" format="YYYY-MM-DD HH:mm" :minute-list="['00', '30']" @on-change="change"></datetime>
+<!--              <el-select v-model="select" class="select-box">-->
+<!--                  <el-option-->
+<!--                          v-for="item in options3"-->
+<!--                          :key="item.value"-->
+<!--                          :label="item.label"-->
+<!--                          :value="item.value">-->
+<!--                  </el-option>-->
+<!--              </el-select>-->
             </div>
             <div class="option-box">
               <div class="label-name">终止时间：</div>
-              <el-select v-model="select" class="select-box">
-                  <el-option
-                          v-for="item in options3"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">
-                  </el-option>
-              </el-select>
+              <datetime class="select-box" v-model="endTime" format="YYYY-MM-DD HH:mm" :minute-list="['00', '30']" @on-change="change"></datetime>
+<!--              <el-select v-model="select" class="select-box">-->
+<!--                  <el-option-->
+<!--                          v-for="item in options3"-->
+<!--                          :key="item.value"-->
+<!--                          :label="item.label"-->
+<!--                          :value="item.value">-->
+<!--                  </el-option>-->
+<!--              </el-select>-->
             </div>
           </div>
-          <div class="search-btn">分析</div>
-          <div class="timer">
-            <img src="../../assets/images/index1/timer-icon.png"/>
-            <span>2019-06-06  12:26:00</span>
-          </div>
+          <div class="search-btn" @click="fenXiFun">分析</div>
+<!--          <div class="timer">-->
+<!--            <img src="../../assets/images/index1/timer-icon.png"/>-->
+<!--            <span>2019-06-06  12:26:00</span>-->
+<!--          </div>-->
         </template>
 
 
@@ -156,7 +158,8 @@
 
 <script>
   import { XHeader,XButton,Toast,XTable, Actionsheet, TransferDom, ButtonTab, ButtonTabItem ,Tabbar, TabbarItem, Group, Cell,XInput,
-      VChart, VLine, VArea, VTooltip, VLegend, VPie, VGuide, VBar, VScale, VPoint } from "vux";
+      VChart, VLine, VArea, VTooltip,dateFormat, VLegend, VPie, VGuide, VBar, VScale, VPoint,Datetime } from "vux";
+  import warn from '../Warn/warn.js'
   export default {
     components: {
         XHeader,
@@ -174,10 +177,13 @@
         VGuide,
         VPie,
         VScale,
-        VPoint
+        VPoint,
+      Datetime
     },
     data(){
       return{
+        startTime:this.start(),
+        endTime:this.endFun(),
         data5: [
             { time: '2016-08-08 00:00:00', tem: 10 },
             { time: '2016-08-08 00:10:00', tem: 22 },
@@ -232,9 +238,43 @@
         }]
       }
     },
+
+    methods(){
+      this.getTableData();
+    },
+
     methods:{
+      fenXiFun(){
+        this.getTableData();
+      },
+      start(){
+        let startTime =  dateFormat(new Date(), 'YYYY-MM-DD HH:00')
+        return startTime;
+      },
+      endFun(){
+        let startTime =  dateFormat(new Date(), 'YYYY-MM-DD HH:30')
+        return startTime;
+      },
+      change (value) {
+        console.log('change', value)
+      },
+      getTableData(){
+        warn.projectStatusAnl(this.startTime + ':00',this.endTime + ':00').then(res=>{
+          if(res.code === 0 && Array.isArray(res.data.projectStatusAnalyzes) && res.data.projectStatusAnalyzes.length > 0){
+            let dataList = []; let dataObj = {};
+            res.data.projectStatusAnalyzes.map((item,index)=>{
+              dataObj = {};
+              dataObj.time = item.time;
+              dataObj.tem = item.count;
+              dataList.push(dataObj);
+            });
+            this.data5 = dataList;
+          }
+        }).catch()
+      },
       tabChange(nub){
-        this.tabType = nub
+        this.tabType = nub;
+        this.getTableData();
       }
     }
   }
