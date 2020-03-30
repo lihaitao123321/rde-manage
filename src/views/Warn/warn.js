@@ -143,7 +143,8 @@ let warns = {
             method:'/cloud/api/app/monitor/projectDetail',
             data:{
                // "projectId":"8aaa645f62654b4d01626b420ba80000"
-                "projectId":param
+               //  "projectId":param
+                projectId:'402880956b541944016b9832650c0000'
             }
         })
     },

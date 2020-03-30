@@ -151,40 +151,40 @@
                         </div>
                     </div>
                     <div class="all-mon">
-                        <div class="title">
-                            <div>新能源发电功率</div>
-                            <div @click="jumpUrl('fadianbaobiao')"><span>详情</span>
-                                <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
-                            </div>
-                        </div>
+<!--                        <div class="title">-->
+<!--                            <div>新能源发电功率</div>-->
+<!--                            <div @click="jumpUrl('fadianbaobiao')"><span>详情</span>-->
+<!--                                <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="pillar-box">
-                            <v-chart :data="data5" class="chart-box" :width="340">
-                                <v-scale x type="timeCat" />
-                                <v-scale y :min="0" alias="%" />
-                                <v-point :style="{
-                                        stroke: '#fff',
-                                        lineWidth: 1
-                                        }" shape="smooth" />
-                                <v-line shape="smooth"/>
-                            </v-chart>
+<!--                            <v-chart :data="data5" class="chart-box" :width="340">-->
+<!--                                <v-scale x type="timeCat" />-->
+<!--                                <v-scale y :min="0" alias="%" />-->
+<!--                                <v-point :style="{-->
+<!--                                        stroke: '#fff',-->
+<!--                                        lineWidth: 1-->
+<!--                                        }" shape="smooth" />-->
+<!--                                <v-line shape="smooth"/>-->
+<!--                            </v-chart>-->
                         </div>
                     </div>
                     <div class="all-mon">
-                        <div class="title">
-                            <div>绿色能源实时占比</div>
-                            <div @click="jumpUrl('shishinengyuanbaobiao')"><span>详情</span>
-                                <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
-                            </div>
-                        </div>
+<!--                        <div class="title">-->
+<!--                            <div>绿色能源实时占比</div>-->
+<!--                            <div @click="jumpUrl('shishinengyuanbaobiao')"><span>详情</span>-->
+<!--                                <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="pillar-box">
-                            <v-chart class="chart-box" :width="340" :data="data6" :padding="[20, 'auto']">
-                                <v-tooltip disabled />
-                                <v-scale y :options="yOptions" />
-                                <v-pie :radius="0.6" :inner-radius="0.6" series-field="name"
-                                    :colors="['#FE5D4D','#3BA4FF','#737DDE']" />
-                                <v-legend :options="legendOptions" />
-                                <v-guide type="html" :options="htmlOptions" />
-                            </v-chart>
+<!--                            <v-chart class="chart-box" :width="340" :data="data6" :padding="[20, 'auto']">-->
+<!--                                <v-tooltip disabled />-->
+<!--                                <v-scale y :options="yOptions" />-->
+<!--                                <v-pie :radius="0.6" :inner-radius="0.6" series-field="name"-->
+<!--                                    :colors="['#FE5D4D','#3BA4FF','#737DDE']" />-->
+<!--                                <v-legend :options="legendOptions" />-->
+<!--                                <v-guide type="html" :options="htmlOptions" />-->
+<!--                            </v-chart>-->
                         </div>
                     </div>
                 </div>
