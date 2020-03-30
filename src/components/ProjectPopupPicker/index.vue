@@ -1,67 +1,77 @@
 <template>
-  <div class="rightWarp">
-    <div class="header">项目</div>
-    <div class="footer">
-      <div class="reset" @click="searchReset">重置</div>
-      <div class="ok" @click="searchOk">确认</div>
+  <div>
+    <div class="little_title">项目类型：</div>
+    <div class="uf uf-ac picker" @click="show=true">
+      <div class="uf-f1 placeholder">{{placeholder}}</div>
+      <i class="el-icon-caret-bottom sanjiao"></i>
     </div>
-    <div class="list">
-      <AreaPopupPicker v-model="defaultData.areaId"/>
-      <ProjectPopupPicker v-model="defaultData.projectType"/>
-      <DiviceTypePicker v-model="defaultData.deviceId"></DiviceTypePicker>
-      <div class="little_title">设计负荷：</div>
-      <div style="display: flex;align-items: center;">
-        <input class="inputClass" v-model="defaultData.beginDesignLoad">
-        <span class="KW">KW</span>
-        <hr class="hr">
-        <input class="inputClass" v-model="defaultData.endDesignLoad">
-        <span class="KW">KW</span>
-      </div>
+    <div v-transfer-dom>
+      <popup v-model="show" class="vux-popup-picker">
+        <popup-header
+          left-text="取消"
+          right-text="确定"
+          title="项目类型"
+          :show-bottom-border="false"
+          @on-click-left="show = false"
+          @on-click-right="ok"
+        ></popup-header>
+        <div class="vux-popup-picker-container">
+          <picker :data="options" v-model="select" @on-change="change"></picker>
+        </div>
+      </popup>
     </div>
   </div>
 </template>
 <script>
-import ProjectPopupPicker from "@/components/ProjectPopupPicker";
-import AreaPopupPicker from "@/components/AreaPopupPicker";
-import DiviceTypePicker from "./DiviceTypePicker";
+import { Picker, Popup, PopupHeader } from "vux";
 export default {
   name: "searchOptions",
   components: {
-    ProjectPopupPicker,
-    AreaPopupPicker,
-    DiviceTypePicker
+    Picker,
+    Popup,
+    PopupHeader
   },
   props: {
-    data: {
-      type: Object,
+    value: {
+      type: [String, Number],
       default() {
-        return {
-          areaId: "",
-          projectType: "",
-          beginDesignLoad: "",
-          endDesignLoad: "",
-          deviceId: ""
-        };
+        return "";
       }
     }
   },
   data() {
     return {
-      defaultData: JSON.parse(JSON.stringify(this.data))
+      placeholder: "",
+      show: false,
+      select: [this.value],
+      options: []
     };
   },
   methods: {
-    searchReset() {
-      this.defaultData.areaId = "";
-      this.defaultData.projectType = "";
-      this.defaultData.beginDesignLoad = "";
-      this.defaultData.endDesignLoad = "";
-      this.searchOk();
-    },
-    searchOk() {
-      this.$emit("input", JSON.parse(JSON.stringify(this.defaultData)));
-      this.$emit("search");
+    change() {},
+    ok() {
+      this.show = false;
+      for (let i = 0; i < this.options[0].length; i++) {
+        if (this.options[0][i].value == this.select[0]) {
+          this.placeholder = this.options[0][i].name;
+          this.$emit("input", this.options[0][i].value);
+          return;
+        }
+      }
+      this.placeholder = "";
     }
+  },
+  watch: {
+    value() {
+      this.select[0] = this.value;
+      this.ok();
+    }
+  },
+  created() {
+    this.$store.dispatch("enumeration/getProjectTypeList").then(res => {
+      this.options = [res];
+      this.ok();
+    });
   }
 };
 </script>
@@ -184,4 +194,3 @@ export default {
   }
 }
 </style>
-

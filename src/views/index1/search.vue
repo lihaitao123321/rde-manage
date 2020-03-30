@@ -9,7 +9,7 @@
       >
         <!-- drawer content -->
         <div slot="drawer" style="height: 100%;">
-          <SearchOptions></SearchOptions>
+          <SearchOptions v-model="rightOptions" @search="drawerVisibility=false;refresh()"></SearchOptions>
         </div>
         <!-- main content -->
         <div class="main_content">
@@ -35,7 +35,7 @@
             <div class="search-history">
               <div class="title">
                 <div class="history-title">{{ ids.length > 0 ?'历史记录':'为您搜索到的内容' }}</div>
-                <div class="clear-btn" v-if="ids.length > 0">清空记录</div>
+                <div class="clear-btn" v-if="ids.length > 0" @click="clearHistory">清空记录</div>
               </div>
             </div>
             <div class="search-list">
@@ -104,7 +104,7 @@
 import SearchOptions from "@/views/index1/components/searchOptions";
 import { Scroller, Drawer } from "vux";
 import { mapState, mapActions } from "vuex";
-import historyModel from "@/util/projectHistory";
+import historyModel from "@/plugins/projectHistory";
 export default {
   components: {
     Scroller,
@@ -115,9 +115,7 @@ export default {
     return {
       tabActive: 0,
       seacrhText: "",
-      rightOptions: {
-        value: ""
-      },
+
       options: [
         {
           value: "12",
@@ -142,7 +140,13 @@ export default {
       pageNum: 1,
       pageSize: 10,
       keywords: "",
-      ids:[],
+      ids: [],
+      rightOptions: {
+        areaId: "",
+        projectType: "",
+        beginDesignLoad: "",
+        endDesignLoad: ""
+      },
       pullupDefaultConfig: {
         content: "上拉加载更多",
         pullUpHeight: 60,
@@ -165,6 +169,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["getProjectTypeList"]),
     async loadMore() {
       if (this.dataList.length < this.pageSize * this.pageNum) {
         return false;
@@ -192,10 +197,7 @@ export default {
         method: "/cloud/api/app/firstpage/getProjectData",
         data: {
           // keywords: this.keywords.trim(),
-          areaId: null, //项目地点
-          projectType: null, //项目类型
-          beginDesignLoad: null, //负载下限
-          endDesignLoad: null, //负载上限
+          ...this.rightOptions,
           projectIds: this.ids, //项目id
           pageNum: this.pageNum,
           pageSize: this.pageSize
@@ -212,12 +214,15 @@ export default {
           });
           if (this.dataList.length < this.pageSize * this.pageNum) {
             this.$refs.scrollerBottom.disablePullup();
-            this.$vux.toast.text("没有更多数据了");
           } else {
             this.$refs.scrollerBottom.enablePullup();
           }
         }
       });
+    },
+    clearHistory() {
+      historyModel.clearHistory();
+      this.refresh();
     },
     openProject(item) {
       historyModel.editHistory(item.id);

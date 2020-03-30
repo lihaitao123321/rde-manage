@@ -8,51 +8,8 @@
       :drawer-style="{'background-color':'white', width: '330px'}"
     >
       <!-- drawer content -->
-      <div slot="drawer">
-        <div class="rightWarp">
-          <div class="header">项目</div>
-          <div class="list">
-            <div class="little_title">项目位置:</div>
-            <el-select v-model="value" placeholder="国家" style="width: 90px;">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <el-select v-model="value" placeholder="省份" style="width: 90px;">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <el-select v-model="value" placeholder="城市" style="width: 90px;">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <div class="little_title">项目类型：</div>
-            <el-select v-model="value" placeholder="项目类型" style="width: 185px;">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <div class="little_title">设计负荷：</div>
-            <el-input v-model="value" style="width:100px"></el-input>
-            <span>KW</span>一
-            <el-input v-model="value" style="width:100px"></el-input>
-            <span>KW</span>
-          </div>
-        </div>
+      <div slot="drawer" style="height: 100%;">
+        <SearchOptions v-model="rightOptions" @search="drawerVisibility=false;refresh()"></SearchOptions>
       </div>
       <!-- main content -->
       <div class="main_content">
@@ -87,7 +44,12 @@
           height="-80"
         >
           <div class="content">
-            <div class="content_item" v-for="item in dataList" :key="item.id" @click="onClick(item)">
+            <div
+              class="content_item"
+              v-for="item in dataList"
+              :key="item.id"
+              @click="onClick(item)"
+            >
               <div class="item_top">
                 <div class="line">
                   <div class="label">项目名称:</div>
@@ -129,16 +91,14 @@
 </template>
 
 <script>
-import {
-  Scroller,
-  Drawer,
-} from "vux";
+import { Scroller, Drawer } from "vux";
 import { mapState, mapActions } from "vuex";
-
+import SearchOptions from "@/views/index1/components/searchOptions";
 export default {
   components: {
     Scroller,
     Drawer,
+    SearchOptions
   },
   data() {
     return {
@@ -190,7 +150,10 @@ export default {
       tabActive: 0,
       value: "",
       rightOptions: {
-        value: ""
+        areaId: "",
+        projectType: "",
+        beginDesignLoad: "",
+        endDesignLoad: ""
       },
       drawerVisibility: false,
       showMode: "push",
@@ -233,10 +196,7 @@ export default {
       return this.Tools.ajax({
         method: "/cloud/api/app/firstpage/getProjectData",
         data: {
-          areaId: null, //项目地点
-          projectType: null, //项目类型
-          beginDesignLoad: null, //负载下限
-          endDesignLoad: null, //负载上限
+          ...this.rightOptions,
           projectIds: [], //项目id
           pageNum: this.pageNum,
           pageSize: this.pageSize
@@ -254,20 +214,20 @@ export default {
           });
           if (this.dataList.length < this.pageSize * this.pageNum) {
             this.$refs.scrollerBottom.disablePullup();
-            this.$vux.toast.text('没有更多数据了')
+            this.$vux.toast.text("没有更多数据了");
           } else {
             this.$refs.scrollerBottom.enablePullup();
           }
         }
       });
     },
-    onClick(item){
-      this.$bus.emit('oNSetOneProduct',item);
+    onClick(item) {
+      this.$bus.emit("oNSetOneProduct", item);
       this.$router.goBack();
     },
     showDrawer() {
       this.drawerVisibility = !this.drawerVisibility;
-    },
+    }
   }
 };
 </script>

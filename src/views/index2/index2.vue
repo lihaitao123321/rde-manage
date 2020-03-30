@@ -1,74 +1,74 @@
 <template>
-    <div class="t_page">
-        <div class="search-header">
-            <div class="back-icon" @click="$router.goBack()">
-                <img style="height: 100%;width: 100%" src="../../assets/images/index2/返回图标@2x.png">
-            </div>
-            <div class="search">
-                <div class="input_warp">
-                    <div class="left_search_icon">
-                        <i class="el-icon-search"></i>
-                    </div>
-                    <div class="search_content">
-                        <input placeholder="搜索项目" readonly @click="openSearchPage">
-                    </div>
-                </div>
-            </div>
+  <div class="t_page">
+    <div class="search-header">
+      <div class="back-icon" @click="$router.goBack()">
+        <img style="height: 100%;width: 100%" src="../../assets/images/index2/返回图标@2x.png">
+      </div>
+      <div class="search">
+        <div class="input_warp">
+          <div class="left_search_icon">
+            <i class="el-icon-search"></i>
+          </div>
+          <div class="search_content">
+            <input placeholder="搜索项目" readonly @click="openSearchPage">
+          </div>
         </div>
-        <div class="left">
-            <div class="blue">{{leftModel.projectCount || 0}}</div>
-            <div class="text">项目数</div>
-            <div class="blue">{{leftModel.deviceCount || 0}}</div>
-            <div class="text">设备数</div>
-            <div class="blue" style="color: #1ACC83FF;">{{leftModel.onlineRate*100}}%</div>
-            <div class="text">在线率</div>
-            <div class="blue">{{leftModel.runingRate*100}}%</div>
-            <div class="text">运行率</div>
-            <div class="blue" style="color:#D22642FF;">{{leftModel.alarmRate*100}}%</div>
-            <div class="text">报警率</div>
-        </div>
-        <div class="goodsInfo" v-if="showProduct">
-            <div class="header">
-                <x-icon type="ios-close-empty" size="30" @click="showProduct=false"></x-icon>
-                <div class="navigation" @click="openAmap">导航</div>
-            </div>
-            <div class="content_item" @click="openSiteInfo">
-                <div class="item_top">
-                    <div class="line">
-                        <div class="label">项目名称:</div>
-                        <div class="value">{{productModel.name}}</div>
-                    </div>
-                    <div class="line">
-                        <div class="label">项目位置:</div>
-                        <div class="value">{{productModel.address}}</div>
-                    </div>
-                    <div class="line">
-                        <div class="label">项目类型 :</div>
-                        <div class="value">{{productModel.projectType}}</div>
-                    </div>
-                    <div class="line">
-                        <div class="label">设计负荷:</div>
-                        <div class="value">{{productModel.designLoad}}</div>
-                    </div>
-                </div>
-                <div class="item_bottom">
-                    <div class="online">
-                        <span class="label">在线率：</span>
-                        <span class="color">{{productModel.onlineRate*100}}%</span>
-                    </div>
-                    <div class="run">
-                        <span class="label">运行率：</span>
-                        <span>{{productModel.runingRate*100}}%</span>
-                    </div>
-                    <div class="warn">
-                        <span class="label">报警率：</span>
-                        <span>{{productModel.alarmRate*100}}%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="content" id="index1_content_map"></div>
+      </div>
     </div>
+    <div class="left">
+      <div class="blue">{{leftModel.projectCount || 0}}</div>
+      <div class="text">项目数</div>
+      <div class="blue">{{leftModel.deviceCount || 0}}</div>
+      <div class="text">设备数</div>
+      <div class="blue" style="color: #1ACC83FF;">{{leftModel.onlineRate*100}}%</div>
+      <div class="text">在线率</div>
+      <div class="blue">{{leftModel.runingRate*100}}%</div>
+      <div class="text">运行率</div>
+      <div class="blue" style="color:#D22642FF;">{{leftModel.alarmRate*100}}%</div>
+      <div class="text">报警率</div>
+    </div>
+    <div class="goodsInfo" v-if="showProduct">
+      <div class="header">
+        <x-icon type="ios-close-empty" size="30" @click="showProduct=false"></x-icon>
+        <div class="navigation" @click="openAmap">导航</div>
+      </div>
+      <div class="content_item" @click="openProjectDetail">
+        <div class="item_top">
+          <div class="line">
+            <div class="label">项目名称:</div>
+            <div class="value">{{productModel.name}}</div>
+          </div>
+          <div class="line">
+            <div class="label">项目位置:</div>
+            <div class="value">{{productModel.address}}</div>
+          </div>
+          <div class="line">
+            <div class="label">项目类型 :</div>
+            <div class="value">{{productModel.projectType}}</div>
+          </div>
+          <div class="line">
+            <div class="label">设计负荷:</div>
+            <div class="value">{{productModel.designLoad}}</div>
+          </div>
+        </div>
+        <div class="item_bottom">
+          <div class="online">
+            <span class="label">在线率：</span>
+            <span class="color">{{productModel.onlineRate*100}}%</span>
+          </div>
+          <div class="run">
+            <span class="label">运行率：</span>
+            <span>{{productModel.runingRate*100}}%</span>
+          </div>
+          <div class="warn">
+            <span class="label">报警率：</span>
+            <span>{{productModel.alarmRate*100}}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content" id="index1_content_map"></div>
+  </div>
 </template>
 <script>
 import startAppModel from "@/plugins/startAppModel";
@@ -146,10 +146,7 @@ export default {
       this.locationMark = marker;
       this.map.setZoomAndCenter(13, position);
     },
-    //打开站点详情
-    openSiteInfo() {
-      this.$router.push("/siteInfoLeft/" + this.productModel.siteId);
-    },
+
     //收藏
     async collectionProduct() {
       await this.Tools.ajax({
@@ -214,7 +211,10 @@ export default {
     },
     async showAMarker(item) {
       let obj = null;
-      if (this.leftModel.appProjectModels && this.leftModel.appProjectModels.length > 0) {
+      if (
+        this.leftModel.appProjectModels &&
+        this.leftModel.appProjectModels.length > 0
+      ) {
         for (let i = 0; i < this.leftModel.appProjectModels.length; i++) {
           if (item.id === this.leftModel.appProjectModels[i].id) {
             obj = this.leftModel.appProjectModels[i];
@@ -222,6 +222,7 @@ export default {
           }
         }
       }
+      console.log("obj", obj);
       await this.Tools.ajax({
         method: "/cloud/api/app/map/getProjectById",
         data: {
@@ -233,8 +234,14 @@ export default {
             ...obj,
             ...data.data
           };
-          this.showProduct = true;
-          this.map.setZoomAndCenter(13, [this.showProduct.gdLongitude, this.showProduct.gdLatitude]);
+
+          this.map.setZoomAndCenter(13, [
+            this.productModel.gdLongitude,
+            this.productModel.gdLatitude
+          ]);
+          this.$nextTick(res => {
+            this.showProduct = true;
+          });
         }
       });
     },
@@ -313,6 +320,10 @@ export default {
         this.productModel.siteName
       );
     },
+    //打开项目详情
+    openProjectDetail() {
+      this.$router.push("/xiangMuDetail/" + this.productModel.id);
+    }
   }
 };
 </script>

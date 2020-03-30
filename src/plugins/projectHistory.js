@@ -1,37 +1,41 @@
-export default{
-    addHistory(id){
+export default {
+    addHistory(id) {
         let list = this.getHistoryList()
         list.push(id)
         localStorage.setItem('projectHistoryList', JSON.stringify(list))
     },
-    deleteHistory(id){
+    deleteHistory(id) {
         let list = this.getHistoryList()
         for (let i = 0; i < list.length; i++) {
-            if(list[i].id === id){
-                list.splice(i,1)
+            if (list[i].id === id) {
+                list.splice(i, 1)
                 break
             }
         }
         localStorage.setItem('projectHistoryList', JSON.stringify(list))
     },
-    editHistory(id){
+    //外部调用
+    editHistory(id) {
         let list = this.getHistoryList()
         for (let i = 0; i < list.length; i++) {
-            if(list[i].id === id){
-                list.splice(i,1)
+            if (list[i].id === id) {
+                list.splice(i, 1)
                 list.unShift(id)
                 return
             }
         }
         this.addHistory(id)
     },
-    getHistoryList(){
+    getHistoryList() {
         let list = localStorage.getItem('projectHistoryList')
-        if(list){
+        if (list) {
             list = JSON.parse(list)
-        }else{
+        } else {
             list = []
         }
         return list
+    },
+    clearHistory() {
+        localStorage.setItem('projectHistoryList', '')
     }
 }

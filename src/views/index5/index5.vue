@@ -1,21 +1,27 @@
 <template>
   <div class="t_page">
     <div class="top" @click="toPersonal">
-      <div class="img">
-        <img :src=Tools.config.host+Tools.config.imageFtpUrl+form.imageUrl alt="">
-      </div>
+      <div class="img" :style="{backgroundImage:'url('+loginInfo.pic+')'}"></div>
       <div class="top-right">
         <div>
-          <span class="name">{{form.username}}</span>
+          <span class="name">{{loginInfo.username}}</span>
           <img width="17" src="../../assets/images/index5/认证@2x.png">
         </div>
-        <div>{{form.companyName}}</div>
+        <div>{{company.name}}</div>
       </div>
       <div class="right-icon">
         <i class="el-icon-arrow-right"></i>
       </div>
     </div>
     <Group class="group">
+      <cell title="切换企业" :value="company.name" is-link :link="{path:'/switchCompany'}">
+        <img
+          slot="icon"
+          width="16"
+          style="margin: 5px 19px 0 0;"
+          src="../../assets/images/index5/修改密码(1)@2x.png"
+        >
+      </cell>
       <cell :title="cellData.changePassword" is-link :link="{path:'/changePassword'}">
         <img
           slot="icon"
@@ -71,7 +77,7 @@
 
 <script>
 import { Group, Cell, XButton, Flexbox, FlexboxItem } from "vux";
-
+import { mapGetters } from "vuex";
 export default {
   components: {
     Group,
@@ -102,9 +108,10 @@ export default {
       }
     };
   },
-  mounted() {
-    this.init();
+  computed: {
+    ...mapGetters(["loginInfo", "company"])
   },
+  mounted() {},
   methods: {
     init() {
       this.Tools.ajax({
@@ -112,9 +119,9 @@ export default {
         data: {}
       }).then(res => {
         if (res.code === 0) {
-          this.form = res.data
+          this.form = res.data;
         } else {
-          this.$vux.toast.text('加载失败');
+          this.$vux.toast.text("加载失败");
         }
       });
     },
@@ -138,6 +145,7 @@ export default {
       margin-left: 30px;
       margin-top: 20px;
       border-radius: 50%;
+      background-size: cover;
     }
     .top-right {
       margin: 34px;
@@ -159,7 +167,7 @@ export default {
 
   .group {
     margin-top: -100px;
-    padding: 10px 20px;
+    padding: 10px 15px;
     /deep/ .weui-cells {
       margin-top: 1.17647059em;
       background-color: #ffffff;

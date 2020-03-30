@@ -1,25 +1,30 @@
 <template>
-  <div class="t_page">
-    <x-header :left-options="{preventGoBack:true}" @on-click-back="$router.goBack()">选择登录企业</x-header>
-    <div class="content">
-      <div class="item_c" v-for="item in dataList" :key="item.id" @click="selectCompany(item)">
-        <img :src="Tools.config.host + item.logo">
-        <div>{{item.name}}</div>
-      </div>
+    <div class="t_page">
+        <x-header :left-options="{preventGoBack:true}" @on-click-back="$router.goBack()">选择登录企业</x-header>
+        <div class="content">
+            <checklist
+                label-position="left"
+                :options="dataList"
+                v-model="companyId"
+                :max="1"
+                @on-change="selectCompany"
+            ></checklist>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import { XHeader } from "vux";
+import { XHeader, Checklist } from "vux";
+import { mapGetters } from "vuex";
 export default {
   components: {
-    XHeader
+    XHeader,
+    Checklist
   },
   data() {
     return {
+      companyId: [],
       dataList: [],
-
       username: "",
       telephone: "17630378060",
       password: "",
@@ -34,9 +39,14 @@ export default {
       showMenus: false
     };
   },
-  created() {},
+  created() {
+    this.companyId = [this.company.id];
+  },
   mounted() {
     this.getAllCompany();
+  },
+  computed: {
+    ...mapGetters(["company"])
   },
   methods: {
     getAllCompany() {
@@ -44,20 +54,27 @@ export default {
         method: "/cloud/api/findByUserId",
         data: {}
       }).then(res => {
+        res.forEach(item => {
+          item.key = item.id;
+          item.value = item.name;
+        });
         this.dataList = res;
       });
     },
-    selectCompany(item) {
+    selectCompany(value, label) {
+      if (value.length === 0 || value[0] === this.company.id) {
+        return;
+      }
       this.Tools.ajax({
         method: "/cloud/api/company/changeAppToken",
         data: {
-          companyId: item.id
+          companyId: value[0]
         }
       }).then(res => {
         if (res.code === 0) {
-          this.$store.commit("setCompany", item);
+          this.$store.commit("setCompany", { id: value[0], name: label[0] });
           localStorage.setItem("userToken", res.data);
-          this.$router.push("home");
+          this.$router.goBack();
         } else {
           this.$vux.toast.text("选择公司失败");
         }

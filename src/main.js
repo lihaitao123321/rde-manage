@@ -9,7 +9,10 @@ Vue.use(VueBus);
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(ElementUI, { size: 'mini', zIndex: 3000 });
+Vue.use(ElementUI, {
+  size: 'mini',
+  zIndex: 3000
+});
 
 
 import './css/main.less';
@@ -17,26 +20,34 @@ import './css/main.less';
 import './assets/font-awesome-4.7.0/css/font-awesome.css'
 //多选button组件
 import CheckButtonList from './components/checkButtonList'
-Vue.component('CheckButtonList',CheckButtonList);
+Vue.component('CheckButtonList', CheckButtonList);
 //遮罩弹框组件
 import PopMask from './components/pop-mask/PopMask.vue'
-Vue.component('PopMask',PopMask);
+Vue.component('PopMask', PopMask);
 //公用筛选组件
 import Condition from './components/condition/Condition.vue'
-Vue.component('Condition',Condition);
+Vue.component('Condition', Condition);
 //加载中组件
-import  { LoadingPlugin } from 'vux'
+import {
+  LoadingPlugin
+} from 'vux'
 Vue.use(LoadingPlugin)
+import {
+  TransferDom
+} from 'vux'
+Vue.directive('TransferDom', TransferDom)
 //自定义路由方法
 router.goBack = function () {
   this.isBack = true;
   window.history.back();
 };
 import Tools from './util/Tools'
-Vue.prototype.Tools=Tools;
+Vue.prototype.Tools = Tools;
 
 
-import  { ToastPlugin } from 'vux'
+import {
+  ToastPlugin
+} from 'vux'
 import Vuex from "vuex";
 Vue.use(ToastPlugin);
 

@@ -4,7 +4,7 @@ import login from './views/login/login.vue'
 import register from './views/login/register.vue'
 import registerOk from './views/login/registerOk.vue'
 import selectCompany from './views/login/selectCompany.vue'
-import home from './views/Home.vue'
+import home from './views/home.vue'
 import index1 from './views/index1/index1.vue'
 import index2 from './views/index2/index2.vue'
 import index3 from './views/index3/index3.vue'
@@ -56,7 +56,7 @@ import BoxRadio from './views/index3/BoxRadio'
 import CancelAlarm from './views/index3/CancelAlarm'
 import RemoveRecord from './views/index3/RemoveRecord'
 import video from './views/index3/video'
-
+import switchCompany from './views/index5/switchCompany'
 import baoJingListNew from './views/index3/baojingListNew'
 import caoZuoList from './views/index3/caoZuoList';
 import sheBeiList from './views/index3/sheBeiList';
@@ -79,9 +79,9 @@ export default new Router({
             component: login
         },
         {
-            path:'/BoxRadio',
-            name:'BoxRadio',
-            component:BoxRadio
+            path: '/BoxRadio',
+            name: 'BoxRadio',
+            component: BoxRadio
         },
         {
             path: '/baojingList',
@@ -89,9 +89,9 @@ export default new Router({
             component: baojingList
         },
         {
-            path:'/baojingListNew',
-            name:'baojingListNew',
-            component:baojingListNew
+            path: '/baojingListNew',
+            name: 'baojingListNew',
+            component: baojingListNew
         },
         {
             path: '/ReportAna',
@@ -152,11 +152,10 @@ export default new Router({
             path: '/home',
             name: 'home',
             component: home,
-            meta:{
-                keepAlive:true
+            meta: {
+                keepAlive: true
             },
-            children: [
-                {
+            children: [{
                     path: '',
                     redirect: to => {
                         return 'index1';
@@ -166,45 +165,32 @@ export default new Router({
                     path: 'index1',
                     name: 'index1',
                     component: index1,
-                    meta:{
-                        keepAlive:true
-                    },
-                },
-                {
-                    path: 'index2',
-                    name: 'index2',
-                    component: index2,
-                    meta:{
-                        keepAlive:true
-                    },
                 },
                 {
                     path: 'index4',
                     name: 'index4',
                     component: index4,
-                    meta:{
-                        keepAlive:true
-                    },
                 },
                 {
                     path: 'index5',
                     name: 'index5',
-                    component: index5,
-                    meta:{
-                        keepAlive:true
-                    },
+                    component: index5
                 }
             ]
+        },
+        {
+            path: '/index2',
+            name: 'index2',
+            component: index2,
+            meta: {
+                keepAlive: true
+            },
         },
         {
             path: '/index3',
             name: 'index3',
             component: index3,
-            meta:{
-                keepAlive:true
-            },
-            children: [
-                {
+            children: [{
                     path: '',
                     redirect: to => {
                         return 'baoJingListNew';
@@ -213,42 +199,27 @@ export default new Router({
                 {
                     path: 'baoJingListNew',
                     name: 'baoJingListNew',
-                    component: baoJingListNew,
-                    meta:{
-                        keepAlive:true
-                    },
+                    component: baoJingListNew
                 },
                 {
                     path: 'caoZuoList',
                     name: 'caoZuoList',
-                    component: caoZuoList,
-                    meta:{
-                        keepAlive:true
-                    },
+                    component: caoZuoList
                 },
                 {
                     path: 'sheBeiList',
                     name: 'sheBeiList',
-                    component: sheBeiList,
-                    meta:{
-                        keepAlive:true
-                    },
+                    component: sheBeiList
                 },
                 {
                     path: 'xiTongList',
                     name: 'xiTongList',
-                    component: xiTongList,
-                    meta:{
-                        keepAlive:true
-                    },
+                    component: xiTongList
                 },
                 {
                     path: 'xiangMuList',
                     name: 'xiangMuList',
-                    component: xiangMuList,
-                    meta:{
-                        keepAlive:true
-                    },
+                    component: xiangMuList
                 }
             ]
         },
@@ -436,6 +407,12 @@ export default new Router({
             path: '/video',
             name: 'video',
             component: video
+        },
+        {
+            path: '/switchCompany',
+            name: 'switchCompany',
+            component: switchCompany
         }
+
     ]
 })
