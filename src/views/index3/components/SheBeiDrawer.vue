@@ -1,64 +1,90 @@
 <template>
   <div class="rightWarp">
-    <div class="header">项目</div>
+    <div class="header">设备</div>
     <div class="footer">
       <div class="reset" @click="searchReset">重置</div>
       <div class="ok" @click="searchOk">确认</div>
     </div>
-    <div class="list">
-      <AreaPopupPicker v-model="defaultData.areaId"/>
-      <ProjectPopupPicker v-model="defaultData.projectType"/>
-      <div class="little_title">设计负荷：</div>
-      <div style="display: flex;align-items: center;">
-        <input class="inputClass" v-model="defaultData.beginDesignLoad">
-        <span class="KW">KW</span>
-        <hr class="hr">
-        <input class="inputClass" v-model="defaultData.endDesignLoad">
-        <span class="KW">KW</span>
-      </div>
+    <div class="list" v-if="showOptions">
+      <DeviceTypePicker v-model="defaultData.deviceTypeId"></DeviceTypePicker>
+      <DeviceModelPicker v-model="defaultData.deviceModelId"></DeviceModelPicker>
+      <DeviceSystemPicker v-model="defaultData.deviceSystemId"></DeviceSystemPicker>
+      <DeviceProjectPicker v-model="defaultData.deviceProjectId"></DeviceProjectPicker>
+      <div class="little_title">通讯状态：</div>
+      <CheckButtonList :data="checkedButtonDics1" v-model="defaultData.deviceCommStatusId"></CheckButtonList>
+      <div class="little_title">工作状态：</div>
+      <CheckButtonList :data="checkedButtonDics2" v-model="defaultData.deviceWorkStatusId"></CheckButtonList>
+      <div class="little_title">报警状态：</div>
+      <CheckButtonList :data="checkedButtonDics3" v-model="defaultData.deviceAlarmStatusId"></CheckButtonList>
     </div>
   </div>
 </template>
 <script>
-import ProjectPopupPicker from "@/components/searchPicker/ProjectPopupPicker";
-import AreaPopupPicker from "@/components/searchPicker/AreaPopupPicker";
+import DeviceTypePicker from "@/components/searchPicker/DeviceTypePicker";
+import DeviceModelPicker from "@/components/searchPicker/DeviceModelPicker";
+import DeviceSystemPicker from "@/components/searchPicker/DeviceSystemPicker";
+import DeviceProjectPicker from "@/components/searchPicker/DeviceProjectPicker";
+import CheckButtonList from "@/components/checkButtonList";
 export default {
   name: "searchOptions",
   components: {
-    ProjectPopupPicker,
-    AreaPopupPicker,
+    DeviceTypePicker,
+    DeviceModelPicker,
+    DeviceSystemPicker,
+    DeviceProjectPicker,
+    CheckButtonList,
   },
   props: {
     data: {
       type: Object,
       default() {
         return {
-          areaId: "",
-          projectType: "",
-          beginDesignLoad: "",
-          endDesignLoad: "",
-          deviceId: ""
+          deviceTypeId: '',
+          deviceModelId: '',
+          deviceSystemId: '',
+          deviceProjectId:'',
+          deviceCommStatusId:[],
+          deviceWorkStatusId:[],
+          deviceAlarmStatusId:[],
         };
       }
     }
   },
   data() {
     return {
-      defaultData: JSON.parse(JSON.stringify(this.data))
+      showOptions:false,//防止子组件多次请求接口
+      defaultData: JSON.parse(JSON.stringify(this.data)),
+      checkedButtonDics1:[],
+      checkedButtonDics2:[],
+      checkedButtonDics3:[]
     };
   },
   methods: {
+    async initData(){
+      //初次加载数据
+      await this.$store.dispatch("enumeration/getDeviceTypeList");
+      this.showOptions = true
+      this.checkedButtonDics1 = await this.$store.dispatch("enumeration/getDeviceCommStatusList");
+      this.checkedButtonDics2 = await this.$store.dispatch("enumeration/getDeviceWorkStatusList");
+      this.checkedButtonDics3 = await this.$store.dispatch("enumeration/getDeviceAlarmStatusList");
+    },
     searchReset() {
-      this.defaultData.areaId = "";
-      this.defaultData.projectType = "";
-      this.defaultData.beginDesignLoad = "";
-      this.defaultData.endDesignLoad = "";
+      this.defaultData.deviceTypeId = ""
+      this.defaultData.deviceModelId = ""
+      this.defaultData.deviceSystemId = ""
+      this.defaultData.deviceProjectId = ""
+      this.defaultData.deviceCommStatusId = []
+      this.defaultData.deviceWorkStatusId = []
+      this.defaultData.deviceAlarmStatusId = []
       this.searchOk();
     },
     searchOk() {
       this.$emit("input", JSON.parse(JSON.stringify(this.defaultData)));
       this.$emit("search");
     }
+  },
+  created(){
+    this.initData()
   }
 };
 </script>
@@ -181,4 +207,3 @@ export default {
   }
 }
 </style>
-

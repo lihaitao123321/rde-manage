@@ -1,7 +1,7 @@
 <template>
     <div class="outer">
-        <div class="item" :style="getStyle(item.checked)" v-for="(item,index) in localData" @click="clickItem(index)">
-            {{item.label}}
+        <div class="item" :style="getStyle(item.value)" v-for="(item,index) in data" :key="index" @click="clickItem(item.value)">
+            {{item.name}}
         </div>
     </div>
 </template>
@@ -14,15 +14,14 @@
         props:['data','value'],
         data() {
             return {
-                styleModel:{},
-                localData: []
+                defaultValues:this.value
             }
         },
         created() {
             this.initData();
         },
         watch: {
-            data() {
+            value(){
                 this.initData();
             }
         },
@@ -35,30 +34,21 @@
         },
         methods: {
             initData(){
-
-                let localData=JSON.parse(JSON.stringify(this.data));
-                for (let i = 0; i < localData.length; i++) {
-                    if(!localData[i].checked){
-                        localData[i].checked=false;
+                this.defaultValues = this.value
+            },
+            clickItem(value) {
+                for (let i = 0; i < this.defaultValues.length; i++) {
+                    if(this.defaultValues[i] === value){
+                        this.defaultValues.splice(i,1)
+                        this.$emit('input',this.defaultValues);
+                        return
                     }
                 }
-                this.localData=localData;
+                this.defaultValues.push(value)
+                this.$emit('input',this.defaultValues);
             },
-            clickItem(index) {
-                this.localData[index].checked = !this.localData[index].checked;
-                this.$emit('input',this.getCheckList());
-            },
-            getCheckList() {
-                let list = [];
-                for (let i = 0; i < this.localData.length; i++) {
-                    if(this.localData[i].checked){
-                        list.push(this.localData[i]);
-                    }
-                }
-                return list;
-            },
-            getStyle(bool){
-                if(bool){
+            getStyle(value){
+                if(this.defaultValues.includes(value)){
                     return {
                         color:"white",
                         backgroundColor:"#2B7FF3"

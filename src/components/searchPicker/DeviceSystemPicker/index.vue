@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="little_title">设备类型：</div>
+        <div class="little_title">所属系统：</div>
         <div class="uf uf-ac picker" @click="show=true">
             <div class="uf-f1 placeholder">{{placeholder}}</div>
             <i class="el-icon-caret-bottom sanjiao"></i>
@@ -10,7 +10,7 @@
                 <popup-header
                     left-text="取消"
                     right-text="确定"
-                    title="设备类型"
+                    title="所属系统"
                     :show-bottom-border="false"
                     @on-click-left="show = false"
                     @on-click-right="ok"
@@ -68,9 +68,11 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("enumeration/getProjectTypeList").then(res => {
-      this.options = [res];
-      this.ok();
+    this.$store.dispatch("enumeration/getDeviceSystemList").then(res => {
+      if(res.length>0){
+        this.options = [res];
+        this.ok();
+      }
     });
   }
 };
@@ -151,7 +153,7 @@ export default {
     color: #e3e3e6;
     overflow-y: auto;
     .picker {
-      width: 196px;
+      width: 298px;
       height: 34px;
       padding: 10px;
       background: rgba(242, 242, 245, 1);

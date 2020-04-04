@@ -8,7 +8,7 @@
     >
       <!-- drawer content -->
       <div slot="drawer" style="height: 100%;">
-        <SearchOptions v-model="rightOptions" @search="drawerVisibility=false;refresh()"></SearchOptions>
+        <SheBeiDrawer v-model="rightOptions" @search="drawerVisibility=false;refresh()"></SheBeiDrawer>
       </div>
       <!-- main content -->
       <div class="main_content">
@@ -98,12 +98,12 @@
 <script>
 import { Scroller, Drawer } from "vux";
 import { mapState } from "vuex";
-import SearchOptions from "@/views/index1/components/searchOptions";
+import SheBeiDrawer from "./components/SheBeiDrawer";
 export default {
   components: {
     Scroller,
     Drawer,
-    SearchOptions
+    SheBeiDrawer
   },
   data() {
     return {
@@ -132,10 +132,13 @@ export default {
       showModeValue: "push",
       drawerVisibility: false,
       rightOptions: {
-        areaId: "",
-        projectType: "",
-        beginDesignLoad: "",
-        endDesignLoad: ""
+        deviceTypeId: '',
+        deviceModelId: '',
+        deviceSystemId: '',
+        deviceProjectId:'',
+        deviceCommStatusId:[],
+        deviceWorkStatusId:[],
+        deviceAlarmStatusId:[],
       }
     };
   },
@@ -176,6 +179,12 @@ export default {
       return this.Tools.ajax({
         method: "/cloud/api/app/monitor/device/getDevicesPage",
         data: {
+          deviceType:this.rightOptions.deviceTypeId,
+          modelId:this.rightOptions.deviceModelId,
+          projectId:this.rightOptions.deviceProjectId,
+          communicationStatus:this.rightOptions.deviceCommStatusId.join(','),
+          workStatus:this.rightOptions.deviceWorkStatusId.join(','),
+          alarmStatus:this.rightOptions.deviceAlarmStatusId.join(','),
           pageNum: this.pageNum,
           pageSize: this.pageSize
         }

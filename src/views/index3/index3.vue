@@ -115,6 +115,7 @@ export default {
 
 <style lang="less" scoped>
 .t_page{
+  position: relative;
   .content {
     position: absolute;
     z-index: 1;
@@ -122,8 +123,6 @@ export default {
     right: 0;
     bottom: 45px;
     left: 0;
-    width: 100%;
-    overflow-y: auto;
   }
 }
 </style>
