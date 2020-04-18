@@ -104,6 +104,7 @@
         methods: {
             openDetail(item){
                 // this.$store.commit('projectListFun', item);
+                // console.log('/xiangMuDetail/' + item.id);
                 this.$router.push('/xiangMuDetail/' + item.id)
             },
             getProListFun(){

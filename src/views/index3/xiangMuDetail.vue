@@ -95,37 +95,85 @@
 <!--                            <div class="action-number">35</div>-->
 <!--                        </div>-->
                     </div>
+
+
                     <div class="all-mon">
                         <div class="title">
                             <div>总体监控预览</div>
-                            <div @click="jumpUrl('jiankongbaobiao')"><span>进入监控</span>
+                            <div @click="jumpUrl('jiankongbaobiao')">
+                                <span>进入监控</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
                         </div>
-                        <div class="chart-box mb13">
-
+                        <div class="uf chart-box mb13">
+                            <div class="uf-f1">
+                                <vCircle title="在线率" :num="projectVo.onlineRate"></vCircle>
+                            </div>
+                            <div class="uf-f1">
+                                <vCircle
+                                        title="运行率"
+                                        color="l(0,0) 0:#273DDC 0.5:#388DEF 1:#273DDC"
+                                        :num="projectVo.runingRate"
+                                ></vCircle>
+                            </div>
+                            <div class="uf-f1">
+                                <vCircle
+                                        title="报警率"
+                                        color="l(0,0) 0:#FF684E 0.5:#FFA55D 1:#FF684E"
+                                        :num="projectVo.alarmRate"
+                                ></vCircle>
+                            </div>
                         </div>
                     </div>
+
+
+
+<!--                    <div class="all-mon">-->
+<!--                        <div class="title">-->
+<!--                            <div>总体监控预览</div>-->
+<!--                            <div @click="jumpUrl('jiankongbaobiao')"><span>进入监控</span>-->
+<!--                                <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="chart-box mb13">-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+
                     <div class="all-mon">
                         <div class="title">
                             <div>报警动态</div>
-                            <div @click="jumpUrl('baojingbaobiao')"><span>进入报警</span>
+                            <div @click="jumpUrl('baojingbaobiao')">
+                                <span>进入报警</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
                         </div>
                         <div class="pillar-box">
-                            <v-chart class="chart-box" :width="340" ref="demo3" :data="data3">
-                                <v-scale x field="title" />
-                                <v-scale y field="nub" />
-                                <v-bar series-field="name" :adjust="{
-                                    type: 'dodge',
-                                    marginRatio: 0.05 // 设置分组间柱子的间距
-                                }" />
-                                <v-tooltip show-value-in-legend />
-                            </v-chart>
+                            <pillar :dataList="[projectVo.alarmlevel2,projectVo.alarmlevel1,projectVo.alarmlevel0,projectVo.offlineCount]"></pillar>
                         </div>
-
                     </div>
+
+
+<!--                    <div class="all-mon">-->
+<!--                        <div class="title">-->
+<!--                            <div>报警动态</div>-->
+<!--                            <div @click="jumpUrl('baojingbaobiao')"><span>进入报警</span>-->
+<!--                                <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="pillar-box">-->
+<!--                            <v-chart class="chart-box" :width="340" ref="demo3" :data="data3">-->
+<!--                                <v-scale x field="title" />-->
+<!--                                <v-scale y field="nub" />-->
+<!--                                <v-bar series-field="name" :adjust="{-->
+<!--                                    type: 'dodge',-->
+<!--                                    marginRatio: 0.05 // 设置分组间柱子的间距-->
+<!--                                }" />-->
+<!--                                <v-tooltip show-value-in-legend />-->
+<!--                            </v-chart>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
 
 
 
@@ -150,14 +198,14 @@
                             </v-chart>
                         </div>
                     </div>
-                    <div class="all-mon">
+<!--                    <div class="all-mon">-->
 <!--                        <div class="title">-->
 <!--                            <div>新能源发电功率</div>-->
 <!--                            <div @click="jumpUrl('fadianbaobiao')"><span>详情</span>-->
 <!--                                <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>-->
 <!--                            </div>-->
 <!--                        </div>-->
-                        <div class="pillar-box">
+<!--                        <div class="pillar-box">-->
 <!--                            <v-chart :data="data5" class="chart-box" :width="340">-->
 <!--                                <v-scale x type="timeCat" />-->
 <!--                                <v-scale y :min="0" alias="%" />-->
@@ -167,16 +215,16 @@
 <!--                                        }" shape="smooth" />-->
 <!--                                <v-line shape="smooth"/>-->
 <!--                            </v-chart>-->
-                        </div>
-                    </div>
-                    <div class="all-mon">
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="all-mon">-->
 <!--                        <div class="title">-->
 <!--                            <div>绿色能源实时占比</div>-->
 <!--                            <div @click="jumpUrl('shishinengyuanbaobiao')"><span>详情</span>-->
 <!--                                <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>-->
 <!--                            </div>-->
 <!--                        </div>-->
-                        <div class="pillar-box">
+<!--                        <div class="pillar-box">-->
 <!--                            <v-chart class="chart-box" :width="340" :data="data6" :padding="[20, 'auto']">-->
 <!--                                <v-tooltip disabled />-->
 <!--                                <v-scale y :options="yOptions" />-->
@@ -185,8 +233,8 @@
 <!--                                <v-legend :options="legendOptions" />-->
 <!--                                <v-guide type="html" :options="htmlOptions" />-->
 <!--                            </v-chart>-->
-                        </div>
-                    </div>
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
 
@@ -200,6 +248,8 @@
         XHeader, Actionsheet, TransferDom, ButtonTab, ButtonTabItem, Tabbar, TabbarItem, Group, Cell, XInput, XButton,
         VChart, VLine, VArea, VTooltip, VLegend, VPie, VGuide, VBar, VScale, VPoint
     } from 'vux'
+    import vCircle from "@/components/circle1/index.vue";
+    import pillar from "@/components/pillar/index.vue";
     import warn from '../Warn/warn.js'
     const data6 = [
         { name: '清扫机器人', percent: 83.59, a: '1' },
@@ -227,7 +277,9 @@
             VGuide,
             VPie,
             VScale,
-            VPoint
+            VPoint,
+            vCircle,
+            pillar
         },
         data() {
             return {
@@ -266,6 +318,20 @@
                     { name: '运维设备', title: '警告', nub: 34.5 },
                     { name: '运维设备', title: '离线', nub: 99.7 }
                 ],
+                pageData: {
+                    projectCount: 0,
+                    deviceCount: 0,
+                    designLoad: 0,
+                    newEnergyCapacity: 0,
+                    onlineRate: 0,
+                    runingRate: 0,
+                    alarmRate: 0,
+                    alarmlevel0: 0,
+                    alarmlevel1: 0,
+                    alarmlevel2: 0,
+                    offlineCount: 0,
+                    powers:[]
+                },
                 data5: [
                     { time: '2016-08-08 00:00:00', tem: 10 },
                     { time: '2016-08-08 00:10:00', tem: 22 },
@@ -382,6 +448,9 @@
           async  getProjectDetailFun(){
              await   warn.getProjectDetailFun(this.$route.params.id).then(res=>{
                     if(res.code === 0){
+                        res.data.projectVo.onlineRate = Number(res.data.projectVo.onlineRate) * 100;
+                        res.data.projectVo.runingRate = Number(res.data.projectVo.runingRate) * 100;
+                        res.data.projectVo.alarmRate = Number(res.data.projectVo.alarmRate) * 100;
                         this.projectVo = res.data.projectVo;
                         if(Array.isArray(res.data.userCablePower) && res.data.userCablePower.length > 0){
                             let userPowerObj = {};let userPowerList = [];
