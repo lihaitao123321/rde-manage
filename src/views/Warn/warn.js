@@ -1,13 +1,32 @@
 import Tools from '../../util/Tools'
 let warns = {
     //报警列表
-    warnReportFun(page_num,page_size){
+    warnReportFun(data){
+        data = JSON.parse(JSON.stringify(data))
+        let beginDate = data.rangeTime[0]
+        if(beginDate){
+            beginDate = beginDate + ':00'
+        }
+        let endDate = data.rangeTime[1]
+        if(endDate){
+            endDate = endDate + ':00'
+        }
+        data = {
+            beginDate,
+            trafficStatus:'',
+            endDate,
+            workStatus:'',
+            devTypeId:data.deviceTypeId,
+            modelId:data.deviceModelId,
+            deviceId:'',
+            projectId:'',
+            subProjectId:'',
+            pageNum:data.pageNum,
+            pageSize:data.pageSize
+        }
         return  Tools.ajax({
             method: '/cloud/api/app/monitor/pageAlarm',
-            data: {
-                "pageSize":page_size,
-                "pageNum":page_num
-            }
+            data
         })
     },
     //报警管理-报警变量明细查询
