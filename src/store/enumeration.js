@@ -2,7 +2,8 @@ import Tools from '../util/Tools'
 import {
   getProjectTypeList,
   getAreaList,
-  getDeviceAround
+  getDeviceAround,
+  getUserList
 } from '@/api/enumeration'
 const state = {
   projectTypeList: [], //项目类型
@@ -14,6 +15,7 @@ const state = {
   deviceCommStatusList: [],//通讯状态
   deviceWorkStatusList: [],//工作状态
   deviceAlarmStatusList: [],//报警状态
+  userList:[],//操作人员
 }
 
 const mutations = {
@@ -31,6 +33,9 @@ const mutations = {
     state.deviceCommStatusList = JSON.parse(JSON.stringify(obj.deviceCommStatusList))
     state.deviceWorkStatusList = JSON.parse(JSON.stringify(obj.deviceWorkStatusList))
     state.deviceAlarmStatusList = JSON.parse(JSON.stringify(obj.deviceAlarmStatusList))
+  },
+  SET_USER: (state, list) => {
+    state.userList = list
   },
 }
 
@@ -167,6 +172,21 @@ const actions = {
         let res = await getDeviceAround()
         commit('SET_DEVICE_AROUND', res)
         resolve(res.deviceAlarmStatusList)
+      }
+    })
+  },
+  //报警状态
+  getUserList({
+     state,
+     commit
+   }) {
+    return new Promise(async (resolve, reject) => {
+      if (state.userList.length > 0) {
+        resolve(state.userList)
+      } else {
+        let res = await getUserList()
+        commit('SET_USER', res)
+        resolve(res)
       }
     })
   },

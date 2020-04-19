@@ -172,7 +172,7 @@
         },
         methods:{
             openSearchPage() {
-                this.$router.push("/sheBeiSearch");
+                this.$router.push("/baojingSearch");
             },
             getWarnFun(){
                 warn.warnReportFun({

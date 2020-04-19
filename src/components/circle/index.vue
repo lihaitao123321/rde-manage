@@ -29,7 +29,7 @@
       id="container"
       width="105"
       height="105"
-      style="width: 115px; height: 115px;"
+      style="width: 110px; height: 110px;"
     />
     <div class="title">{{this.title}}</div>
   </div>

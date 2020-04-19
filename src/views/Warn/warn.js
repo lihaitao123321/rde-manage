@@ -148,13 +148,32 @@ let warns = {
         })
     },
     //操作记录列表页
-    operationRecords(param1,param2){
+    operationRecords(data){
+        data = JSON.parse(JSON.stringify(data))
+        let beginTime = data.rangeTime[0]
+        if(beginTime){
+            beginTime = beginTime + ':00'
+        }
+        let endTime = data.rangeTime[1]
+        if(endTime){
+            endTime = endTime + ':00'
+        }
+        data = {
+            beginTime,
+            endTime,
+            devTypeId:data.deviceTypeId,
+            modelId:data.deviceModelId,
+            deviceId:data.deviceModelId,
+            projectId:data.deviceProjectId,
+            subProjectId:data.deviceProjectId,
+            type:data.handleType.join(','),
+            createdBy:data.userId,
+            pageNum:data.pageNum,
+            pageSize:data.pageSize
+        }
         return Tools.ajax({
             method:'/cloud/api/monitor/record/pageOperationRecord',
-            data:{
-                "pageNum": param1,
-                "pageSize": param2
-            }
+            data
         })
     },
     //项目数量接口

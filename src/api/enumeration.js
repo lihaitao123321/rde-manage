@@ -145,3 +145,28 @@ export function getDeviceAround() {
     });
   })
 }
+//项目类型
+export function getUserList() {
+  return new Promise((resolve, reject) => {
+    Tools.ajax({
+      method: "/cloud/api/app/sys/listUser",
+      data: {}
+    }).then( data => {
+      if (data.code === 0) {
+        let list = data.data
+        let resList = []
+        for (let i = 0; i < list.length; i++) {
+          resList.push({
+            value: list[i].userId,
+            name: list[i].name
+          })
+        }
+        resolve(resList)
+      } else {
+        resolve([])
+      }
+    }).catch(() => {
+      resolve([])
+    });
+  })
+}
