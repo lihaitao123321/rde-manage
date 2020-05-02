@@ -10,8 +10,7 @@ let isTest = false;
 export default {
     isPhone: '',
     config: {
-        host: 'https://106.12.36.121:9080',
-        imageFtpUrl: isTest ? host + '/images/test/ftproot/tempupload/0/' : '/images/test/ftproot/tempupload/0/',
+        baseUrl: 'https://iot.congrongyun.com',
     },
     codeMessage: {
         0: '服务器未响应！',

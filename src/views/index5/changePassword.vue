@@ -15,10 +15,11 @@
         </div>
     </div>
 </template>
-  
+
   <script>
   import { XHeader,Group,XInput,XButton,Toast } from "vux";
   import encrypt from '../../util/jsencrypt'
+  import { mapGetters } from "vuex";
 
   export default {
     components: {
@@ -39,20 +40,22 @@
         showPositionValue:false,
         text:''
        }
-       
+
       };
     },
+      computed: {
+          ...mapGetters(["loginInfo", "company"])
+      },
     methods: {
         onSave() {
             console.log(666)
             const { password } = this;
-            let oldPwd = localStorage.getItem("pwd")
-            if (!password.old == oldPwd) {
+            if (!password.old === oldPwd) {
                 this.toast.showPositionValue = true;
                 this.toast.text = '当前密码输入错误'
                 return false;
             }
-            if (!password.new == password.confirm) {
+            if (!password.new === password.confirm) {
                 this.toast.showPositionValue = true;
                 this.toast.text = '新密码两次输入不一致'
                 return false;
@@ -63,18 +66,23 @@
                 this.toast.text = '请输入合法的密码，可以是4~20位的字母、数字、- 或 _的组合'
                 return false;
             }
+            let oldPwd = encrypt.encrypt(password.old);
             let newPwd = encrypt.encrypt(password.new);
             this.Tools.ajax({
-                method: '/user/update',
+                method: '/cloud/api/updateUserPasswd',
                 data: {
-                    "oldPassword": password.old,
-                    "newPassword": newPwd
+                    "telephone": localStorage.getItem('tel'),
+                    "oldpasswd": oldPwd,
+                    "newpasswd": newPwd
                 }
             }).then(res => {
-                this.toast.showPositionValue = true;
-                this.toast.text = '密码修改成功'
+                if(res.status == 0){
+                    this.toast.showPositionValue = true;
+                    this.toast.text = '密码修改成功'
+                }
+
             }).catch (() => { })
-        },    
+        },
     },
   };
   </script>

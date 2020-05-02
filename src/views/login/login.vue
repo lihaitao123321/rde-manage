@@ -106,16 +106,18 @@ export default {
         localStorage.setItem("prevToken", data.token);
         localStorage.setItem("userCompanyNum", data.num);
         localStorage.setItem("userCurrentCompanyStatus", data.companyStatus);
-
+        this.$store.commit("setLoginInfo", {
+            tel: this.telephone,
+            pwd: this.password
+        });
         if (data.num > 1) {
-          this.$router.push("selectCompany");
           localStorage.setItem("userToken", data.token);
+          this.$router.push("selectCompany");
         } else {
           this.$router.push("home");
         }
       });
     },
-    getUserInfo() {},
     register() {
       this.$router.push({ path: "/register" });
     },

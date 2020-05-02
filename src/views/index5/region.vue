@@ -6,22 +6,22 @@
                 @on-click-back="$router.goBack()"
                 title="所在地区"
             >
-                <XButton slot="right">保存</XButton>
+                <XButton slot="right" @click.native="update">保存</XButton>
             </XHeader>
             <div class="text">定位到的位置</div>
             <Group class="region-input">
-                <XInput v-model="region" readonly></XInput>
+                <XInput :value="location" readonly></XInput>
             </Group>
             <div class="text">全部</div>
-            <Group class="region-list">
-                <cell v-for="item in regionList" :title="item.name" is-link :key="item.id"></cell>
-            </Group>
+            <group>
+                <x-address title="选择位置" v-model="region" :list="regionList"  placeholder="请选择地址" inline-desc="系统预设位置" :show.sync="showAddress"></x-address>
+            </group>
         </div>
     </div>
 </template>
-  
+
   <script>
-import { XHeader, Group, XInput, XButton, Cell } from "vux";
+import { XHeader, Group, XInput, XButton, Cell, XAddress,ChinaAddressV4Data } from "vux";
 
 export default {
   components: {
@@ -29,12 +29,15 @@ export default {
     Group,
     XInput,
     XButton,
-    Cell
+    Cell,
+      XAddress
   },
   data() {
     return {
-      region: "江西南昌",
-      regionList: []
+      location:'江西 南昌',
+      region: [],
+      regionList: [],
+      showAddress:false
     };
   },
   mounted(){
@@ -42,35 +45,35 @@ export default {
   },
   methods:{
       init(){
+          this.$store.dispatch("enumeration/getAreaList").then(res => {
+              this.regionList = res;
+          });
+      },
+      update(key,item) {
           this.Tools.ajax({
-              method:'cloud/api/app/sys/getAreaList',
-              data:{}
+              method:'/cloud/api/app/my/updateArea',
+              data:{
+                  areaId:this.region[0]
+              }
           }).then(res=>{
-              if(res.code === 0){
-                  let list = res.data;
-                  for(let i = 0;i < list.length;i++){
-                      list[i].children = []
-                  }
-                  for(let i = 0;i < list.length;i++){
-                      list[i].children = []
-                      for(let j = 0;j<list.length;j++){
-                          if(list[i].parentId == list[j].id){
-                              list[j].children.push(list[i])
-                          }
-                      }
-                  }
-                  for(let i = 0;i < list.length;i++){
-                      for(let j = 0;j<list.length;j++){
-                          if(list[i].parentId == list[j].id){
-                              list.splice(i--,1)
-                          }
-                      }
-                  }
-                  this.regionList = list;
+              if(res.status === "0"){
+                  this.$vux.toast.success('修改成功');
+                  this.$router.goBack();
+              }else {
+                  this.$vux.toast.text('修改失败');
               }
           })
       },
-  }
+  },
+    computed:{
+        cValue(){
+            if(this.region && this.region.length>0){
+                return this.region[0].name
+            }else{
+
+            }
+        }
+    }
 };
 </script>
 
@@ -81,6 +84,9 @@ export default {
 
 /deep/ .vux-header .vux-header-title {
   font-weight: 500;
+}
+/deep/.weui-cells {
+    margin-top: 0;
 }
 
 .t_page {

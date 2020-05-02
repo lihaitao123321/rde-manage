@@ -1,7 +1,7 @@
 <template>
   <div class="t_page">
     <div class="top" @click="toPersonal">
-      <div class="img" :style="{backgroundImage:'url('+loginInfo.pic+')'}"></div>
+      <div class="img" :style="{backgroundImage:'url('+loginInfo.imageUrl+')'}"></div>
       <div class="top-right">
         <div>
           <span class="name">{{loginInfo.username}}</span>
@@ -111,17 +111,17 @@ export default {
   computed: {
     ...mapGetters(["loginInfo", "company"])
   },
-  mounted() {},
+  mounted() {
+    this.getUserInfo()
+  },
   methods: {
-    init() {
+    getUserInfo() {
       this.Tools.ajax({
         method: "cloud/api/app/my/getMyUserData",
         data: {}
       }).then(res => {
         if (res.code === 0) {
-          this.form = res.data;
-        } else {
-          this.$vux.toast.text("加载失败");
+          this.$store.commit('setLoginInfo',res.data);
         }
       });
     },
@@ -195,7 +195,7 @@ export default {
     margin-top: 20px;
     color: #2b7ff3ff;
     font-weight: 500;
-    width: 376px;
+    width: 100%;
   }
 }
 

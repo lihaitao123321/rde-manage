@@ -28,11 +28,11 @@ let store = new Vuex.Store({
 
   },
   getters: {
-    loginInfo: (state) => {
+    loginInfo:(state)=>{
       let u = localStorage.getItem('loginInfo')
-      if (state.loginInfo.nickname) {
+      if(state.loginInfo.nickname){
         return state.loginInfo
-      } else if (u) {
+      }else if(u){
         return JSON.parse(u)
       }
       return {}
@@ -54,15 +54,12 @@ let store = new Vuex.Store({
     setLoginInfo(state, payload) {
       let loginInfo = JSON.parse(JSON.stringify(state.loginInfo))
       for (let key in payload) {
-        loginInfo[key] = payload[key];
+        if(payload.hasOwnProperty(key)){
+          loginInfo[key] = payload[key];
+        }
       }
       state.loginInfo = loginInfo;
       localStorage.setItem('loginInfo', JSON.stringify(state.loginInfo));
-    },
-    setLoginInfo(state, payload) {
-      for (let key in payload) {
-        state.loginInfo[key] = payload[key];
-      }
     },
     setLogout(state, data) {
       state.isLogout = data;
