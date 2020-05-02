@@ -68,6 +68,15 @@
       </div>
     </div>
     <div class="content" id="index1_content_map"></div>
+    <!-- 自定义定位圆点，采用原生定位-->
+    <div class="location_button">
+      <img
+              style="width: 70%;height: 70%;"
+              :src="locationLoading? require('../../assets/images/index2/timg.gif'):require('../../assets/images/index2/location.png')"
+              alt=""
+              @click.stop="startLocation()"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -518,6 +527,26 @@ export default {
   #index1_content_map {
     width: 100%;
     height: 100%;
+  }
+  .location_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 14px;
+    bottom: 130px;
+    z-index: 500;
+    width: 35px;
+    height: 35px;
+    background-color: white;
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 10px 0 #ccc;
+    img{
+      width: 35px;
+      height: 35px;
+    }
   }
 }
 

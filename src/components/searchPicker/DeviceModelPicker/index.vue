@@ -69,7 +69,6 @@ export default {
   },
   created() {
     this.$store.dispatch("enumeration/getDeviceModelList").then(res => {
-      console.log('getDeviceModelList', res)
       this.options = [res];
       this.ok();
     });

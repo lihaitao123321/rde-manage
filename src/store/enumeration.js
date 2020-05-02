@@ -50,7 +50,7 @@ const actions = {
         resolve(state.projectTypeList)
       } else {
         let resList = await getProjectTypeList()
-        commit('SET_AREA', resList)
+        commit('SET_PROJECT', resList)
         resolve(resList)
       }
     })

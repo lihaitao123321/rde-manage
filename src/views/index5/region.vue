@@ -57,7 +57,7 @@ export default {
               }
           }).then(res=>{
               if(res.status == "0"){
-                  this.$vux.toast.success('修改成功');
+                  this.$vux.toast.text('修改成功');
                   this.$router.goBack();
               }else {
                   this.$vux.toast.text('修改失败');
