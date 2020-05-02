@@ -64,7 +64,7 @@ import xiTongList from './views/index3/xiTongList';
 import xiangMuList from './views/index3/xiangMuList';
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     routes: [
         //项目默认路由
         {
@@ -416,3 +416,13 @@ export default new Router({
 
     ]
 })
+router.beforeEach((to, from, next) => {
+    if(from.path === '/' && to.path === '/login'){
+        let loginInfo = localStorage.getItem('loginInfo');
+        if(loginInfo && JSON.parse(loginInfo).token){
+            next('/home');
+        }
+    }
+    next();
+});
+export default router;

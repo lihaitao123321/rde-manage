@@ -56,7 +56,7 @@ export default {
                   areaId:this.region[0]
               }
           }).then(res=>{
-              if(res.status === "0"){
+              if(res.status == "0"){
                   this.$vux.toast.success('修改成功');
                   this.$router.goBack();
               }else {
