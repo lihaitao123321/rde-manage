@@ -4,6 +4,7 @@ import login from './views/login/login.vue'
 import register from './views/login/register.vue'
 import registerOk from './views/login/registerOk.vue'
 import selectCompany from './views/login/selectCompany.vue'
+import forgetPassword from './views/login/forgetPassword.vue'
 import home from './views/home.vue'
 import index1 from './views/index1/index1.vue'
 import index2 from './views/index2/index2.vue'
@@ -147,6 +148,11 @@ const router = new Router({
             path: '/selectCompany',
             name: 'selectCompany',
             component: selectCompany
+        },
+        {
+            path: '/forgetPassword',
+            name: 'forgetPassword',
+            component: forgetPassword
         },
         {
             path: '/home',

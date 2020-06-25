@@ -33,6 +33,7 @@
     "@vue/cli-service": "^3.8.0",
     "axios": "^0.18.0",
     "babel-plugin-component": "^1.1.1",
+    "babel-polyfill": "^6.26.0",
     "vue-cli-plugin-axios": "^0.0.4",
     "vue-loader": "14.2.2",
     "vue-template-compiler": "^2.6.10"

@@ -1,7 +1,11 @@
+import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import localConfig from './config'
+//配置
+Vue.prototype.localConfig = localConfig;
 //bus
 import VueBus from 'vue-bus'
 Vue.use(VueBus);

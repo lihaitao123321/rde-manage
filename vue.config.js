@@ -1,10 +1,11 @@
+let config = require('./src/config/index.js')
 module.exports = {
-    outputDir: '//Users//lihaitao//Downloads//my//project//rde-cordova-mac//www//',
+    outputDir: config.outputDir,//build输出地址
     publicPath: './',
     devServer: {
         proxy: {
             '/cloud': {
-                target: 'https://iot.congrongyun.com'
+                target: config.baseUrl
             }
         }
     },

@@ -1,37 +1,8 @@
 <template>
     <div class="t_page">
-        <x-header title="注册" :left-options="{preventGoBack:true}" @on-click-back="$router.goBack()"></x-header>
+        <x-header title="忘记密码" :left-options="{preventGoBack:true}" @on-click-back="$router.goBack()"></x-header>
         <div class="pageContent">
-            <!-- <div class="padding_lrt15px">
-                <div class="t_tabs uf dr js jc ac">
-                    <div class="uf  jc ac dc"  @click="tabColor" v-bind:class="{activefont1:isActive}">手机注册</div>
-                    <div class="uf  jc ac" @click="tabColor1" v-bind:class="{activefont2:isTab}">邮箱注册</div>
-                    <div class="uf t_ridus"  v-bind:class="{activeColor1:isActive}"></div>
-                    <div class="uf t_ridus" v-bind:class="{activeColor2:isTab}"></div>
-                </div>
-            </div>-->
             <group class="group_height" label-width="80px">
-                <div class="t_position">
-                    <el-input
-                        class="t_position_bottom"
-                        placeholder="请输入真实姓名"
-                        clearable
-                        v-model="username"
-                    >
-                        <i slot="prefix" class="el-input__icon t_margin_icon fa fa-user-o"></i>
-                    </el-input>
-                </div>
-                <div class="t_position">
-                    <el-input
-                        class="t_position_bottom"
-                        placeholder="请输入字母用户组合的用户名"
-                        clearable
-                        v-model="nickname"
-                    >
-                        <i slot="prefix" class="el-input__icon t_margin_icon el-icon-user"></i>
-                    </el-input>
-                </div>
-
                 <div class="t_position select-country"  v-if="isActive">
                     <el-input placeholder="请输入手机号" class="t_position_bottom" v-model="telephone" clearable>
                           <!-- <el-select v-model="select" slot="prepend" placeholder="请选择">
@@ -52,7 +23,7 @@
                 <div class="t_position ">
                     <el-input
                         class="t_position_bottom"
-                        placeholder="密码(6-20位，字母、数字、-或_)"
+                        placeholder="新密码(6-20位，字母、数字、-或_)"
                         clearable
                         show-password
                         v-model="password"
@@ -86,17 +57,12 @@
                         <el-button slot="append" @click.stop="sendCode">{{codeText}}</el-button>
                     </el-input>
                 </div>
-                <div class="http_padding">
-                    <el-checkbox v-model="checked"></el-checkbox>
-                    <span class="font_size">我已阅读并同意</span>
-                    <span class="font_color" @click="userHttp"><<用户协议>></span>
-                </div>
-                <div style="padding:15px;">
+                <div style="padding:15px;margin-top: 40px;">
                     <x-button
                         type="primary"
                         :disabled="!checked"
                         @click.native="register"
-                    >{{'注册' || $t('register.ok')}}</x-button>
+                    >{{'重置密码' || $t('register.ok')}}</x-button>
                 </div>
             </group>
         </div>

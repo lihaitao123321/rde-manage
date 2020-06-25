@@ -7,7 +7,7 @@
                 title="版本介绍"
             ></XHeader>
             <div class="logo">
-                <img style="height: 100%;width: 100%" src="../../assets/images/login/96-96.png">
+                <img style="height: 100%;width: 100%" src="../../assets/images/logo/A.png">
             </div>
             <div class="version-code">当前版本V1.0</div>
             <div class="introduction">全新上线</div>
@@ -16,7 +16,7 @@
         </div>
     </div>
 </template>
-  
+
   <script>
 import { XHeader, XButton } from "vux";
 

@@ -3,7 +3,7 @@
     <x-header :left-options="{preventGoBack:true}" @on-click-back="$router.goBack()">选择登录企业</x-header>
     <div class="content">
       <div class="item_c" v-for="item in dataList" :key="item.id" @click="selectCompany(item)">
-        <img :src="Tools.config.host + item.logo">
+        <img :src="config.baseUrl + item.logo">
         <div>{{item.name}}</div>
       </div>
     </div>
@@ -12,14 +12,15 @@
 
 <script>
 import { XHeader } from "vux";
+import config from "../../config";
 export default {
   components: {
     XHeader
   },
   data() {
     return {
+      config,
       dataList: [],
-
       username: "",
       telephone: "17630378060",
       password: "",

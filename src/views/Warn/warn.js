@@ -127,14 +127,11 @@ let warns = {
     },
     //项目
     //获取项目搜索列表页数据
-    getProList(){
+    getProList(options){
         return Tools.ajax({
             // method:'/cloud/api/app/firstpage/getProjectData',
             method:'/cloud/api/app/monitor/listProject',
-            data:{
-                "pageNum": 1,
-                "pageSize": 10
-            }
+            data:options
         })
     },
     //获取项目详情页的数据

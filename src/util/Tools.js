@@ -3,15 +3,12 @@ import axios from 'axios';
 const Qs = require('qs');
 import router from '../router';
 import store from '@/store';
+import config from '../config';
 //测试
 let isTest = false;
 //上线
 // let isTest= false;
 export default {
-    isPhone: '',
-    config: {
-        baseUrl: 'https://iot.congrongyun.com',
-    },
     codeMessage: {
         0: '服务器未响应！',
         200: '服务器成功返回请求的数据',
@@ -56,7 +53,7 @@ export default {
         }
         // 配置默认值
         const service = axios.create({
-            baseURL: process.env.NODE_ENV === 'production' ?store.state.baseUrl:'',
+            baseURL: process.env.NODE_ENV === 'production' ? config.baseUrl : '',
             url: '',
             method: 'post',
             timeout: 30000,

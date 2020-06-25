@@ -3,7 +3,7 @@
         <div class="t_content">
             <div class="t_content_image">
                 <div class="t_content_image1">
-                    <img style="height: 100%;width: 100%" src="../../assets/images/login/96-96.png">
+                    <img style="height: 100%;width: 100%" :src="require('../../assets/images/logo/' + config.logo)">
                 </div>
             </div>
             <group class="t_login">
@@ -32,7 +32,7 @@
                     <x-button @click.native="login" class="t_submit" type="primary">登陆</x-button>
                 </div>
                 <div class="footer_title uf uf-dr js">
-                    <span>忘记密码</span>
+                    <span @click="gotoForgetPassword">忘记密码</span>
                     <span @click="register()">新用户注册 ></span>
                 </div>
             </group>
@@ -55,6 +55,7 @@ import {
   XButton
 } from "vux";
 import encrypt from "../../util/jsencrypt";
+import config from "../../config";
 export default {
   directives: {
     TransferDom
@@ -73,6 +74,7 @@ export default {
   },
   data() {
     return {
+      config,
       telephone: "15051665680",
       password: "11076038",
       td: false,
@@ -121,6 +123,9 @@ export default {
     register() {
       this.$router.push({ path: "/register" });
     },
+      gotoForgetPassword(){
+          this.$router.push({ path: "/forgetPassword" });
+      },
     clearPhone() {
       console.log(666);
       this.telephone = "";
@@ -162,6 +167,7 @@ export default {
 .t_margin_icon {
   margin-right: 22px;
   color: rgba(43, 127, 243, 1);
+  font-size: 20px;
 }
 .t_distance {
   margin-top: 50px;
@@ -182,6 +188,10 @@ export default {
 }
 /deep/.el-input__inner {
   height: 35px !important;
+  font-size:14px;
+  font-family:PingFang SC;
+  font-weight:bold;
+  padding-left: 40px;
 }
 .t_position {
   position: relative;

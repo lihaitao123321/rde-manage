@@ -8,7 +8,7 @@
                         <div class="search-box" @click.stop="seachDetail">
                             <x-icon class="white-x-icon" type="ios-search" size="25"></x-icon>
                             <group>
-                                <x-input class="search-con" readonly placeholder="德孚智能运维云服务系统"></x-input>
+                                <x-input class="search-con" readonly :placeholder="this.localConfig.desc"></x-input>
                             </group>
                         </div>
                         <x-icon
@@ -146,8 +146,8 @@
                             <div @click="jumpUrl('/fadianbaobiao')"><span>详情</span><x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon></div>
                         </div>
                         <div class="pillar-box">
-                            <v-chart 
-                                :data="data5" 
+                            <v-chart
+                                :data="data5"
                                 class="chart-box"
                                 :width= "340">
                                 <v-scale x type="timeCat" />
@@ -318,7 +318,7 @@ export default {
         pageData.powers = newList
         this.pageData = pageData
       }
-      
+
     });
   }
 };

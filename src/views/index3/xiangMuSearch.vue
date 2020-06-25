@@ -137,15 +137,11 @@
                 showModeValue: "push",
                 drawerVisibility: false,
                 rightOptions: {
-                    rangeTime:[],
-                    deviceTypeId: '',
-                    deviceModelId: '',
-                    deviceSystemId: '',
-                    deviceProjectId:'',
-                    deviceCommStatusId:[],
-                    deviceWorkStatusId:[],
-                    deviceAlarmStatusId:[],
-                }
+                    areaId: "",
+                    projectType: "",
+                    beginDesignLoad: "",
+                    endDesignLoad: ""
+                },
             }
         },
         created(){
@@ -163,7 +159,11 @@
                 this.$router.push('/xiangMuDetail/' + item.id)
             },
             getProListFun(){
-                warn.getProList().then(respont=>{
+                warn.getProList({
+                    "pageNum": this.pageNum,
+                    "pageSize": this.pageSize,
+                    ...this.rightOptions
+                }).then(respont=>{
                     if (respont.code === 0 && Array.isArray(respont.data.data) && respont.data.data.length > 0 || true) {
                         if (this.pageNum === 1) {
                             this.projectList = respont.data.data;

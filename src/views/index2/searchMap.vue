@@ -197,7 +197,6 @@ export default {
         method: "/cloud/api/app/firstpage/getProjectData",
         data: {
           ...this.rightOptions,
-          projectIds: [], //项目id
           pageNum: this.pageNum,
           pageSize: this.pageSize
         }
