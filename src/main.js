@@ -28,6 +28,8 @@ Vue.component('CheckButtonList', CheckButtonList);
 //遮罩弹框组件
 import PopMask from './components/pop-mask/PopMask.vue'
 Vue.component('PopMask', PopMask);
+import Popper from './components/popper'
+Vue.use(Popper)
 //公用筛选组件
 import Condition from './components/condition/Condition.vue'
 Vue.component('Condition', Condition);

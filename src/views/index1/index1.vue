@@ -1,23 +1,39 @@
 <template>
     <div class="t_page">
+        <div class="index-header">
+            <pop-list
+                    ref="popList"
+                    placement="top"
+                    width="96"
+                    height="200px"
+                    v-model="visible">
+                <div class="pop-list">
+                    <div class="pop-item" @click="jumpUrl('/scan')">
+                        <img src="../../assets/images/index1/yewu_black@3x.png">扫一扫
+                    </div>
+                    <div class="pop-item">
+                        <img src="../../assets/images/index1/yewu_black@3x.png">近场通讯
+                    </div>
+                </div>
+                <x-icon slot="reference" class="more-icon white-x-icon" type="ios-ionic-outline" size="25"></x-icon>
+            </pop-list>
+            <div class="search-box" @click.stop="seachDetail">
+                <x-icon class="white-x-icon" type="ios-search" size="25"></x-icon>
+                <group>
+                    <x-input class="search-con" readonly :placeholder="this.localConfig.desc"></x-input>
+                </group>
+            </div>
+            <x-icon
+                    class="white-x-icon"
+                    type="ios-ionic-outline"
+                    size="25"
+                    @click="toNoticeCenter"
+            ></x-icon>
+        </div>
         <div class="redBg">
             <div class="index-page">
                 <div class="index-top">
-                    <div class="index-header">
-                        <x-icon class="more-icon white-x-icon" type="ios-ionic-outline" size="25"></x-icon>
-                        <div class="search-box" @click.stop="seachDetail">
-                            <x-icon class="white-x-icon" type="ios-search" size="25"></x-icon>
-                            <group>
-                                <x-input class="search-con" readonly :placeholder="this.localConfig.desc"></x-input>
-                            </group>
-                        </div>
-                        <x-icon
-                            class="white-x-icon"
-                            type="ios-ionic-outline"
-                            size="25"
-                            @click="toNoticeCenter"
-                        ></x-icon>
-                    </div>
+
                     <div class="index-action">
                         <div class="action-box" @click="jumpUrl('/projectNumber')">
                             <img
@@ -63,7 +79,7 @@
                             </div>
                             <div class="action-number">{{ pageData.newEnergyCapacity || 0 }}</div>
                         </div>
-                        <!-- <div class="action-box">
+                        <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation5.png" >
                             <div class="action-name">实用用电功率<span>(KW)</span></div>
                             <div class="action-number">{{ pageData.projectCount || 0  }}</div>
@@ -72,12 +88,12 @@
                             <img class="navigation-icon" src="../../assets/images/index1/navigation6.png" >
                             <div class="action-name">新能源发电功率<span>(KW)</span></div>
                             <div class="action-number">{{ pageData.projectCount || 0  }}</div>
-                        </div>-->
+                        </div>
                     </div>
                     <div class="all-mon">
                         <div class="title">
                             <div>总体监控预览</div>
-                            <div @click="jumpUrl('/index3/sheBeiList')">
+                            <div @click="jumpUrl('/index3/baoJingListNew')">
                                 <span>进入监控</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
@@ -213,6 +229,7 @@ import {
 } from "vux";
 import vCircle from "@/components/circle/index.vue";
 import pillar from "@/components/pillar/index.vue";
+import popList from "@/components/pop-list.vue";
 const data6 = [
   { name: "清扫机器人", percent: 83.59, a: "1" },
   { name: "接驳车机器人", percent: 2.17, a: "1" },
@@ -240,7 +257,8 @@ export default {
     VScale,
     VPoint,
     vCircle,
-    pillar
+    pillar,
+    popList
   },
   data() {
     return {
@@ -279,11 +297,16 @@ export default {
         alarmlevel2: 0,
         offlineCount: 0,
         powers:[]
-      }
+      },
+        visible:false
     };
   },
   methods: {
     jumpUrl(url) {
+        if(url === '/scan'){
+            this.$refs.popList.hidePop()
+            this.visible = false;
+        }
       this.$router.push(url);
     },
     toNoticeCenter() {
@@ -325,6 +348,32 @@ export default {
 </script>
 <style lang="less" scoped>
 @import "../../css/index";
+
+.pop-list{
+    .pop-item{
+        display: flex;
+        align-items: flex-end;
+        color: #0D0408;
+        font-size:16px;
+        font-weight:500;
+        line-height:15px;
+        padding: 17px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        img{
+            width: 17px;
+            height: 17px;
+            margin-top: -2px;
+            margin-right: 14px;
+        }
+    }
+    .pop-item:first-child{
+        padding-top: 5px;
+    }
+    .pop-item:last-child{
+        padding-bottom: 5px;
+        border-bottom: none;
+    }
+}
 </style>
 
 

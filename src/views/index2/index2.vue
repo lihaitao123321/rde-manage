@@ -10,7 +10,7 @@
             <i class="el-icon-search"></i>
           </div>
           <div class="search_content">
-            <input placeholder="搜索项目" readonly @click="openSearchPage">
+            <input placeholder="输入搜索内容" readonly @click="openSearchPage">
           </div>
         </div>
       </div>
@@ -320,6 +320,8 @@ export default {
     },
     openAmap() {
       let location = this.$store.state.location;
+      console.log(1111,this.productModel.gdLatitude,
+              this.productModel.gdLongitude,)
       startAppModel.openAmap(
         location[1],
         location[0],

@@ -101,6 +101,7 @@
   </div>
 </template>
 <script>
+  import _ from "lodash";
 import SearchOptions from "@/views/index1/components/searchOptions";
 import { Scroller, Drawer } from "vux";
 import { mapState, mapActions } from "vuex";
@@ -168,6 +169,15 @@ export default {
       }
     };
   },
+  watch:{
+    keywords:_.debounce(function(){
+      console.log(66666)
+      this.pageNum = 1;
+      this.initData();
+      this.$refs.scrollerBottom.enablePullup();
+      this.$refs.scrollerBottom.donePulldown();
+    },600)
+  },
   methods: {
     ...mapActions(["getProjectTypeList"]),
     async loadMore() {
@@ -196,7 +206,7 @@ export default {
       return this.Tools.ajax({
         method: "/cloud/api/app/firstpage/getProjectData",
         data: {
-          // keywords: this.keywords.trim(),
+          keywords: this.keywords.trim(),
           ...this.rightOptions,
           projectIds: this.ids, //项目id
           pageNum: this.pageNum,

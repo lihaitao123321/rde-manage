@@ -28,6 +28,8 @@ import jiankongbaobiao from './views/index1/jiankongbaobiao.vue'
 import shiyonggonglvbaobiao from './views/index1/shiyonggonglvbaobiao.vue'
 import fadianbaobiao from './views/index1/fadianbaobiao.vue'
 import shishinengyuanbaobiao from './views/index1/shishinengyuanbaobiao.vue'
+import scan from './views/index1/scan.vue'
+import jinchangtongxun from './views/index1/jinchangtongxun.vue'
 import retrievePw from './views/login/RetrievePw'
 import startPage from './views/login/startPage'
 import aboutUs from './views/index5/aboutUs.vue'
@@ -418,8 +420,17 @@ const router = new Router({
             path: '/switchCompany',
             name: 'switchCompany',
             component: switchCompany
+        },
+        {
+            path: '/scan',
+            name: 'scan',
+            component: scan
+        },
+        {
+            path: '/jinchangtongxun',
+            name: 'jinchangtongxun',
+            component: jinchangtongxun
         }
-
     ]
 })
 router.beforeEach((to, from, next) => {

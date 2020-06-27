@@ -1,64 +1,68 @@
 .t_page{
-
+  //头部搜索
+  .index-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    background: #388DEF;
+    padding: 0 15px;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    .more-icon{
+      color: @color-white;
+    }
+    .search-box{
+      flex: 1;
+      box-sizing: border-box;
+      border-radius: 15px;
+      padding: 0 14px;
+      margin: 0 20px;
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.3);
+      /deep/ .weui-cells{
+        margin-top: 0;
+        background: none;
+        &::before{
+          border-top: none;
+        }
+        &::after{
+          border-bottom: none;
+        }
+        input::-webkit-input-placeholder {
+          color: @color-white;
+        }
+        .search-con{
+          font-size: 14px;
+          padding: 0 10px;
+          width: 200px;
+          height: 30px;
+        }
+      }
+    }
+    .notice-icon{
+      color: @color-white;
+    }
+    .white-x-icon {
+      display: block;
+      fill: @color-white;
+    }
+  }
   .index-page{
     padding: 0 0 18px 0;
     .index-top{
-      padding: 0 15px;
-      padding-top: 15px;
-      padding-bottom: 20px;
+      padding: 50px 15px 20px 15px;
       background: linear-gradient(to bottom, #388DEF, #273DDC);
-      //头部搜索
-      .index-header{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 30px;
-        .more-icon{
-          color: @color-white;
-        }
-        .search-box{
-          flex: 1;
-          box-sizing: border-box;
-          border-radius: 15px;
-          padding: 0 14px;
-          margin: 0 20px;
-          display: flex;
-          align-items: center;
-          background: rgba(255,255,255,0.3);
-          /deep/ .weui-cells{
-            margin-top: 0;
-            background: none;
-            &::before{
-              border-top: none;
-            }
-            &::after{
-              border-bottom: none;
-            }
-            input::-webkit-input-placeholder {
-              color: @color-white;
-            }
-            .search-con{
-              font-size: 14px;
-              padding: 0 10px;
-              width: 200px;
-              height: 30px;
-            }
-          }
-        }
-        .notice-icon{
-          color: @color-white;
-        }
-        .white-x-icon {
-          display: block;
-          fill: @color-white;
-        }
-      }
+
       //功能模块
       .index-action{
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        margin-top: 20px;
         .action-box{
           width: 165px;
           height: 100px;

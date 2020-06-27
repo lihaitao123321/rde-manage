@@ -7,17 +7,17 @@
           <span class="name">{{loginInfo.username}}</span>
           <img width="17" src="../../assets/images/index5/认证@2x.png">
         </div>
-        <div>{{company.name}}</div>
+        <div class="text-overflow">{{company.name}}</div>
       </div>
       <div class="right-icon">
         <i class="el-icon-arrow-right"></i>
       </div>
     </div>
     <Group class="group">
-      <cell title="切换企业" :value="company.name" is-link :link="{path:'/switchCompany'}">
+      <cell title="切换企业" :value="company.name"  is-link :link="{path:'/switchCompany'}">
         <img
           slot="icon"
-          width="16"
+          width="14"
           style="margin: 5px 19px 0 0;"
           src="../../assets/images/index5/修改密码(1)@2x.png"
         >
@@ -25,7 +25,7 @@
       <cell :title="cellData.changePassword" is-link :link="{path:'/changePassword'}">
         <img
           slot="icon"
-          width="16"
+          width="14"
           style="margin: 5px 19px 0 0;"
           src="../../assets/images/index5/修改密码(1)@2x.png"
         >
@@ -33,7 +33,7 @@
       <cell :title="cellData.cell2" is-link :link="{path:'/message'}">
         <img
           slot="icon"
-          width="20"
+          width="14"
           style="margin: 6px 15px 0 0;"
           src="../../assets/images/index5/消息设置@2x.png"
         >
@@ -41,7 +41,7 @@
       <cell :title="cellData.cell3" is-link :link="{path:'/language'}">
         <img
           slot="icon"
-          width="20"
+          width="14"
           style="margin: 6px 15px 0 0;"
           src="../../assets/images/index5/语言类型@2x.png"
         >
@@ -49,7 +49,7 @@
       <cell :title="cellData.cell4" is-link>
         <img
           slot="icon"
-          width="20"
+          width="14"
           style="margin: 6px 15px 0 0;"
           src="../../assets/images/index5/清除缓存@2x.png"
         >
@@ -57,7 +57,7 @@
       <cell :title="cellData.cell5" is-link :link="{path:'/version'}">
         <img
           slot="icon"
-          width="20"
+          width="14"
           style="margin: 6px 15px 0 0;"
           src="../../assets/images/index5/版本介绍@2x.png"
         >
@@ -65,7 +65,7 @@
       <cell :title="cellData.cell6" is-link :link="{path:'/aboutUs'}">
         <img
           slot="icon"
-          width="20"
+          width="14"
           style="margin: 6px 15px 0 0;"
           src="../../assets/images/index5/关于我们(1)@2x.png"
         >
@@ -135,20 +135,21 @@ export default {
 <style lang="less" scoped>
 .t_page {
   .top {
-    background: linear-gradient(to top right, #3865df, #3286ed);
+    background: linear-gradient(to top right, #273DDB, #378DEF);
     height: 200px;
     display: flex;
     .img {
       width: 80px;
       height: 80px;
       background-color: white;
-      margin-left: 30px;
-      margin-top: 20px;
+      margin-left: 20px;
+      margin-top: 40px;
       border-radius: 50%;
       background-size: cover;
     }
     .top-right {
-      margin: 34px;
+      margin-top: 51px;
+      padding-left: 20px;
       color: white;
       .name {
         font-size: 24px;
@@ -160,13 +161,16 @@ export default {
     .right-icon {
       position: fixed;
       right: 20px;
-      top: 48px;
-      color: white;
+      top: 67px;
+      color: rgba(255,255,255,0.7);
+      font-size: 20px;
     }
   }
-
+  /deep/.weui-cell{
+    padding: 0 15px;
+  }
   .group {
-    margin-top: -100px;
+    margin-top: -90px;
     padding: 10px 15px;
     /deep/ .weui-cells {
       margin-top: 1.17647059em;
@@ -206,6 +210,15 @@ export default {
 
 /deep/ .weui-btn:after {
   border-radius: 15px;
+}
+/deep/.weui-cell__ft{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  width:160px;
+}
+.text-overflow{
+  width:200px;
 }
 </style>
 

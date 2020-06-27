@@ -1,14 +1,6 @@
 <template>
-    <div>
-        <v-chart
-                :data="data"
-                :padding="[20, 'auto']">
-            <v-tooltip disabled />
-            <v-scale y :options="yOptions" />
-            <v-pie :radius="0.85" :inner-radius="0.7" series-field="name" :colors="['#FE5D4D','#3BA4FF','#737DDE']" />
-            <v-legend :options="legendOptions" />
-            <v-guide type="html" :options="htmlOptions" />
-        </v-chart>
+    <div style="display: flex;align-items: center;justify-content: center;height: 100%;">
+        功能开发中，敬请期待
     </div>
 </template>
 
