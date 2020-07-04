@@ -53,15 +53,15 @@ export default {
           icon: require("../../assets/images/index3/dzsb_black@2x.png"),
           activeIcon: require("../../assets/images/index3/dzsb_red@2x.png")
         },
-        {
-          title: "系统",
-          link: {
-              path: "/index3/xiTongList",
-              replace:true
-          },
-          icon: require("../../assets/images/index3/ywsb_black@2x.png"),
-          activeIcon: require("../../assets/images/index3/ywsb_red@2x.png")
-        },
+        // {
+        //   title: "系统",
+        //   link: {
+        //       path: "/index3/xiTongList",
+        //       replace:true
+        //   },
+        //   icon: require("../../assets/images/index3/ywsb_black@2x.png"),
+        //   activeIcon: require("../../assets/images/index3/ywsb_red@2x.png")
+        // },
         {
           title: "项目",
           link: {

@@ -137,8 +137,11 @@
     },
     methods:{
       init(){
-        this.getProjectNum(this.$route.params.serialNum);
         this.select = this.$route.params.serialNum;
+        if(typeof this.select === 'string'){
+          this.select = Number(this.select)
+        }
+        this.getProjectNum(this.$route.params.serialNum);
       },
       async loadMore() {
         if (this.total < this.pageSize * this.pageNum) {
@@ -146,23 +149,23 @@
         }
         this.$vux.loading.show("加载数据中");
         this.pageNum++;
-        await   this.getProjectNum(this.select);
+        await this.getProjectNum();
         this.$refs.scrollerBottom.donePullup();
         this.$vux.loading.hide();
       },
       async refresh() {
         this.$vux.loading.show("刷新数据中");
         this.pageNum = 1;
-        await   this.getProjectNum(this.select);
+        await   this.getProjectNum();
         this.$refs.scrollerBottom.enablePullup();
         this.$refs.scrollerBottom.donePulldown();
         this.$vux.loading.hide();
       },
       changSelect(){
-        this.getProjectNum(this.select);
+        this.getProjectNum();
       },
-      getProjectNum(numSelect){
-        warn.projectNum(numSelect,this.pageNum,this.pageSize).then(res=>{
+      getProjectNum(){
+        warn.projectNum(this.select,this.pageNum,this.pageSize).then(res=>{
             if(res.code === 0 && Array.isArray(res.data.data) && res.data.data.length > 0){
 
               if (this.pageNum === 1) {
@@ -176,7 +179,7 @@
               });
               if (this.total < this.pageSize * this.pageNum) {
                 this.$refs.scrollerBottom.disablePullup();
-                this.$vux.toast.text('没有更多数据了')
+                // this.$vux.toast.text('没有更多数据了')
               } else {
                 this.$refs.scrollerBottom.enablePullup();
               }
@@ -265,5 +268,5 @@
   }
 
 }
- 
+
 </style>

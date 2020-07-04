@@ -297,7 +297,7 @@ const router = new Router({
             component: searchMap
         },
         {
-            path: '/projectNumber',
+            path: '/projectNumber/:serialNum',
             name: 'projectNumber',
             component: projectNumber
         },

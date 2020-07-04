@@ -35,7 +35,7 @@
                 <div class="index-top">
 
                     <div class="index-action">
-                        <div class="action-box" @click="jumpUrl('/projectNumber')">
+                        <div class="action-box" @click="jumpUrl('/projectNumber/1')">
                             <img
                                 class="navigation-icon"
                                 src="../../assets/images/index1/navigation1.png"
@@ -46,7 +46,7 @@
                             </div>
                             <div class="action-number">{{ pageData.projectCount || 0 }}</div>
                         </div>
-                        <div class="action-box">
+                        <div class="action-box" @click="jumpUrl('/projectNumber/2')">
                             <img
                                 class="navigation-icon"
                                 src="../../assets/images/index1/navigation2.png"
@@ -57,7 +57,7 @@
                             </div>
                             <div class="action-number">{{ pageData.deviceCount || 0 }}</div>
                         </div>
-                        <div class="action-box">
+                        <div class="action-box" @click="jumpUrl('/projectNumber/3')">
                             <img
                                 class="navigation-icon"
                                 src="../../assets/images/index1/navigation3.png"
@@ -79,7 +79,7 @@
                             </div>
                             <div class="action-number">{{ pageData.newEnergyCapacity || 0 }}</div>
                         </div>
-                        <div class="action-box">
+                        <div class="action-box" @click="jumpUrl('/projectNumber/4')">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation5.png" >
                             <div class="action-name">实用用电功率<span>(KW)</span></div>
                             <div class="action-number">{{ pageData.projectCount || 0  }}</div>
