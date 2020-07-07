@@ -105,22 +105,28 @@ export default {
           this.$vux.toast.text("账号或密码错误");
           return false;
         }
-        localStorage.setItem("tel", this.telephone);
-        localStorage.setItem("pwd", this.password);
-        localStorage.setItem("prevToken", data.token);
-          localStorage.setItem("userToken", data.token);
-        localStorage.setItem("userCompanyNum", data.num);
-        localStorage.setItem("userCurrentCompanyStatus", data.companyStatus);
-        this.$store.commit("setLoginInfo", {
-            tel: this.telephone,
-            pwd: this.password
-        });
-        if (data.num > 1) {
-          localStorage.setItem("userToken", data.token);
-          this.$router.push("selectCompany");
-        } else {
-          this.$router.push("home");
-        }
+          if (data.num === 0) {
+              this.$vux.toast.text("当前用户未绑定所属公司，请联系管理员!");
+              return false;
+          }else{
+              localStorage.setItem("tel", this.telephone);
+              localStorage.setItem("pwd", this.password);
+              localStorage.setItem("prevToken", data.token);
+              localStorage.setItem("userToken", data.token);
+              localStorage.setItem("userCompanyNum", data.num);
+              localStorage.setItem("userCurrentCompanyStatus", data.companyStatus);
+              this.$store.commit("setLoginInfo", {
+                  tel: this.telephone,
+                  pwd: this.password
+              });
+              if (data.num > 1) {
+                  localStorage.setItem("userToken", data.token);
+                  this.$router.push("selectCompany");
+              } else {
+                  this.$router.push("home");
+              }
+          }
+
       });
     },
     register() {

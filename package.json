@@ -22,7 +22,7 @@
     "vue": "^2.6.10",
     "vue-baidu-map": "^0.21.20",
     "vue-bus": "^1.2.1",
-    "vue-echarts": "^5.0.0-beta.0",
+    "vue-echarts": "^4.0.3",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1",
     "vuex-i18n": "^1.13.1",

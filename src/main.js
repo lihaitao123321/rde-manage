@@ -19,9 +19,12 @@ Vue.use(ElementUI, {
 });
 
 // vue-echarts
-import ECharts from 'vue-echarts'
 import './components/echarts'
+import ECharts from 'vue-echarts'
 Vue.component('v-chart', ECharts)
+// echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
 import './css/main.less';
 //引入全局字体图标库,用法：<i class="fa fa-angle-left"></i>,具体图标去 http://fontawesome.dashgame.com 查看

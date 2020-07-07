@@ -66,7 +66,7 @@
                         <div>1:报警</div>
                         <div>0:正常</div>
                     </div>
-                    <echartsTotal :detailList="detailList"></echartsTotal>
+                    < :detailList="detailList"></>
                 </div>
                 <div class="top_bottom_word uf dr js">
                     <div class="photo_warn">报警快照分析(n条)</div>

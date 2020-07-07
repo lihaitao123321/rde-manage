@@ -11,7 +11,7 @@
         props:{
             detailList:{
                 type:Array,
-                default:function () {
+                default:function () {echartsTotal
                     return []
                 }
             }

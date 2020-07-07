@@ -1,25 +1,26 @@
 <template>
     <div class="t_page">
-      <div class="project-page">
-        <XHeader class="header" :left-options="{ preventGoBack:true, backText: '' }" @on-click-back="$router.goBack()">
-          <el-select v-model="select" style="width: 116px;">
-              <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-              </el-option>
-          </el-select>
-          <div class="right-box" slot="right">
-            <img src="../../assets/images/index1/share.png" />
-            <img src="../../assets/images/index1/clip.png" />
-          </div>
-        </XHeader>
-        <div class="type-tab">
-          <div class="tab-box" :class="tabType==0 ? 'active' : '' " @click="tabChange(0)"><span>分析</span><div class="line"></div></div>
-          <div class="tab-box" :class="tabType==1 ? 'active' : '' " @click="tabChange(1)"><span>报表</span><div class="line"></div></div>
+      <XHeader class="header" :left-options="{ preventGoBack:true, backText: '' }" @on-click-back="$router.goBack()">
+        <el-select v-model="level" style="width: 116px;">
+          <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+          </el-option>
+        </el-select>
+        <div class="right-box" slot="right">
+          <img src="../../assets/images/index1/share.png" />
+          <img src="../../assets/images/index1/clip.png" />
         </div>
-        <template v-if="tabType==0">
+      </XHeader>
+      <div class="project-page">
+
+        <div class="type-tab">
+          <div class="tab-box" :class="tabType===0 ? 'active' : '' " @click="tabChange(0)"><span>分析</span><div class="line"></div></div>
+          <div class="tab-box" :class="tabType===1 ? 'active' : '' " @click="tabChange(1)"><span>报表</span><div class="line"></div></div>
+        </div>
+        <template v-if="tabType===1">
           <div class="table-box">
             <x-table class="table-con" :cell-bordered="false" :content-bordered="false">
               <thead>
@@ -29,21 +30,11 @@
                   <th>在线率</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>2019-07-12 15:00:00</td>
-                  <td>20%</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>2019-07-12 15:00:00</td>
-                  <td>20%</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>2019-07-12 15:00:00</td>
-                  <td>20%</td>
+              <tbody class="tbody">
+                <tr v-for="(item,index) in tableDataList" :key="item.series">
+                  <td>{{index+1}}</td>
+                  <td>{{item.time}}</td>
+                  <td>{{item.count + item.unit}}</td>
                 </tr>
               </tbody>
             </x-table>
@@ -51,36 +42,25 @@
           <div class="options">
             <div class="option-box">
               <div class="label-name">采集周期：</div>
-              <el-select v-model="select" class="select-box">
+              <el-select v-model="select2" class="select-box">
                   <el-option
                           v-for="item in options2"
                           :key="item.value"
                           :label="item.label"
                           :value="item.value">
                   </el-option>
+                <div class="el-icon-caret-bottom" slot=""></div>
               </el-select>
             </div>
-            <div class="option-box">
+            <div class="option-box" @click="startDate">
               <div class="label-name">起始时间：</div>
-              <el-select v-model="select" class="select-box">
-                  <el-option
-                          v-for="item in options3"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">
-                  </el-option>
-              </el-select>
+              <div class="content">{{Tools.Date.TimeFormat(startTime,'ymdhms')}}</div>
+              <div class="el-icon-caret-bottom sanjiao"></div>
             </div>
             <div class="option-box">
               <div class="label-name">终止时间：</div>
-              <el-select v-model="select" class="select-box">
-                  <el-option
-                          v-for="item in options3"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">
-                  </el-option>
-              </el-select>
+              <div class="content">{{Tools.Date.TimeFormat(endTime,'ymdhms')}}</div>
+              <div class="el-icon-caret-bottom sanjiao"></div>
             </div>
           </div>
           <div class="search-btn">查询</div>
@@ -93,45 +73,8 @@
           <div class="baobiao">
             <div class="all-mon">
                 <div class="pillar-box">
-                    <v-chart 
-                        :data="data5" 
-                        class="chart-box"
-                        :width= "340">
-                        <v-scale x type="timeCat"  />
-                        <v-scale y :min="0" alias="KW"  />
-                        <v-point
-                            :style="{
-                            stroke: '#fff',
-                            lineWidth: 1
-                            }"
-                            shape="smooth" />
-                        <v-line shape="smooth" />
-                    </v-chart>
+                  <echarts :options="chartOption"/>
                 </div>
-            </div>
-          </div>
-          <div class="options">
-            <div class="option-box">
-              <div class="label-name">起始时间：</div>
-              <el-select v-model="select" class="select-box">
-                  <el-option
-                          v-for="item in options3"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">
-                  </el-option>
-              </el-select>
-            </div>
-            <div class="option-box">
-              <div class="label-name">终止时间：</div>
-              <el-select v-model="select" class="select-box">
-                  <el-option
-                          v-for="item in options3"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">
-                  </el-option>
-              </el-select>
             </div>
           </div>
           <div class="search-btn">分析</div>
@@ -151,11 +94,25 @@
 </template>
 
 <script>
-  import { XHeader,XButton,Toast,XTable, Actionsheet, TransferDom, ButtonTab, ButtonTabItem ,Tabbar, TabbarItem, Group, Cell,XInput,
+  // 1、开始时间和结束时间不能大于一年
+  // 2、开始时间和结束时间小于等于一年大于1个月，按月统计；步长1个月
+  // 3、开始时间和结束时间小于等于一个月大于1天，按天统计；步长一天
+  // 4、开始时间和结束时间小于等于1天大于一小时，按小时统计，步长1小时
+  // 5、开始时间和结束时间小于等于1小时，按分统计，步长5分钟
+  import Vue from 'vue'
+  Vue.use(DatetimePlugin)
+  import { XHeader,Datetime,XButton,Toast,XTable, Actionsheet, TransferDom, ButtonTab, ButtonTabItem ,Tabbar, TabbarItem, Group, Cell,XInput,
       VChart, VLine, VArea, VTooltip, VLegend, VPie, VGuide, VBar, VScale, VPoint } from "vux";
+  import { DatetimePlugin } from 'vux'
+  import echarts from '../../components/echarts'
+  import {getTableList} from '../../api/baobiao'
+  import {getOption} from './chartOptions/baojingOption'
+  let colors = ['#2B7FF3']
+
   export default {
     components: {
         XHeader,
+      Datetime,
         Group,
         XInput,
         XButton,
@@ -170,10 +127,17 @@
         VGuide,
         VPie,
         VScale,
-        VPoint
+        VPoint,
+      echarts
     },
     data(){
       return{
+        level: 0,
+        tabType: 1,
+        startTime:'',
+        endTime:'',
+        tableDataList:[],
+        chartOption:{},
         data5: [
             { time: '2016-08-08 00:00:00', tem: 10 },
             { time: '2016-08-08 00:10:00', tem: 22 },
@@ -185,63 +149,135 @@
             { time: '2016-08-10 02:00:00', tem: 20 },
             { time: '2016-08-10 02:20:00', tem: 18 }
         ],
-        tabType: 0,
-        select: 0,
         options: [{
             value: 0,
-            label: '在线率'
+            label: '警告'
         }, {
             value: 1,
-            label: '在线率1'
+            label: '报警'
         }, {
             value: 2,
-            label: '在线率2'
+            label: '故障'
         }, {
             value: 3,
-            label: '在线率3'
+            label: '离线'
         }],
+        select2:5,
         options2: [{
-            value: 0,
-            label: '5分钟'
+          value: 5,
+          label: '5分钟'
         }, {
-            value: 1,
-            label: '10分钟'
+          value: 10,
+          label: '10分钟'
         }, {
-            value: 2,
-            label: '15分钟'
+          value: 30,
+          label: '30分钟'
         }, {
-            value: 3,
-            label: '20分钟'
+          value: 60,
+          label: '1小时'
         }],
-        options3: [{
-            value: 0,
-            label: '2019-06-10  15:00:00'
-        }, {
-            value: 1,
-            label: '2019-06-10  15:00:00'
-        }, {
-            value: 2,
-            label: '2019-06-10  15:00:00'
-        }, {
-            value: 3,
-            label: '2019-06-10  15:00:00'
-        }]
+        select3:''
       }
     },
     methods:{
+      //获取报表数据
+      initData(){
+        getTableList({
+          step:this.select2,
+          startDate:this.startTime,
+          endDate:this.endTime,
+          leave:this.leave,
+          pageNum:1,
+          pageSize:10
+        }).then(res=>{
+          let seriesData0 = []
+          let dateList0 = []
+          if(res.code === 0){
+            this.tableDataList = res.data.data || []
+            this.tableDataList.forEach(item=>{
+              seriesData0.push(item.count)
+              dateList0.push(item.time)
+            })
+          }else{
+            this.tableDataList = []
+          }
+          this.chartOption = getOption({
+            seriesDataList:[seriesData0],
+            xAxisDataList:[dateList0],
+            colors,
+          })
+        })
+      },
       tabChange(nub){
         this.tabType = nub
+      },
+      startDate(){
+        this.$vux.datetime.show({
+          cancelText: '取消',
+          confirmText: '确定',
+          format: 'YYYY-MM-DD HH',
+          value: '2017-05-20 18',
+          onConfirm (val) {
+            console.log('plugin confirm', val)
+          },
+          onShow () {
+            console.log('plugin show')
+          },
+          onHide () {
+            console.log('plugin hide')
+          }
+        })
       }
+    },
+    created() {
+      this.endTime = this.Tools.Date.getDayDistanceToToday(0);
+      this.startTime = this.Tools.Date.getDayDistanceToToday(-0.05);
+      this.initData()
     }
   }
 </script>
 
 <style lang="less" scoped>
+  .header{
+    /deep/ .el-input__inner{
+      background: none;
+      font-size: 18px;
+      color: #333333;
+      font-weight: bold;
+    }
+    /deep/ .el-input .el-select__caret{
+      color: #2B7FF3;
+      font-size: 18px;
+    }
+    /deep/ .vux-header-right{
+      height: 100%;
+      top: 0;
+    }
+    .right-box{
+      display: flex;
+      height: 100%;
+      align-items: center;
+      img{
+        width: 29px;
+        height: 29px;
+        &:nth-child(1){
+          margin-right: 12px;
+        }
+      }
+    }
+  }
 .project-page{
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 60px;
   .baobiao{
       .all-mon{
         width: 345px;
         margin: 15px auto;
+        padding: 10px;
+        border-radius: 5px;
+        background: #ffffff;
+        box-sizing: border-box;
         .title{
           display: flex;
           justify-content: space-between;
@@ -282,9 +318,7 @@
           height: 295px;
           margin: 0 auto;
           overflow: hidden;
-          border-radius: 5px;
-          background: #ffffff;
-          box-sizing: border-box;
+
           .chart-box{
             margin: 0 auto;
           }
@@ -308,6 +342,11 @@
         font-size: 14px;
         text-align: center;
       }
+      .content{
+        flex: 1;
+        font-size: 14px;
+        color: #333333;
+      }
       .select-box{
         flex: 1;
         padding-right: 16px;
@@ -317,6 +356,16 @@
           font-size: 14px;
           color: #333333;
         }
+      }
+      .content{
+        flex-grow: 1;
+        font-size: 14px;
+        color: #333333;
+        padding-left: 15px;
+      }
+      .sanjiao{
+        margin-right: 20px;
+        color: #2B7FF3;
       }
     }
   }
@@ -382,34 +431,7 @@
       }
     }
   }
-  .header{
-    /deep/ .el-input__inner{
-      background: none;
-      font-size: 18px;
-      color: #333333;
-      font-weight: bold;
-    }
-    /deep/ .el-input .el-select__caret{
-      color: #2B7FF3;
-      font-size: 18px;
-    }
-    /deep/ .vux-header-right{
-      height: 100%;
-      top: 0;
-    }
-    .right-box{
-      display: flex;
-      height: 100%;
-      align-items: center;
-      img{
-        width: 29px;
-        height: 29px;
-        &:nth-child(1){
-          margin-right: 12px;
-        }
-      }
-    }
-  }
+
   .table-box{
     padding: 17px 15px 15px 15px;
     /deep/ .vux-table td:before, .vux-table th:before{
@@ -419,6 +441,8 @@
       border-radius: 5px;
       background: #ffffff;
       tbody{
+        height: 500px;
+        overflow-y: auto;
         tr{
           &:nth-child(2n+1){
             background: #F7F7FA;
@@ -457,5 +481,5 @@
   }
 
 }
- 
+
 </style>

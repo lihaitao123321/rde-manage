@@ -55,7 +55,7 @@
           <div class="options">
             <div class="option-box">
               <div class="label-name">采集周期：</div>
-              <el-select v-model="select" class="select-box">
+              <el-select v-model="select2" class="select-box">
                   <el-option
                           v-for="item in options2"
                           :key="item.value"
@@ -97,8 +97,8 @@
           <div class="baobiao">
             <div class="all-mon">
                 <div class="pillar-box">
-                    <v-chart 
-                        :data="data5" 
+                    <v-chart
+                        :data="data5"
                         class="chart-box"
                         :width= "340">
                         <v-scale x type="timeCat"  />
@@ -115,6 +115,7 @@
             </div>
           </div>
           <div class="options">
+            <DatePicker></DatePicker>
             <div class="option-box">
               <div class="label-name">起始时间：</div>
               <el-select v-model="select" class="select-box">
@@ -157,6 +158,7 @@
 <script>
   import { XHeader,XButton,Toast,XTable, Actionsheet, TransferDom, ButtonTab, ButtonTabItem ,Tabbar, TabbarItem, Group, Cell,XInput,
       VChart, VLine, VArea, VTooltip, VLegend, VPie, VGuide, VBar, VScale, VPoint } from "vux";
+  import DatePicker from "../../components/searchPicker/DatePicker"
   export default {
     components: {
         XHeader,
@@ -174,7 +176,8 @@
         VGuide,
         VPie,
         VScale,
-        VPoint
+        VPoint,
+        DatePicker
     },
     data(){
       return{
@@ -204,18 +207,19 @@
             value: 3,
             label: '报警动3'
         }],
+        select2:5,
         options2: [{
-            value: 0,
+            value: 5,
             label: '5分钟'
         }, {
-            value: 1,
+            value: 10,
             label: '10分钟'
         }, {
-            value: 2,
-            label: '15分钟'
+            value: 30,
+            label: '30分钟'
         }, {
-            value: 3,
-            label: '20分钟'
+            value: 60,
+            label: '1小时'
         }],
         options3: [{
             value: 0,
@@ -461,5 +465,5 @@
   }
 
 }
- 
+
 </style>
