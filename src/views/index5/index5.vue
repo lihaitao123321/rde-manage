@@ -22,7 +22,7 @@
           src="../../assets/images/index5/修改密码(1)@2x.png"
         >
       </cell>
-      <cell :title="cellData.changePassword" is-link :link="{path:'/changePassword'}">
+      <cell :title="cellData.changePassword" value="" is-link :link="{path:'/changePassword'}">
         <img
           slot="icon"
           width="14"

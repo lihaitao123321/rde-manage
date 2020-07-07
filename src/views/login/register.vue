@@ -204,17 +204,21 @@ export default {
           telephone: this.telephone
         }
       }).then(res => {
-        console.log(res);
         switch (res.status) {
           case "0":
             // 发送成功
             this.$vux.toast.text("验证码已发送请注意查收");
             break;
+          case "1":
+            // 发送失败
+            this.$vux.toast.text("发送失败，请稍后重试！");
+            break;
           case "2":
+              // 重复发送
             this.$vux.toast.text("2分钟内不重复发送短信");
             break;
           default:
-            // 1：失败 或者其他情况
+            // 其他情况
             this.$vux.toast.text("发送失败，请稍后重试！");
             break;
         }
@@ -253,6 +257,9 @@ export default {
             setTimeout(() => {
               this.$router.goBack();
             }, 1500);
+            break;
+          case "1":
+              this.$vux.toast.text("注册失败，请重试");
             break;
           case "2":
             this.$vux.toast.text("验证码错误");

@@ -75,8 +75,10 @@ export default {
   data() {
     return {
       config,
-      telephone: "15051665680",
-      password: "11076038",
+      // telephone: "15051665680",
+      // password: "11076038",
+        telephone: "17630378060",
+        password: "123321",
       td: false,
       input1: "",
       input2: ""
@@ -106,6 +108,7 @@ export default {
         localStorage.setItem("tel", this.telephone);
         localStorage.setItem("pwd", this.password);
         localStorage.setItem("prevToken", data.token);
+          localStorage.setItem("userToken", data.token);
         localStorage.setItem("userCompanyNum", data.num);
         localStorage.setItem("userCurrentCompanyStatus", data.companyStatus);
         this.$store.commit("setLoginInfo", {

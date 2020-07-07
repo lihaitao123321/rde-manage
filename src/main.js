@@ -18,6 +18,10 @@ Vue.use(ElementUI, {
   zIndex: 3000
 });
 
+// vue-echarts
+import ECharts from 'vue-echarts'
+import './components/echarts'
+Vue.component('v-chart', ECharts)
 
 import './css/main.less';
 //引入全局字体图标库,用法：<i class="fa fa-angle-left"></i>,具体图标去 http://fontawesome.dashgame.com 查看
@@ -31,8 +35,8 @@ Vue.component('PopMask', PopMask);
 import Popper from './components/popper'
 Vue.use(Popper)
 //公用筛选组件
-import Condition from './components/condition/Condition.vue'
-Vue.component('Condition', Condition);
+// import Condition from './components/condition/Condition.vue'
+// Vue.component('Condition', Condition);
 //加载中组件
 import {
   LoadingPlugin

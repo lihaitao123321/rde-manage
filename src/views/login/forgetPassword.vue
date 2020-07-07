@@ -165,19 +165,24 @@ export default {
         }
       }, 1000);
       this.Tools.ajax({
-        method: "/cloud/api/sendregistermsg",
+        method: "/cloud/api/sendforgetmsg",
         data: {
           telephone: this.telephone
         }
       }).then(res => {
-        console.log(res);
         switch (res.status) {
           case "0":
             // 发送成功
-            this.$vux.toast.text("验证码已发送请注意查收");
+            this.$vux.toast.text("设置密码成功");
+            break;
+          case "1":
+            this.$vux.toast.text("发送失败，请稍后重试！");
             break;
           case "2":
-            this.$vux.toast.text("2分钟内不重复发送短信");
+            this.$vux.toast.text("验证码错误");
+            break;
+          case "3":
+            this.$vux.toast.text("验证码过期");
             break;
           default:
             // 1：失败 或者其他情况
@@ -187,16 +192,12 @@ export default {
       });
     },
     register() {
-      if (!this.username) {
-        this.$vux.toast.text("请输入用户名");
-        return false;
-      }
       if (!this.Tools.RegExp.Phone.test(this.telephone)) {
         this.$vux.toast.text("请输入正确的手机号码");
         return false;
       }
       if (!this.Tools.RegExp.password.test(this.password)) {
-        this.$vux.toast.text("请输入正确的密码，4~20位字母、数字、 _的组合");
+        this.$vux.toast.text("请输入正确的密码格式");
         return false;
       }
       if (!this.code) {
@@ -204,12 +205,11 @@ export default {
         return false;
       }
       this.Tools.ajax({
-        method: "/cloud/api/register",
+        method: "/cloud/api/forgetpasswd",
         data: {
           code: this.code.trim(),
           passwd: encrypt.encrypt(this.password),
           telephone: this.telephone.trim(),
-          username: this.username.trim()
         }
       }).then(res => {
         switch (res.status) {

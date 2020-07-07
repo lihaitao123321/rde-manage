@@ -65,6 +65,7 @@ import caoZuoList from './views/index3/caoZuoList';
 import sheBeiList from './views/index3/sheBeiList';
 import xiTongList from './views/index3/xiTongList';
 import xiangMuList from './views/index3/xiangMuList';
+import unitTest from './views/unitTest';
 Vue.use(Router)
 
 const router = new Router({
@@ -76,6 +77,12 @@ const router = new Router({
                 return '/login';
             }
         },
+        {
+            path: '/unitTest',
+            name: 'unitTest',
+            component: unitTest
+        },
+
         {
             path: '/login',
             name: 'login',
