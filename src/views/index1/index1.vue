@@ -11,7 +11,7 @@
                     <div class="pop-item" @click="jumpUrl('/scan')">
                         <img src="../../assets/images/index1/yewu_black@3x.png">扫一扫
                     </div>
-                    <div class="pop-item">
+                    <div class="pop-item" @click="jumpUrl('/jinchangtongxun')">
                         <img src="../../assets/images/index1/yewu_black@3x.png">近场通讯
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>实际用电功率</div>
-                            <div @click="jumpUrl('/index3/sheBeiList')">
+                            <div @click="jumpUrl('/shiyonggonglvbaobiao')">
                                 <span>详情</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
@@ -303,7 +303,7 @@ export default {
   },
   methods: {
     jumpUrl(url) {
-        if(url === '/scan'){
+        if(url === '/scan' || url === '/jinchangtongxun'){
             this.$refs.popList.hidePop()
             this.visible = false;
         }

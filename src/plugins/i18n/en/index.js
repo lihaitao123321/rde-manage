@@ -1,6 +1,6 @@
 module.exports = {
     login: {
-        title: '登陆',
+        title: '登录',
         register:'注册'
     }
 };

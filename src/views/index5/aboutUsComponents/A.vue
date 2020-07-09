@@ -1,9 +1,8 @@
 <template>
     <div class="aboutUs">
-        <div class="title">
-            <ul>
-                <li>关于德孚</li>
-            </ul>
+        <div class="main-title">
+            <div class="dot"></div>
+            <div class="label">关于德孚</div>
         </div>
         <div class="content">
             <div
@@ -23,10 +22,9 @@
                 <span class="detail">光伏太阳能设备及其配件的研发，生产，销售，自营和代理各类商品及技术的进出口业务</span>
             </div>
         </div>
-        <div class="title" style="margin-top: 60px;">
-            <ul>
-                <li>联系我们</li>
-            </ul>
+        <div class="main-title">
+            <div class="dot"></div>
+            <div class="label">联系我们</div>
         </div>
         <div class="content content1">
             <span class="title">总部</span>
@@ -76,20 +74,32 @@
 
 <style lang="less" scoped>
     .aboutUs {
+        padding-bottom: 80px;
         background-color: white;
         height: 100%;
         overflow-y: auto;
         margin-top: 15px;
-        .title {
-            li {
+        .main-title {
+            display: flex;
+            height: 55px;
+            align-items: center;
+            padding-left: 15px;
+            .dot{
+                width:7px;
+                height:7px;
+                background:rgba(43,127,243,1);
+                border-radius:50%;
+            }
+            .label{
                 font-size: 18px;
                 font-weight: 500;
                 color: #2b7ff3ff;
+                margin-left: 5px;
             }
         }
 
         .content {
-            margin: 10px 15px;
+            margin: 0 15px;
             padding-top: 10px;
             padding-bottom: 20px;
             border-top: 1px solid #ebebeb;

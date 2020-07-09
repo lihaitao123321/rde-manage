@@ -27,6 +27,7 @@ import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
 import './css/main.less';
+import 'vant/lib/index.css';
 //引入全局字体图标库,用法：<i class="fa fa-angle-left"></i>,具体图标去 http://fontawesome.dashgame.com 查看
 import './assets/font-awesome-4.7.0/css/font-awesome.css'
 //多选button组件

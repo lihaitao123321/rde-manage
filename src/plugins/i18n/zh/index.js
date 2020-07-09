@@ -5,16 +5,16 @@ export default {
     ...model1,
     //登陆页
     login: {
-        title: '登陆',
+        title: '登录',
         register:'注册',
         phone:'手机号码',
-        password:'登陆密码',
+        password:'登录密码',
     },
     //注册页
     register:{
         title: '新用户注册',
         username:'用户姓名',
-        password: '登陆密码',
+        password: '登录密码',
         phone:'手机号',
         code:'验证码',
         email:'邮箱',

@@ -1,7 +1,7 @@
 <template>
     <div class="t_page">
       <XHeader class="header" :left-options="{ preventGoBack:true, backText: '' }" @on-click-back="$router.goBack()">
-        <el-select v-model="level" style="width: 116px;">
+        <el-select v-model="level" style="width: 80px;" @change="initData">
           <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -27,47 +27,21 @@
                 <tr>
                   <th>序号</th>
                   <th>时间</th>
-                  <th>在线率</th>
+                  <th>{{getTypeName}}</th>
+                  <th>单位</th>
                 </tr>
               </thead>
               <tbody class="tbody">
                 <tr v-for="(item,index) in tableDataList" :key="item.series">
                   <td>{{index+1}}</td>
                   <td>{{item.time}}</td>
-                  <td>{{item.count + item.unit}}</td>
+                  <td>{{item.count}}</td>
+                  <td>{{item.unit}}</td>
                 </tr>
               </tbody>
             </x-table>
           </div>
-          <div class="options">
-            <div class="option-box">
-              <div class="label-name">采集周期：</div>
-              <el-select v-model="select2" class="select-box">
-                  <el-option
-                          v-for="item in options2"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">
-                  </el-option>
-                <div class="el-icon-caret-bottom" slot=""></div>
-              </el-select>
-            </div>
-            <div class="option-box" @click="startDate">
-              <div class="label-name">起始时间：</div>
-              <div class="content">{{Tools.Date.TimeFormat(startTime,'ymdhms')}}</div>
-              <div class="el-icon-caret-bottom sanjiao"></div>
-            </div>
-            <div class="option-box">
-              <div class="label-name">终止时间：</div>
-              <div class="content">{{Tools.Date.TimeFormat(endTime,'ymdhms')}}</div>
-              <div class="el-icon-caret-bottom sanjiao"></div>
-            </div>
-          </div>
-          <div class="search-btn">查询</div>
-          <div class="timer">
-            <img src="../../assets/images/index1/timer-icon.png"/>
-            <span>2019-06-06  12:26:00</span>
-          </div>
+
         </template>
         <template v-else>
           <div class="baobiao">
@@ -77,19 +51,65 @@
                 </div>
             </div>
           </div>
-          <div class="search-btn">分析</div>
-          <div class="timer">
-            <img src="../../assets/images/index1/timer-icon.png"/>
-            <span>2019-06-06  12:26:00</span>
-          </div>
         </template>
-
-
-
-
-
-
+        <div class="options">
+<!--          <div class="option-box">-->
+<!--            <div class="label-name">采集周期：</div>-->
+<!--            <el-select v-model="select2" class="select-box">-->
+<!--              <el-option-->
+<!--                      v-for="item in options2"-->
+<!--                      :key="item.value"-->
+<!--                      :label="item.label"-->
+<!--                      :value="item.value">-->
+<!--              </el-option>-->
+<!--              <div class="el-icon-caret-bottom" slot=""></div>-->
+<!--            </el-select>-->
+<!--          </div>-->
+          <div class="option-box" @click="showPopup(1)">
+            <div class="label-name">起始时间：</div>
+            <div class="content">{{Tools.Date.TimeFormat(startDate,'ymdhm')}}</div>
+            <div class="el-icon-caret-bottom sanjiao"></div>
+          </div>
+          <div class="option-box" @click="showPopup(2)">
+            <div class="label-name">终止时间：</div>
+            <div class="content">{{Tools.Date.TimeFormat(endDate,'ymdhm')}}</div>
+            <div class="el-icon-caret-bottom sanjiao"></div>
+          </div>
+        </div>
+        <div class="search-btn" @click="clickButton">{{tabType===1?'查询':'分析'}}</div>
+        <div class="timer">
+          <img src="../../assets/images/index1/timer-icon.png"/>
+          <span>2019-06-06  12:26:00</span>
+        </div>
       </div>
+
+
+      <Popup
+              v-model="show1"
+              position="bottom"
+      >
+        <DatetimePicker
+                :value="startDate"
+                :filter="filter1"
+                type="datetime"
+                :max-date="endDate"
+                @cancel="show1=false"
+                @confirm="startDateOk"
+        />
+      </Popup>
+      <Popup
+              v-model="show2"
+              position="bottom"
+      >
+        <DatetimePicker
+                :value="endDate"
+                :filter="filter1"
+                type="datetime"
+                :min-date="startDate"
+                @cancel="show2=false"
+                @confirm="endDateOk"
+        />
+      </Popup>
     </div>
 </template>
 
@@ -100,12 +120,13 @@
   // 4、开始时间和结束时间小于等于1天大于一小时，按小时统计，步长1小时
   // 5、开始时间和结束时间小于等于1小时，按分统计，步长5分钟
   import Vue from 'vue'
+  import { DatetimePlugin } from 'vux'
   Vue.use(DatetimePlugin)
   import { XHeader,Datetime,XButton,Toast,XTable, Actionsheet, TransferDom, ButtonTab, ButtonTabItem ,Tabbar, TabbarItem, Group, Cell,XInput,
       VChart, VLine, VArea, VTooltip, VLegend, VPie, VGuide, VBar, VScale, VPoint } from "vux";
-  import { DatetimePlugin } from 'vux'
+  import {DatetimePicker, Popup} from 'vant';
   import echarts from '../../components/echarts'
-  import {getTableList} from '../../api/baobiao'
+  import {getJiankongTableList} from '../../api/baobiao'
   import {getOption} from './chartOptions/baojingOption'
   let colors = ['#2B7FF3']
 
@@ -128,7 +149,9 @@
         VPie,
         VScale,
         VPoint,
-      echarts
+      echarts,
+      DatetimePicker,
+      Popup
     },
     data(){
       return{
@@ -138,17 +161,14 @@
         endTime:'',
         tableDataList:[],
         chartOption:{},
-        data5: [
-            { time: '2016-08-08 00:00:00', tem: 10 },
-            { time: '2016-08-08 00:10:00', tem: 22 },
-            { time: '2016-08-08 00:30:00', tem: 20 },
-            { time: '2016-08-09 00:35:00', tem: 26 },
-            { time: '2016-08-09 01:00:00', tem: 20 },
-            { time: '2016-08-09 01:20:00', tem: 26 },
-            { time: '2016-08-10 01:40:00', tem: 28 },
-            { time: '2016-08-10 02:00:00', tem: 20 },
-            { time: '2016-08-10 02:20:00', tem: 18 }
-        ],
+        dateIndex: 0,
+        show1: false,
+        show2: false,
+        show3: false,
+        show4: false,
+        startMinDate: '',
+        startDate: '',
+        endDate: '',
         options: [{
             value: 0,
             label: '警告'
@@ -179,14 +199,80 @@
         select3:''
       }
     },
+    computed: {
+      getTypeName(){
+        for (let i = 0; i < this.options.length; i++) {
+          if(this.options[i].value === this.level){
+            return this.options[i].label + '数'
+          }
+        }
+        return ''
+      },
+      limitEndTime() {
+        let time = this.Tools.Date.getDateDistanceToOneTimeByMinute(this.startDate, 30);
+        return time;
+      }
+    },
     methods:{
+      filter1(type, options) {
+        let date = new Date();
+        if (type === 'hour') {
+          // return options.filter(option => option >= date.getHours())
+        }
+        if (type === 'minute') {
+          return options.filter(option => option % 5 === 0)
+        }
+        return options;
+      },
+      filter2(type, options) {
+        if (this.startTime) {
+          let hour = Number(this.startTime.split(':')[0]);
+          let minute = Number(this.startTime.split(':')[1]);
+          if (type === 'hour') {
+            return options.filter(option => option >= hour)
+          }
+          if (type === 'minute') {
+            return options.filter(option => option % 30 === 0)
+          }
+        } else {
+          let date = new Date();
+          if (type === 'hour') {
+            return options.filter(option => option > date.getHours())
+          }
+          if (type === 'minute') {
+            return options.filter(option => option % 30 === 0)
+          }
+        }
+
+        return options;
+      },
+      startDateOk(value) {
+        this.show1 = false;
+        this.startDate = value;
+      },
+      endDateOk(value) {
+        this.show2 = false;
+        this.endDate = value;
+      },
+      showPopup(value) {
+        if (value === 2 && !this.startDate) {
+          this.$toast('请先选择开始时间');
+          return false;
+        }
+        this.dateIndex = value;
+        this['show' + value] = true;
+      },
+      //点击查询或者分析按钮
+      clickButton(){
+        this.initData()
+      },
       //获取报表数据
       initData(){
-        getTableList({
+        getJiankongTableList({
           step:this.select2,
-          startDate:this.startTime,
-          endDate:this.endTime,
-          leave:this.leave,
+          startDate:this.startDate,
+          endDate:this.endDate,
+          level:this.level,
           pageNum:1,
           pageSize:10
         }).then(res=>{
@@ -195,7 +281,7 @@
           if(res.code === 0){
             this.tableDataList = res.data.data || []
             this.tableDataList.forEach(item=>{
-              seriesData0.push(item.count)
+              seriesData0.push(item.count || Math.random())
               dateList0.push(item.time)
             })
           }else{
@@ -211,27 +297,10 @@
       tabChange(nub){
         this.tabType = nub
       },
-      startDate(){
-        this.$vux.datetime.show({
-          cancelText: '取消',
-          confirmText: '确定',
-          format: 'YYYY-MM-DD HH',
-          value: '2017-05-20 18',
-          onConfirm (val) {
-            console.log('plugin confirm', val)
-          },
-          onShow () {
-            console.log('plugin show')
-          },
-          onHide () {
-            console.log('plugin hide')
-          }
-        })
-      }
     },
     created() {
-      this.endTime = this.Tools.Date.getDayDistanceToToday(0);
-      this.startTime = this.Tools.Date.getDayDistanceToToday(-0.05);
+      this.endDate = this.Tools.Date.getDayDistanceToToday(0);
+      this.startDate = this.Tools.Date.getDayDistanceToToday(-0.05);
       this.initData()
     }
   }

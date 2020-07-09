@@ -1,60 +1,63 @@
 <template>
-    <div style="display: flex;align-items: center;justify-content: center;height: 100%;">
-        功能开发中，敬请期待
+    <div class="t_page">
+        <div class="aboutUs">
+            <img src="../../assets/images/public/developing.png">
+            <div class="text">
+                功能开发中，敬请期待...
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-    import { VChart, VLine, VArea, VTooltip, VLegend, VBar, VPie, VGuide, VScale } from 'vux'
-
-    const data = [
-        { name: '股票类', percent: 83.59, a: '1' },
-        { name: '债券类', percent: 2.17, a: '1' },
-        { name: '现金类', percent: 14.24, a: '1' }
-    ]
-
-    const map = {}
-    data.map(obj => {
-        map[obj.name] = obj.percent + '%'
-    })
+    import { XHeader, XButton } from "vux";
 
     export default {
         components: {
-            VChart,
-            VLine,
-            VArea,
-            VTooltip,
-            VLegend,
-            VBar,
-            VPie,
-            VGuide,
-            VScale
+            XHeader,
+            XButton
         },
-        data () {
-            return {
-                map,
-                htmlOptions: {
-                    position: [ '50%', '45%' ],
-                    html: `
-          <div style="width: 250px;height: 40px;text-align: center;">
-            <div style="font-size: 16px">总资产</div>
-            <div style="font-size: 24px">133.08 亿</div>
-          </div>`
-                },
-                legendOptions: {
-                    position: 'right',
-                    itemFormatter (val) {
-                        return val + '  ' + map[val]
-                    }
-                },
-                yOptions: {
-                    formatter (val) {
-                        return val * 100 + '%'
-                    }
-                },
-                data
+        data() {
+            return {};
+        }
+    };
+</script>
+
+<style lang="less" scoped>
+    /deep/ .vux-header .vux-header-right {
+        top: 7px;
+    }
+
+    /deep/ .vux-header .vux-header-title {
+        font-weight: 500;
+    }
+
+    .t_page {
+        background-color: #ffffffff;
+        .vux-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            padding: 3px 0;
+            background-color: white;
+        }
+        .aboutUs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            img{
+                width: 100%;
+                margin-top: 100px;
+            }
+            .text{
+                font-size:14px;
+                font-family:PingFang SC;
+                font-weight:500;
+                color:#999999;
+                margin-top: 30px;
             }
         }
     }
-</script>
-
+</style>

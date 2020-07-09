@@ -200,7 +200,7 @@ export default {
           });
           if (this.dataList.length < this.pageSize * this.pageNum) {
             this.$refs.scrollerBottom.disablePullup();
-            this.$vux.toast.text("没有更多数据了");
+            // this.$vux.toast.text("没有更多数据了");
           } else {
             this.$refs.scrollerBottom.enablePullup();
           }

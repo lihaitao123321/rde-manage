@@ -7,7 +7,10 @@
                 title="扫码"
         ></XHeader>
         <div class="aboutUs">
-            功能开发中
+            <img src="../../assets/images/public/developing.png">
+            <div class="text">
+                功能开发中，敬请期待...
+            </div>
         </div>
     </div>
 </template>
@@ -48,11 +51,19 @@
         }
         .aboutUs {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding-top: 50px;
-            overflow-y: auto;
+            img{
+                width: 100%;
+                margin-top: 100px;
+            }
+            .text{
+                font-size:14px;
+                font-family:PingFang SC;
+                font-weight:500;
+                color:#999999;
+                margin-top: 30px;
+            }
         }
     }
 </style>

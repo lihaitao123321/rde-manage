@@ -42,7 +42,7 @@ export default {
               replace:true
           },
           icon: require("../../assets/images/index3/czjl_black@2x.png"),
-          activeIcon: require("../../assets/images/index3/czjl_red@2x.png")
+          activeIcon: require("../../assets/images/index3/czjl_blue@2x.png")
         },
         {
           title: "设备",
@@ -50,8 +50,8 @@ export default {
               path: "/index3/sheBeiList",
               replace:true
           },
-          icon: require("../../assets/images/index3/dzsb_black@2x.png"),
-          activeIcon: require("../../assets/images/index3/dzsb_red@2x.png")
+          icon: require("../../assets/images/index3/dzsb_black@3x.png"),
+          activeIcon: require("../../assets/images/index3/dzsb_blue@3x.png")
         },
         // {
         //   title: "系统",
@@ -68,8 +68,8 @@ export default {
               path: "/index3/xiangMuList",
               replace:true
           },
-          icon: require("../../assets/images/index3/dz_black@2x.png"),
-          activeIcon: require("../../assets/images/index3/dz_red@2x.png")
+          icon: require("../../assets/images/index3/dz_black@3x.png"),
+          activeIcon: require("../../assets/images/index3/dz_blue@3x.png")
         }
       ],
       tabActive: 0,

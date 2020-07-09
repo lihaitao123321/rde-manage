@@ -29,7 +29,7 @@
                     </el-input>
                 </div>
                 <div class="t_distance">
-                    <x-button @click.native="login" class="t_submit" type="primary">登陆</x-button>
+                    <x-button @click.native="login" class="t_submit" type="primary">登录</x-button>
                 </div>
                 <div class="footer_title uf uf-dr js">
                     <span @click="gotoForgetPassword">忘记密码</span>
@@ -115,9 +115,11 @@ export default {
               localStorage.setItem("userToken", data.token);
               localStorage.setItem("userCompanyNum", data.num);
               localStorage.setItem("userCurrentCompanyStatus", data.companyStatus);
+
               this.$store.commit("setLoginInfo", {
                   tel: this.telephone,
-                  pwd: this.password
+                  pwd: this.password,
+                  token:data.token
               });
               if (data.num > 1) {
                   localStorage.setItem("userToken", data.token);
