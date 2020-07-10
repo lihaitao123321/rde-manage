@@ -59,10 +59,10 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
         yAxis: [
             {
                 type: 'value',
-                name: '个数',
+                name: 'KW',
                 position: 'left',
                 nameTextStyle:{
-                    padding:[0,0,0,10]
+                    color:'#999999',
                 },
                 splitNumber: 3,
                 axisTick: {
@@ -73,15 +73,15 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
                     lineStyle: {
                         type: 'solid',
                         width: 0.5,
-                        color: '#999999'
+                        color: '#EFEEEE',
                     }
                 },
                 splitLine: {
                     show: true,
-                    lineStyle: {
-                        type: 'dashed',
-                        width: 0.79,
-                        color: '#5e5d64'
+                    lineStyle:{
+                        type: 'solid',
+                        width: 0.5,
+                        color: '#EFEEEE',
                     }
                 },
                 axisLabel: {

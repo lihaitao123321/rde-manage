@@ -272,7 +272,7 @@
           if(res.code === 0){
             this.tableDataList = res.data.data || []
             this.tableDataList.forEach(item=>{
-              seriesData0.push(item.kwh || Math.random())
+              seriesData0.push(item.kwh)
               dateList0.push(item.time)
             })
           }else{

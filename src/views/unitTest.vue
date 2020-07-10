@@ -18,8 +18,8 @@
                     tooltip: {
                         trigger: 'axis',
                         extraCssText: 'width:200px;z-index:2',
-                        backgroundColor: 'rgba(31,31,40,.8)',
-                        position: ['20%', '20%'],
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        position: ['20%', '40%'],
                         axisPointer: {
                             lineStyle: {
                                 color: 'rgba(216,216,216,.1)',
@@ -28,7 +28,7 @@
                             }
                         },
                         formatter(params){
-                            let str = `<div class="tooltip-title" style="text-align:center">${ params[0].axisValue}</div>`
+                            let str = `<div class="tooltip-title" style="text-align:center">${ params[0].axisValue }</div>`
                             return str
                         }
                     },
@@ -44,7 +44,6 @@
                         {
                             type: 'category',
                             name: '',
-                            splitNumber : 5,
                             axisTick: {
                                 lineStyle: {
                                     type: 'dashed',
@@ -53,12 +52,23 @@
                                 },
                                 alignWithLabel: true
                             },
-                            axisLabel: {
-                                interval:0,
-                                fontFamily: 'oswaldfont-regular',
-                                color: '#8e92a4'
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    type: 'solid',
+                                    width: 0.5,
+                                    color: '#999999'
+                                }
                             },
-                            data: ['2013','2012','2012','2012','2012','2012','2012','2012','2012','2012']
+                            axisLabel: {
+                                fontFamily: 'oswaldfont-regular',
+                                color: '#8e92a4',
+                                fontSize: 10,
+                                formatter(params) {
+                                    return params.replace(' ','\n');
+                                }
+                            },
+                            data: ['故障','报警','警告','离线']
                         }
                     ],
                     yAxis: [
@@ -77,8 +87,8 @@
                                 show: true,
                                 lineStyle: {
                                     type: 'solid',
-                                    width: 0.79,
-                                    color: '#61616a'
+                                    width: 0.5,
+                                    color: '#999999'
                                 }
                             },
                             splitLine: {
@@ -105,31 +115,108 @@
                     ],
                     series: [
                         {
-                            name: '投资版',
-                            type: 'line',
+                            name: '',
+                            type: 'bar',
                             barGap: 1,
+                            barWidth:14,
                             itemStyle: {
-                                color:'rgba(67, 126, 255, 1)'
+                                barBorderRadius: [7, 7, 0, 0] //（顺时针左上，右上，右下，左下）
                             },
-                            data: [1,2,3,4,5,6,7,3,9,1],
+                            label:{
+                                show:true,
+                                position:'top',
+                                distance:5,
+                                color:'#2B7FF2',
+                                fontSize:13,
+                                fontWeight:500
+                            },
+                            data: [{
+                                name:'',
+                                value:1,
+                                itemStyle: {
+                                    color: {
+                                        type: 'linear',
+                                        x: 0,
+                                        y: 0,
+                                        x2: 0,
+                                        y2: 1,
+                                        colorStops: [{
+                                            offset: 0,
+                                            color: '#5794FF' // 0% 处的颜色
+                                        }, {
+                                            offset: 1,
+                                            color: '#6B5FFE' // 100% 处的颜色
+                                        }],
+                                        global: false // 缺省为 false
+                                    },
+                                    barBorderRadius: [7, 7, 0, 0] //（顺时针左上，右上，右下，左下）
+                                },
+                            },{
+                                name:'',
+                                value:2,
+                                itemStyle: {
+                                    color: {
+                                        type: 'linear',
+                                        x: 0,
+                                        y: 0,
+                                        x2: 0,
+                                        y2: 1,
+                                        colorStops: [{
+                                            offset: 0,
+                                            color: '#FF5E39' // 0% 处的颜色
+                                        }, {
+                                            offset: 1,
+                                            color: '#FF2553' // 100% 处的颜色
+                                        }],
+                                        global: false // 缺省为 false
+                                    },
+                                    barBorderRadius: [7, 7, 0, 0] //（顺时针左上，右上，右下，左下）
+                                },
+                            },{
+                                name:'',
+                                value:3,
+                                itemStyle: {
+                                    color: {
+                                        type: 'linear',
+                                        x: 0,
+                                        y: 0,
+                                        x2: 0,
+                                        y2: 1,
+                                        colorStops: [{
+                                            offset: 0,
+                                            color: '#FFA523' // 0% 处的颜色
+                                        }, {
+                                            offset: 1,
+                                            color: '#F89200' // 100% 处的颜色
+                                        }],
+                                        global: false // 缺省为 false
+                                    },
+                                    barBorderRadius: [7, 7, 0, 0] //（顺时针左上，右上，右下，左下）
+                                },
+                            },{
+                                name:'',
+                                value:1,
+                                itemStyle: {
+                                    color: {
+                                        type: 'linear',
+                                        x: 0,
+                                        y: 0,
+                                        x2: 0,
+                                        y2: 1,
+                                        colorStops: [{
+                                            offset: 0,
+                                            color: '#D4D4D6' // 0% 处的颜色
+                                        }, {
+                                            offset: 1,
+                                            color: '#D4D4D6' // 100% 处的颜色
+                                        }],
+                                        global: false // 缺省为 false
+                                    },
+                                    barBorderRadius: [7, 7, 0, 0] //（顺时针左上，右上，右下，左下）
+                                },
+                            }],
                         },
                     ],
-                    dataZoom: [
-                        {
-                            fillerColor:'rgba(145,222,228,0.8)',
-                            backgroundColor:'hsla(240, 9%, 94%, 1)',
-                            show: true,
-                            xAxisIndex: [0],
-                            type: 'slider',
-                            top: '85%',
-                            left:20,
-                            right:20,
-                            start: 20,
-                            end: 80
-                        }
-                    ],
-
-
                 }
             }
         }

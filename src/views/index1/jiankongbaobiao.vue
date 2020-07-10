@@ -281,7 +281,7 @@
           if(res.code === 0){
             this.tableDataList = res.data.data || []
             this.tableDataList.forEach(item=>{
-              seriesData0.push(item.count || Math.random())
+              seriesData0.push(item.count)
               dateList0.push(item.time)
             })
           }else{

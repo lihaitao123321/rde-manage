@@ -73,7 +73,6 @@ let store = new Vuex.Store({
     },
   },
   modules: {
-    i18n: vuexI18n.store,
     enumeration
   }
 });

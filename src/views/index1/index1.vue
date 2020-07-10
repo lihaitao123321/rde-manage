@@ -9,10 +9,10 @@
                     v-model="visible">
                 <div class="pop-list">
                     <div class="pop-item" @click="jumpUrl('/scan')">
-                        <img src="../../assets/images/index1/yewu_black@3x.png">扫一扫
+                        <img src="../../assets/images/index1/scan.png">扫一扫
                     </div>
                     <div class="pop-item" @click="jumpUrl('/jinchangtongxun')">
-                        <img src="../../assets/images/index1/yewu_black@3x.png">近场通讯
+                        <img src="../../assets/images/index1/jinchangtongxun.png">近场通讯
                     </div>
                 </div>
                 <x-icon slot="reference" class="more-icon white-x-icon" type="ios-ionic-outline" size="25"></x-icon>
@@ -27,7 +27,7 @@
                     class="white-x-icon"
                     type="ios-ionic-outline"
                     size="25"
-                    @click="toNoticeCenter"
+                    @click="jumpUrl('/notice')"
             ></x-icon>
         </div>
         <div class="redBg">
@@ -121,13 +121,15 @@
                     <div class="all-mon">
                         <div class="title">
                             <div>报警动态</div>
-                            <div @click="jumpUrl('/index3/sheBeiList')">
+                            <div @click="jumpUrl('/jiankongbaobiao')">
                                 <span>进入报警</span>
                                 <x-icon class="back-icon" type="ios-arrow-right" size="15"></x-icon>
                             </div>
                         </div>
                         <div class="pillar-box">
-                            <pillar :dataList="[pageData.alarmlevel0,pageData.alarmlevel1,pageData.alarmlevel2,pageData.offlineCount]"></pillar>
+                            <div class="chart-layout">
+                                <echarts :options="firstChartOption"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -141,19 +143,9 @@
                             </div>
                         </div>
                         <div class="pillar-box">
-                            <v-chart v-if="pageData.powers.length>0" :data="pageData.powers" class="chart-box" :width="340">
-                                <v-scale x type="timeCat" :tick-count="3" :formatter="formatterSc"/>
-                                <v-scale y :min="0" alias="KW"/>
-                                <v-area colors="l(90) 0:#57B6FF 1:#fff" shape="smooth" />
-                                <v-point
-                                    :style="{
-                                    stroke: '#fff',
-                                    lineWidth: 3
-                                    }"
-                                    shape="smooth"
-                                />
-                                <v-line shape="smooth"/>
-                            </v-chart>
+                            <div class="chart-layout">
+                                <echarts :options="secondChartOption"/>
+                            </div>
                         </div>
                     </div>
                     <!-- <div class="all-mon">
@@ -205,15 +197,7 @@
 
 <script>
 import {
-  XHeader,
-  Actionsheet,
-  TransferDom,
-  ButtonTab,
-  ButtonTabItem,
-  Tabbar,
-  TabbarItem,
   Group,
-  Cell,
   XInput,
   XButton,
   VChart,
@@ -230,6 +214,9 @@ import {
 import vCircle from "@/components/circle/index.vue";
 import pillar from "@/components/pillar/index.vue";
 import popList from "@/components/pop-list.vue";
+import echarts from '../../components/echarts'
+import {getOption as getFirstOption} from './chartOptions/baojingdongtaiOption'
+import {getOption as getSecondOption} from './chartOptions/baojingOption'
 const data6 = [
   { name: "清扫机器人", percent: 83.59, a: "1" },
   { name: "接驳车机器人", percent: 2.17, a: "1" },
@@ -258,48 +245,53 @@ export default {
     VPoint,
     vCircle,
     pillar,
-    popList
+    popList,
+    echarts
   },
   data() {
-    return {
-      map,
-      htmlOptions: {
-        position: ["50%", "50%"],
-        html: `
-              <div style="width: 250px;height: 40px;text-align: center;">
-                  <div style="font-size: 24px; color:#212121;">49999</div>
-                  <div style="font-size: 13px; color:#999999;">总数</div>
-              </div>`
-      },
-      legendOptions: {
-        position: "bottom",
-        itemFormatter(val) {
-          return val + "  " + map[val];
-        }
-      },
-      yOptions: {
-        formatter(val) {
-          return val * 100 + "%";
-        }
-      },
-      data6,
-      //页面数据
-      pageData: {
-        projectCount: 0,
-        deviceCount: 0,
-        designLoad: 0,
-        newEnergyCapacity: 0,
-        onlineRate: 0,
-        runingRate: 0,
-        alarmRate: 0,
-        alarmlevel0: 0,
-        alarmlevel1: 0,
-        alarmlevel2: 0,
-        offlineCount: 0,
-        powers:[]
-      },
-        visible:false
-    };
+      let defaultOption1 = getFirstOption()
+      // let defaultOption2 = getFirstOption()
+        return {
+          map,
+          firstChartOption:defaultOption1,
+          secondChartOption:{},
+          htmlOptions: {
+            position: ["50%", "50%"],
+            html: `
+                  <div style="width: 250px;height: 40px;text-align: center;">
+                      <div style="font-size: 24px; color:#212121;">49999</div>
+                      <div style="font-size: 13px; color:#999999;">总数</div>
+                  </div>`
+          },
+          legendOptions: {
+            position: "bottom",
+            itemFormatter(val) {
+              return val + "  " + map[val];
+            }
+          },
+          yOptions: {
+            formatter(val) {
+              return val * 100 + "%";
+            }
+          },
+          data6,
+          //页面数据
+          pageData: {
+            projectCount: 0,
+            deviceCount: 0,
+            designLoad: 0,
+            newEnergyCapacity: 0,
+            onlineRate: 0,
+            runingRate: 0,
+            alarmRate: 0,
+            alarmlevel0: 0,
+            alarmlevel1: 0,
+            alarmlevel2: 0,
+            offlineCount: 0,
+            powers:[]
+          },
+            visible:false
+        };
   },
   methods: {
     jumpUrl(url) {
@@ -310,7 +302,7 @@ export default {
       this.$router.push(url);
     },
     toNoticeCenter() {
-      this.$router.push("notice");
+      this.$router.push("/notice");
     },
     onCheckListChange(list, index) {
       console.log(list);
@@ -332,14 +324,24 @@ export default {
         let pageData = res.data;
         let powers = pageData.powers;
         let newList = []
+        let seriesData0 = []
+        let dateList0 = []
         for (let i = 0; i < powers.length; i++) {
-          newList.push({
-            time:powers[i].workHour,
-            tem:powers[i].kwh
-          })
+            seriesData0.push(powers[i].kwh)
+            dateList0.push(powers[i].time)
+            newList.push({
+                time:powers[i].workHour,
+                tem:powers[i].kwh
+            })
         }
         pageData.powers = newList
         this.pageData = pageData
+        this.firstChartOption = getFirstOption({seriesDataList:[pageData.alarmlevel0,pageData.alarmlevel1,pageData.alarmlevel2,pageData.offlineCount]})
+        this.secondChartOption = getSecondOption({
+            seriesDataList:[seriesData0],
+            xAxisDataList:[dateList0],
+            colors:['#2B7FF3'],
+        })
       }
 
     });

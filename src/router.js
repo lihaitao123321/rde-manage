@@ -22,6 +22,8 @@ import search from './views/index1/search.vue'
 import region from './views/index5/region.vue'
 import version from './views/index5/version.vue'
 import notice from './views/index1/noticeCenter.vue'
+import notice1 from './views/index1/components/notice1.vue'
+import notice2 from './views/index1/components/notice2.vue'
 import projectNumber from './views/index1/projectNumber.vue'
 import baojingbaobiao from './views/index1/baojingbaobiao.vue'
 import jiankongbaobiao from './views/index1/jiankongbaobiao.vue'
@@ -291,7 +293,23 @@ const router = new Router({
         {
             path: '/notice',
             name: 'notice',
-            component: notice
+            component: notice,
+            children: [{
+                path: '',
+                redirect: to => {
+                    return 'notice1';
+                }
+            },
+            {
+                path: 'notice1',
+                name: 'notice1',
+                component: notice1
+            },
+            {
+                path: 'notice2',
+                name: 'notice2',
+                component: notice2
+            }]
         },
         {
             path: '/aboutUs',
