@@ -234,7 +234,7 @@ export default {
         html: `<div style="width: 120px;color: #2B7FF2;white-space: nowrap;text-align:center;">
               <p style="font-size: 18px;margin:0;">&nbsp;</p>
               <p id="text" style="font-size: 28px;margin:0;font-weight: bold;">${
-                this.num
+                this.num.toFixed(0)
               }<span style="color:#ccc;font-size:18px;padding-left:5px;">%</span></p>
             </div>`
       });

@@ -106,7 +106,7 @@ export default {
   },
   async mounted() {
     this.$vux.loading.show("加载地图中");
-    await this.initMap();
+    this.initMap();
     await this.startLocation();
     await this.initData();
     this.$vux.loading.hide();
@@ -198,7 +198,7 @@ export default {
       await this.initData();
       this.t_loading.hide();
     },
-    async initMap() {
+    initMap() {
       this.map = new AMap.Map("index1_content_map", {
         zoom: 14
       });

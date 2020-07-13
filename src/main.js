@@ -64,7 +64,6 @@ Vue.prototype.Tools = Tools;
 import {
   ToastPlugin
 } from 'vux'
-import Vuex from "vuex";
 Vue.use(ToastPlugin);
 
 

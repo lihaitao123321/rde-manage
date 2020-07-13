@@ -79,7 +79,7 @@ export default {
             return response.data;
         }, error => {
             // 请求错误
-            return error.response.data || {};
+            return {};
         });
         let postData = obj.data;
         // if(obj.headers && obj.headers['Content-type']){

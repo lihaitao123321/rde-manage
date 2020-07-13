@@ -22,6 +22,8 @@ export default {
                 if(locationInfo.longitude){
                     let center =[locationInfo.longitude,locationInfo.latitude];
                     cb(center);
+                }else{
+                    cb(false);
                 }
             }, function (err) {
                 cb(false);
