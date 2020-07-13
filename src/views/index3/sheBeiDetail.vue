@@ -84,7 +84,7 @@
             <div @click="jumpUrl('baojingbianliangDetail')">
               <span>报警变量</span>
             </div>
-            <div>
+            <div @click="jumpUrl('/jiankongbaobiao')">
               <span>进入报警</span>
             </div>
           </div>
@@ -108,12 +108,13 @@
     <div class="footer">
       <div>流程图监控</div>
       <div>模型图监控</div>
-      <div @click="jumpUrl('/caozuo')">操作</div>
+      <div @click="jumpUrl('caozuo')">操作</div>
     </div>
   </div>
 </template>
 
 <script>
+import config from "../../config";
 import {
   XHeader,
   Actionsheet,
@@ -213,8 +214,9 @@ export default {
     initMqtt() {
       let username = this.pageData.deviceBaseInfo.thingId;
       let password = this.pageData.deviceBaseInfo.thingKey;
+      console.log(6666,config.mqttUrl)
       this.client = mqtt.connect(
-        this.$store.state.mqttUrl,
+              config.mqttUrl,
         {
           username: username,
           password: password,
@@ -267,16 +269,18 @@ export default {
       });
       this.pageData.deviceParams = deviceParams;
     }),
-    getStatusName(status) {
-      return "状态名称";
-    },
     jumpUrl(name) {
-      this.$router.push({
-        name,
-        params: {
-          pageData: this.pageData
-        }
-      });
+      if(name.indexOf('/')!==-1){
+        this.$router.push(name)
+      }else{
+        this.$router.push({
+          name,
+          params: {
+            pageData: this.pageData
+          }
+        });
+      }
+
     }
   }
 };

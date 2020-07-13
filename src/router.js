@@ -460,8 +460,8 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
     if(from.path === '/' && to.path === '/login'){
-        let loginInfo = localStorage.getItem('loginInfo');
-        if(loginInfo && JSON.parse(loginInfo).token){
+        let userToken = localStorage.getItem('userToken');
+        if(userToken){
             next('/home');
         }
     }

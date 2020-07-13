@@ -77,8 +77,8 @@ export default {
       config,
       // telephone: "15051665680",
       // password: "11076038",
-        telephone: "17630378060",
-        password: "123321",
+        telephone: "",
+        password: "",
       td: false,
       input1: "",
       input2: ""
@@ -101,11 +101,11 @@ export default {
           passwd: encrypt.encrypt(this.password)
         }
       }).then(data => {
-        if (data.status === 1) {
+        if (data.status == 1) {
           this.$vux.toast.text("账号或密码错误");
           return false;
         }
-          if (data.num === 0) {
+          if (data.num == 0) {
               this.$vux.toast.text("当前用户未绑定所属公司，请联系管理员!");
               return false;
           }else{

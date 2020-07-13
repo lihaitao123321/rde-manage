@@ -1,7 +1,7 @@
 <template>
     <div class="t_page">
         <x-header
-                title="报警折线图"
+                title="报警折线图66"
                 :left-options="{preventGoBack:true}"
                 @on-click-back="$router.goBack()"
         >

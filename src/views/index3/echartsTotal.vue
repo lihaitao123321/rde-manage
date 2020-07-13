@@ -28,7 +28,7 @@
                 let detailTime = [];
                 if(Array.isArray(this.detailList) && this.detailList.length > 0){
                     this.detailList.forEach(item=>{
-                        detailList.push(item.level);
+                        detailList.push(item.level || Math.random()>0.5?1:0);
                         detailTime.push(item.date);
                     })
                 }

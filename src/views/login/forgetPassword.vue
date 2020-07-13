@@ -101,11 +101,11 @@ export default {
   },
   data() {
     return {
-      username: "李海涛",
-      nickname: "Dolphin666",
-      telephone: "17630378060",
-      email: "1340706176@qq.com",
-      password: "123321",
+      username: "",
+      nickname: "",
+      telephone: "",
+      email: "",
+      password: "",
       code: "",
       codeText: "获取验证码",
       sending: false,

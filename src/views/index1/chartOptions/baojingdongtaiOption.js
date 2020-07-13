@@ -180,7 +180,7 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
                     },
                 },{
                     name:'',
-                    value:1,
+                    value:0,
                     itemStyle: {
                         color: {
                             type: 'linear',

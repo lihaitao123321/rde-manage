@@ -31,11 +31,11 @@
                     </div>
                     <div class="uf dr">
                         <div class="warn_problem uf ac jf">解除时间</div>
-                        <div class="warn_describe uf ac jf f1">{{detailObj.relieveTime}}</div>
+                        <div class="warn_describe uf ac jf f1">{{detailObj.relieveTime || '--'}}</div>
                     </div>
                     <div class="uf dr">
                         <div class="warn_problem uf ac jf">恢复时间</div>
-                        <div class="warn_describe uf ac jf f1">{{detailObj.recoverTime}}</div>
+                        <div class="warn_describe uf ac jf f1">{{detailObj.recoverTime || '--'}}</div>
                     </div>
                 </div>
                 <div class="item_bottom">
@@ -59,14 +59,15 @@
                 </div>
                 <div class="top_bottom_word uf dr js">
                     <div class="router_warn">报警折线图</div>
-                    <div class="detail_word uf ac jc" @click="WarnDetailFun">详情<span>></span></div>
+                    <div class="detail_word uf ac ec" @click="WarnDetailFun">详情<van-icon style="margin: 0 4px;" name="arrow" /></div>
                 </div>
                 <div class="ReportEcharts">
                     <div class="position_button uf dr">
                         <div>1:报警</div>
                         <div>0:正常</div>
                     </div>
-                    < :detailList="detailList"></>
+                    <echarts :options="chartOption"/>
+<!--                    <echartsTotal :detailList="detailList"></echartsTotal>-->
                 </div>
                 <div class="top_bottom_word uf dr js">
                     <div class="photo_warn">报警快照分析(n条)</div>
@@ -105,15 +106,19 @@
     } from 'vux'
     import echartsTotal from './echartsTotal'
     import  warns  from '../Warn/warn.js'
-
+    import echarts from '../../components/echarts'
+    import {getOption} from "./chartOptions/baojingLineOption"
+    let colors = ['#2B7FF3']
     export default {
         components: {
             XHeader,
             echartsTotal,
+            echarts
         },
         name: "CycleWaterWarn",
         data() {
             return {
+                chartOption:{},
                 detailObj:{},
                 detailList:[],
                 checkListData: [{
@@ -209,14 +214,29 @@
             CycleWaterFunOne(){
                 this.detailObj = {};
                 this.checkListData = [];
-                this.detailList = [];
+                let detailList = [];
                 warns.warnManageDetailFun().then(respont=>{
                     if(respont.code === 0 && respont.data.detail instanceof Object){
                         this.detailObj = respont.data.detail;
                     };
+                    //图表
                     if(respont.code === 0 && Array.isArray(respont.data.lineChart) && respont.data.lineChart.length > 0){
-                        this.detailList = respont.data.lineChart;
+                        detailList = respont.data.lineChart;
                     };
+                    let seriesData0 = []
+                    let dateList0 = []
+                    let colors =
+                    detailList.forEach(item=>{
+                        seriesData0.push(item.level)
+                        dateList0.push(item.date)
+                    })
+                    // seriesData0 = [0,1,0]
+                    this.chartOption = getOption({
+                        seriesDataList:seriesData0,
+                        xAxisDataList:[dateList0],
+                        colors,
+                    })
+
                     if(respont.code === 0 && Array.isArray(respont.data.alarmVariable) && respont.data.alarmVariable.length > 0){
                         let alarmVariableObj = {};
                        respont.data.alarmVariable.forEach(item=>{
@@ -380,6 +400,10 @@
 
     .jc {
         justify-content: center;
+    }
+
+    .ec{
+        justify-content: flex-end;
     }
 
     .dr {
@@ -565,15 +589,14 @@
     }
 
     .detail_word {
-        font-size: 14px;
-        font-family: PingFang SC;
-        font-weight: 500;
-        color: rgba(43, 127, 243, 1);
-        width: 75px;
-        height: 25px;
-        background: rgba(255, 255, 255, 1);
-        box-shadow: 0px 2px 21px 0px rgba(0, 0, 0, 0.2);
-        border-radius: 13px;
+        width:65px;
+        height:25px;
+        background:rgba(255,255,255,1);
+        box-shadow:0px 1px 11px 0px rgba(0, 0, 0, 0.2);
+        border-radius:13px;
+        font-size:14px;
+        font-weight:500;
+        color:rgba(43,127,243,1);
     }
 
     .item_bottom {

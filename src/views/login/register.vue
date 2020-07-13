@@ -135,11 +135,11 @@ export default {
   },
   data() {
     return {
-      username: "李海涛",
-      nickname: "Dolphin666",
-      telephone: "17630378060",
-      email: "1340706176@qq.com",
-      password: "123321",
+      username: "",
+      nickname: "",
+      telephone: "",
+      email: "",
+      password: "",
       code: "",
       codeText: "获取验证码",
       sending: false,
@@ -153,10 +153,6 @@ export default {
       registerType: 0,
       isActive: true,
       isTab: false,
-      input1: "李海涛",
-      input2: "",
-      input3: "",
-      input4: "17630378060",
       select: 0,
       options: [
         { value: 0, label: "中国大陆86+" },

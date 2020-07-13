@@ -33,7 +33,7 @@ export default {
               replace:true
           },
           icon: require("../../assets/images/index3/bj_black@2x.png"),
-          activeIcon: require("../../assets/images/index3/bj_red@2x.png")
+          activeIcon: require("../../assets/images/index3/bj_blue@3x.png")
         },
         {
           title: "操作记录",

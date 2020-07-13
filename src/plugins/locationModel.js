@@ -4,7 +4,7 @@ export default {
     init(){
         if(window.device){
             GaodeLocation.configLocation({
-                appName: '三菱充电',
+                appName: '国訾云物联',
                 android: {
                     locationMode: 1
                 },
@@ -25,6 +25,15 @@ export default {
                 }
             }, function (err) {
                 cb(false);
+            },{
+                androidOption:{
+                    locationMode: 1,
+                    gpsFirst:true
+                },
+                iosOption:{
+                    accuracy: 1,
+                    locationTimeout: 10
+                }
             });
         }
         //浏览器定位
