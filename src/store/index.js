@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import vuexI18n from "vuex-i18n";
 import enumeration from "./enumeration";
+import mqtt from "./mqtt";
 Vue.use(Vuex);
 let store = new Vuex.Store({
   state: {
@@ -73,7 +74,8 @@ let store = new Vuex.Store({
     },
   },
   modules: {
-    enumeration
+    enumeration,
+    mqtt
   }
 });
 Vue.use(vuexI18n.plugin, store);

@@ -399,7 +399,10 @@ const router = new Router({
         {
             path: '/sheBeiDetail/:deviceId',
             name: 'sheBeiDetail',
-            component: sheBeiDetail
+            component: sheBeiDetail,
+            meta: {
+                keepAlive: true
+            },
         },
         {
             path: '/xiangMuDetail/:id',

@@ -58,34 +58,72 @@
             }
         },
         mounted(){
+
             this.init();
+            this.setPermissions()
         },
         methods:{
-            init(){
-                document.addEventListener("deviceready",  ()=> {
-                    //注册极光
-                    document.addEventListener('jpush.receiveRegistrationId', function (event) {
-                        console.log(event.registrationId)
-                    }, false);
-                    window.JPush.init();
-                    window.JPush.setDebugMode(true);
-                    window.JPush.getRegistrationID(function(rId) {
-                        console.log("JPushPlugin:registrationID is " + rId)
-                    })
+            //安卓提前请求定位权限
+            setPermissions() {
+                if (window.device && window.device.platform === 'Android') {
+                    let permissions = cordova.plugins.permissions;
+                    //申请安卓权限
+                    permissions.requestPermissions(
+                        [
+                            permissions.ACCESS_FINE_LOCATION,
+                            permissions.READ_EXTERNAL_STORAGE,
+                            permissions.READ_PHONE_STATE
+                        ],
+                        res => {},
+                        err => {}
+                    );
 
+                    // //GPS定位权限
+                    // permissions.checkPermission(permissions.ACCESS_FINE_LOCATION, status => {
+                    //     if (!status.hasPermission) {
+                    //         permissions.requestPermission(permissions.ACCESS_FINE_LOCATION, res => {
+                    //         }, err => {
+                    //         });
+                    //     } else {
+                    //     }
+                    // });
+                    // //储存权限
+                    // permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, status => {
+                    //     if (!status.hasPermission) {
+                    //         permissions.requestPermission(permissions.READ_EXTERNAL_STORAGE, res => {
+                    //         }, err => {
+                    //         });
+                    //     } else {
+                    //     }
+                    // });
+                    // //运营商信息
+                    // permissions.checkPermission(permissions.ACCESS_NETWORK_STATE, status => {
+                    //     if (!status.hasPermission) {
+                    //         permissions.requestPermission(permissions.ACCESS_NETWORK_STATE, res => {
+                    //         }, err => {
+                    //         });
+                    //     } else {
+                    //     }
+                    // });
+                }
+            },
+            init() {
+                if (!window.device) {
+                    return false;
+                }
+                try {
+                    //监听物理键返回
                     let backClick = 0;// 退出点击次数，默认为0
                     let time = new Date(); // 2s内再次点击就退出
-                    document.addEventListener("backbutton",  ()=> {
-                        //关闭所有弹框
-                        let node = document.getElementById('popListViewBox');
-                        if (node) node.parentNode.removeChild(node);
+                    document.addEventListener("backbutton", () => {
                         let url = location.href.split('/');
                         let page = url[url.length - 1];
-                        if (page === 'home' || page === 'login') {
+                        if (page === 'home' || page === 'index1' || page === 'index2' || page === 'index3' || page === 'index4' || page === 'index5' || page === 'login') {
+                            //拦截扫码页面返回
                             if (backClick) {  // 不为0时
                                 navigator.app.exitApp();  // app退出
                             } else {
-                                this.$vux.toast.text('再次点击退出App');
+                                this.$toast('再次点击退出应用');
                                 if (new Date() - time < 2000) {// 小于2s,退出程序
                                     backClick++;
                                 } else {   // 大于2s，重置时间戳，
@@ -97,8 +135,15 @@
                         }
                     }, false);
 
-
-                }, false);
+                    // //从后台切回到前台监听
+                    // document.addEventListener("resume", () => {
+                    //     jpushModel.resetBadge();
+                    // }, false);
+                    // //初始化极光插件
+                    // jpushModel.init();
+                } catch (exception) {
+                    console.log(exception);
+                }
             }
         },
         watch: {

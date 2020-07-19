@@ -9,174 +9,68 @@
             <div class="item_top">
                 <div class="line">
                     <div class="label">设备名称:</div>
-                    <div class="value">
-                        F009 循环水泵
-                    </div>
+                    <div class="value">{{this.pageData.deviceBaseInfo.deviceName}}</div>
                 </div>
                 <div class="line">
                     <div class="label">所属系统:</div>
-                    <div class="value">NYGL01 1号楼能源管理系统</div>
+                    <div class="value">{{this.pageData.deviceBaseInfo.sysName}}</div>
                 </div>
                 <div class="line">
                     <div class="label">所属项目:</div>
-                    <div class="value">镇江出版大厦</div>
+                    <div class="value">{{this.pageData.deviceBaseInfo.projectName}}</div>
                 </div>
             </div>
         </div>
         <div class="all-mon">
             <div class="title">
-                <div>参数显示</div>
+                <div>参数设置</div>
             </div>
             <div class="pillar-box">
-                <div class="item-con">
+                <div class="item-con" v-for="(item,index) in pageData.deviceParams" :key="index">
                     <div class="lefts">
-                        <span class="indexs">1</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">累计运行时间</span>
+                        <div class="indexs">{{index+1}}</div>
+                        <div class="names">{{item.abbreviate}}</div>
+                        <div class="titles">{{item.abbreviateName}}</div>
                     </div>
                     <div class="rights">
-                        <span class="state-name blue">1450</span>
-                        <span class="units">H</span>
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">2</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">实时功率</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name blue">26</span>
-                        <span class="units">KW</span>
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">3</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">供水温度</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name blue">15</span>
-                        <span class="units"> ℃</span>
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">4</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">回水温度</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name blue">7.5</span>
-                        <span class="units"> ℃</span>
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">5</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">冷凝器低压压力</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name blue">0.67</span>
-                        <span class="units">Bar</span>
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">6</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">温控器模式</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name blue">0.15</span>
-                        <span class="units">Bar</span>
+<!--                        <div class="state-name blue">{{item.value}}</div>-->
+                        <div class="state-name blue">
+                            <input :style="getColor(item)" v-model="item.value"/>
+                        </div>
+                        <div class="units">{{item.unitName}}</div>
+                        <div class="yes">
+                            <van-icon v-if="getShowIcon(item)" name="success" @click="setParamsData(item)"/>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="all-mon">
             <div class="title">
-                <div>模式状态</div>
+                <div>状态操作</div>
             </div>
             <div class="pillar-box">
-                <div class="item-con">
+                <div class="item-con" v-for="(item,index) in pageData.deviceModes" :key="index">
                     <div class="lefts">
-                        <span class="indexs">1</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">工作状态</span>
+                        <div class="indexs">{{index+1}}</div>
+                        <div class="names">{{item.abbreviate}}</div>
+                        <div class="titles">{{item.abbreviateName}}</div>
                     </div>
                     <div class="rights">
-                        <span class="state-name">运行</span>
-                        <img class="icon-image" src="../../assets/images/index3/fresh.png" alt="">
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">2</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">运行模式</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name">制冷</span>
-                        <img class="icon-image" src="../../assets/images/index3/leng.png" alt="">
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">3</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">节能模式</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name">节能启用</span>
-                        <img class="icon-image" src="../../assets/images/index3/go.png" alt="">
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">4</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">故障状态</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name">正常</span>
-                        <img class="icon-image" src="../../assets/images/index3/zhengchang.png" alt="">
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">5</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">风速</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name">中速</span>
-                        <img class="icon-image" src="../../assets/images/index3/zhongsu.png" alt="">
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">6</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">温控器模式</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name">远程</span>
-                        <img class="icon-image" src="../../assets/images/index3/yuancheng.png" alt="">
+                        <div class="state-name blue">{{item.value}}</div>
+                        <div class="units">{{item.label}}</div>
                     </div>
                 </div>
             </div>
         </div>
-
-
       </div>
     </div>
 </template>
 
 <script>
   import { XHeader,Group,XInput,XButton,Toast } from "vux";
+  import {mapState,mapActions} from "vuex";
+  import _ from "lodash";
   export default {
       components: {
         XHeader,
@@ -186,18 +80,128 @@
         Toast
       },
       data() {
-        return {
-        
-        }
+          return {
+              pageData: {
+                  deviceBaseInfo: {},
+                  deviceModes: [],
+                  deviceParams: []
+              }
+          };
       },
-      created(){
-
+      created() {
+          this.initData()
       },
-      mounted(){
-      
+      computed:{
+          ...mapState('mqtt', {
+              message: state => state.message,
+          }),
+      },
+      watch:{
+          message(){
+              this.convertMessage(this.message)
+          }
       },
       methods: {
+          ...mapActions('mqtt',['initMqtt','setMqttData']),
+          initData(){
+              let pageData = this.$route.params.pageData;
+              pageData.deviceModes.forEach(item=>item.originValue='')
+              pageData.deviceParams.forEach(item=>item.originValue='')
+              this.pageData = pageData
+              //初始化mqtt
+              let username = this.pageData.deviceBaseInfo.thingId;
+              let password = this.pageData.deviceBaseInfo.thingKey;
+              this.initMqtt({
+                  username,
+                  password
+              })
+          },
+          getColor(item){
+              if(item.value != item.originValue ){
+                  return {
+                      color:'#2B7FF3'
+                  }
+              }else{
+                  return {}
+              }
+          },
+          getShowIcon(item){
+              if(item.value != item.originValue ){
+                  return true
+              }else{
+                  return false
+              }
+          },
 
+          convertMessage: _.debounce(function(message) {
+              //模式状态处理
+              let pageData = JSON.parse(JSON.stringify(this.pageData));
+              pageData.deviceModes.forEach(item => {
+                  for (const key in message) {
+                      //找到本地和mqtt对应的数据
+                      if (message.hasOwnProperty(key) && key === item.abbreviate) {
+                          item.value = message[key];
+                          item.originValue = message[key];
+                          //找到mqtt的值对应的枚举数据
+                      }
+                  }
+              });
+              //参数显示处理
+              pageData.deviceParams.forEach(item => {
+                  for (const key in message) {
+                      //找到本地和mqtt对应的数据
+                      if (message.hasOwnProperty(key) && key === item.abbreviate) {
+                          item.value = message[key];
+                          item.originValue = message[key];
+                          //找到mqtt的值对应的枚举数据
+                      }
+                  }
+              });
+              this.pageData = pageData;
+          }),
+          setParamsData(item){
+              this.setMqttData({
+                  id:item.abbreviate,
+                  value:item.value
+              })
+              this.sendLog(item)
+          },
+          sendLog(item) {
+              console.log(6666,this.pageData)
+              return this.Tools.ajax({
+                  method: "/cloud/api/control/log/save",
+                  data: {
+                      "deviceId":this.pageData.deviceBaseInfo.id,
+                      "operate":`由${item.originValue + item.unitName}设置为${item.value + item.unitName}`,
+                      "origin":0,
+                      "type":0,
+                      "variableId":"8aaaf67061f433510161f4d8de1f001b"
+                  }
+              }).then(data => {
+                  if (data.code === 0 || true) {
+                      let chartDataList = data.data.deviceAlarms;
+                      let data3 = JSON.parse(JSON.stringify(this.data3));
+                      for (let index = 0; index < data3.length; index++) {
+                          data3[index].nub = chartDataList[index].count;
+                      }
+                      this.data3 = data3;
+                      if(data.data.deviceModes.length>10){
+                          data.data.deviceModes = data.data.deviceModes.slice(0,9)
+                      }
+                      if(data.data.deviceParams.length>10){
+                          data.data.deviceParams = data.data.deviceParams.slice(0,9)
+                      }
+                      this.pageData = data.data;
+                      //初始化mqtt
+                      let username = this.pageData.deviceBaseInfo.thingId;
+                      let password = this.pageData.deviceBaseInfo.thingKey;
+                      this.initMqtt({
+                          username,
+                          password
+                      })
+                  }
+              });
+          },
       }
   }
 </script>
@@ -280,7 +284,7 @@
                     }
                 }
             }
-            
+
         }
         .chart-box{
             height: 140px;
@@ -306,14 +310,19 @@
                 justify-content: space-between;
                 align-items: center;
                 height: 55px;
-                padding-left: 19px;
-                padding-right: 28px; 
+                padding-left: 20px;
+                padding-right: 10px;
                 &:last-child{
                     border-bottom: none;
                 }
                 .lefts{
-                    span{
-                        margin-right: 15px;
+                    display: flex;
+                    align-items: center;
+                    div{
+                        margin-right: 8px;
+                    }
+                    .names{
+                        min-width: 32px;
                     }
                 }
                 .rights{
@@ -321,8 +330,18 @@
                     align-items: center;
                     color: #333333;
                     .blue{
-                        color: #2B7FF3;
                         font-size: 16px;
+                        input{
+                            width:64px;
+                            height:28px;
+                            background:rgba(242,242,245,1);
+                            border-radius:5px;
+                            border: none;
+                            text-align: center;
+                            font-size:16px;
+                            font-family:DIN;
+                            font-weight:bold;;
+                        }
                     }
                     .icon-image{
                         margin-left: 5px;
@@ -330,7 +349,16 @@
                         height: 15px;
                     }
                     .units{
+                        min-width: 16px;
                         margin-left: 5px;
+                    }
+                    .yes{
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        color: #2B7FF3;
+                        font-size: 25px;
+                        width: 35px;
                     }
                 }
             }

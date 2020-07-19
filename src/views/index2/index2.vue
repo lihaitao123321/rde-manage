@@ -106,7 +106,7 @@ export default {
   },
   async mounted() {
     this.$vux.loading.show("加载地图中");
-    this.initMap();
+    await this.initMap();
     await this.startLocation();
     await this.initData();
     this.$vux.loading.hide();
@@ -118,6 +118,7 @@ export default {
     },
     //开始定位
     startLocation() {
+      //设置第一次打开地图
       return new Promise(resolve => {
         this.locationLoading = true;
         locationModel.getCurrentLocation(center => {
@@ -199,24 +200,32 @@ export default {
       this.t_loading.hide();
     },
     initMap() {
-      this.map = new AMap.Map("index1_content_map", {
-        zoom: 14
-      });
-      this.map.on("click", ev => {
-        this.showProduct = false;
-      });
-      this.map.on("mapmove", ev => {
-        this.showProduct = false;
-      });
-      this.map.on("resize", ev => {
-        this.showProduct = false;
-      });
-      //增加工具条
-      let tools = new AMap.ToolBar({
-        position: "RB"
-      });
-      this.map.addControl(tools);
-      this.map.addControl(new AMap.Scale());
+      return new Promise(resolve=>{
+        this.map = new AMap.Map("index1_content_map", {
+          zoom: 14
+        });
+        this.map.on("click", ev => {
+          this.showProduct = false;
+        });
+        this.map.on("mapmove", ev => {
+          this.showProduct = false;
+        });
+        this.map.on("resize", ev => {
+          this.showProduct = false;
+        });
+        this.map.on('complete', () => {
+          resolve(true)
+        });
+        this.map.on('error', () => {
+          resolve(false)
+        });
+        //增加工具条
+        let tools = new AMap.ToolBar({
+          position: "RB"
+        });
+        this.map.addControl(tools);
+        this.map.addControl(new AMap.Scale());
+      })
     },
     async showAMarker(item) {
       let obj = null;

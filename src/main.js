@@ -45,9 +45,11 @@ Vue.use(Popper)
 // Vue.component('Condition', Condition);
 //加载中组件
 import {
-  LoadingPlugin
+  LoadingPlugin,
+  ConfirmPlugin
 } from 'vux'
 Vue.use(LoadingPlugin)
+Vue.use(ConfirmPlugin)
 import {
   TransferDom
 } from 'vux'

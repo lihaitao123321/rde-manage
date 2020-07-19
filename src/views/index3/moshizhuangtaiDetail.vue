@@ -25,7 +25,7 @@
 
 <script>
 import { XHeader } from "vux";
-import mqtt from "mqtt";
+import {mapState} from "vuex";
 import _ from "lodash";
 export default {
   components: {
@@ -33,7 +33,6 @@ export default {
   },
   data() {
     return {
-      client: null,
       pageData: {
         deviceBaseInfo: {},
         deviceModes: [],
@@ -41,73 +40,46 @@ export default {
       }
     };
   },
-  created() {
-    this.pageData = this.$route.params.pageData;
-    this.initMqtt();
-  },
-  mounted() {},
-  beforeRouteLeave(to, from, next) {
-    this.client.end();
-    next();
-  },
-  methods: {
-    //链接并监听mqtt
-    initMqtt() {
-      let username = this.pageData.deviceBaseInfo.thingId;
-      let password = this.pageData.deviceBaseInfo.thingKey;
-      this.client = mqtt.connect(
-        this.$store.state.mqttUrl,
-        {
-          username: username,
-          password: password,
-          keepalive: 60,
-          connectTimeout: 30 * 1000,
-          clientId:
-            "mqttjs_cr_" +
-            Math.random()
-              .toString(16)
-              .substr(2, 8)
-        }
-      );
-      this.client.on("connect", () => {
-        this.client.subscribe("iot/realData/" + username, {
-          qos: 1
-        });
-      });
-      this.client.on("message", (topic, message, packet) => {
-        message = JSON.parse(message);
-        if (message.state == 0) {
-          this.convertMessage(message);
-        }
-      });
+    created() {
+        this.pageData = this.$route.params.pageData;
     },
-    convertMessage: _.debounce(function(message) {
-      let mt = message.mt;
-      //模式状态处理
-      let deviceModes = JSON.parse(JSON.stringify(this.pageData.deviceModes));
-      deviceModes.forEach(item => {
-        for (const key in mt) {
-          //找到本地和mqtt对应的数据
-          if (mt.hasOwnProperty(key) && key === item.abbreviate) {
-            item.value = mt[key];
-            //找到mqtt的值对应的枚举数据
-          }
+    computed:{
+        ...mapState('mqtt', {
+            message: state => state.message,
+        }),
+    },
+    watch:{
+        message(){
+            this.convertMessage(this.message)
         }
-      });
-      this.pageData.deviceModes = deviceModes;
-      //参数显示处理
-      let deviceParams = JSON.parse(JSON.stringify(this.pageData.deviceParams));
-      deviceParams.forEach(item => {
-        for (const key in mt) {
-          //找到本地和mqtt对应的数据
-          if (mt.hasOwnProperty(key) && key === item.abbreviate) {
-            item.value = mt[key];
-            //找到mqtt的值对应的枚举数据
-          }
-        }
-      });
-      this.pageData.deviceParams = deviceParams;
-    })
+    },
+  methods: {
+      convertMessage: _.debounce(function(message) {
+          //模式状态处理
+          let deviceModes = JSON.parse(JSON.stringify(this.pageData.deviceModes));
+          deviceModes.forEach(item => {
+              for (const key in message) {
+                  //找到本地和mqtt对应的数据
+                  if (message.hasOwnProperty(key) && key === item.abbreviate) {
+                      item.value = message[key];
+                      //找到mqtt的值对应的枚举数据
+                  }
+              }
+          });
+          this.pageData.deviceModes = deviceModes;
+          //参数显示处理
+          let deviceParams = JSON.parse(JSON.stringify(this.pageData.deviceParams));
+          deviceParams.forEach(item => {
+              for (const key in message) {
+                  //找到本地和mqtt对应的数据
+                  if (message.hasOwnProperty(key) && key === item.abbreviate) {
+                      item.value = message[key];
+                      //找到mqtt的值对应的枚举数据
+                  }
+              }
+          });
+          this.pageData.deviceParams = deviceParams;
+      }),
   }
 };
 </script>

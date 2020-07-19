@@ -71,7 +71,7 @@
         >
       </cell>
     </Group>
-    <x-button class="button">退出登录</x-button>
+    <x-button class="button" @click.native="logout">退出登录</x-button>
   </div>
 </template>
 
@@ -127,6 +127,17 @@ export default {
     },
     toPersonal() {
       this.$router.push("/personal");
+    },
+    logout(){
+      this.$vux.confirm.show({
+        title:'提示',
+        content:'退出登陆后,您的信息将被清除，确定退出？',
+        onCancel :() => {},
+        onConfirm: () =>{
+          localStorage.clear()
+          this.$router.push('/login');
+        }
+      })
     }
   }
 };

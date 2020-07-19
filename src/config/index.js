@@ -1,5 +1,5 @@
  const config = {
-    project: 'C',
+    project: 'A',
     //苏州德孚
     A: {
         projectId: 'A',

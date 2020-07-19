@@ -90,18 +90,9 @@
           </div>
         </div>
         <div class="pillar-box">
-          <v-chart class="chart-box" :width="340" ref="demo3" style="height: auto;" :data="data3">
-            <v-scale x field="title"/>
-            <v-scale y field="nub"/>
-            <v-bar
-              series-field="name"
-              :adjust="{
-                        type: 'dodge',
-                        marginRatio: 0.05 // 设置分组间柱子的间距
-                    }"
-            />
-            <v-tooltip show-value-in-legend/>
-          </v-chart>
+          <div class="chart-layout">
+            <echarts :options="baoJingChartOption"/>
+          </div>
         </div>
       </div>
     </div>
@@ -114,17 +105,11 @@
 </template>
 
 <script>
+  import echarts from '../../components/echarts'
 import config from "../../config";
 import {
   XHeader,
-  Actionsheet,
-  TransferDom,
-  ButtonTab,
-  ButtonTabItem,
-  Tabbar,
-  TabbarItem,
   Group,
-  Cell,
   XInput,
   XButton,
   VChart,
@@ -138,8 +123,9 @@ import {
   VScale,
   VPoint
 } from "vux";
-import mqtt from "mqtt";
 import _ from "lodash";
+import {mapState,mapActions} from "vuex";
+  import {getOption as getFirstOption} from '../index1/chartOptions/baojingdongtaiOption'
 export default {
   name: "sheBeiDetail",
   components: {
@@ -156,11 +142,12 @@ export default {
     VGuide,
     VPie,
     VScale,
-    VPoint
+    VPoint,
+    echarts
   },
   data() {
     return {
-      client: null,
+      deviceId: '',
       pageData: {
         deviceBaseInfo: {},
         deviceModes: [],
@@ -171,26 +158,41 @@ export default {
         { name: "电站设备", title: "报警", nub: 28.8 },
         { name: "电站设备", title: "故障", nub: 39.3 }
         // { name: "电站设备", title: "离线", nub: 81.4 }
-      ]
+      ],
+      baoJingChartOption:{}
     };
   },
-  async mounted() {
+  async created() {
+    this.deviceId = this.$route.params.deviceId
     await this.initData();
-    await this.initMqtt();
   },
-  beforeRouteLeave(to, from, next) {
-    if(this.client){
-      this.client.end();
+  computed:{
+    ...mapState('mqtt', {
+      message: state => state.message,
+    }),
+  },
+  watch:{
+    message(){
+      this.convertMessage(this.message)
     }
-    next();
+  },
+  async activated() {
+    let deviceId = this.$route.params.deviceId
+    if(this.deviceId === deviceId){
+      return false
+    }else{
+      this.deviceId = deviceId
+    }
+    await this.initData();
   },
   methods: {
+    ...mapActions('mqtt',['initMqtt']),
     //初始化数据
     initData() {
       return this.Tools.ajax({
         method: "/cloud/api/app/monitor/device/getDeviceDetail",
         data: {
-          deviceId: this.$route.params.deviceId
+          deviceId:this.deviceId
         }
       }).then(data => {
         if (data.code === 0 || true) {
@@ -207,67 +209,46 @@ export default {
               data.data.deviceParams = data.data.deviceParams.slice(0,9)
           }
           this.pageData = data.data;
-        }
-      });
-    },
-    //链接并监听mqtt
-    initMqtt() {
-      let username = this.pageData.deviceBaseInfo.thingId;
-      let password = this.pageData.deviceBaseInfo.thingKey;
-      console.log(6666,config.mqttUrl)
-      this.client = mqtt.connect(
-              config.mqttUrl,
-        {
-          username: username,
-          password: password,
-          keepalive: 60,
-          connectTimeout: 30 * 1000,
-          clientId:
-            "mqttjs_cr_" +
-            Math.random()
-              .toString(16)
-              .substr(2, 8)
-        }
-      );
-      this.client.on("connect", () => {
-        this.client.subscribe("iot/realData/" + username, {
-          qos: 1
-        });
-      });
-      this.client.on("message", (topic, message, packet) => {
-        message = JSON.parse(message);
-        console.log('message', message)
-        if (message.state == 0) {
-          this.convertMessage(message);
+          //初始化mqtt
+          let username = this.pageData.deviceBaseInfo.thingId;
+          let password = this.pageData.deviceBaseInfo.thingKey;
+          this.initMqtt({
+            username,
+            password
+          })
+          let series = []
+          this.pageData.deviceAlarms.forEach(item=>{
+            series.push(item.count)
+          })
+          this.baoJingChartOption = getFirstOption({seriesDataList:series})
         }
       });
     },
     convertMessage: _.debounce(function(message) {
-      let mt = message.mt;
       //模式状态处理
-      let deviceModes = JSON.parse(JSON.stringify(this.pageData.deviceModes));
-      deviceModes.forEach(item => {
-        for (const key in mt) {
+      let pageData = JSON.parse(JSON.stringify(this.pageData));
+      pageData.deviceModes.forEach(item => {
+        for (const key in message) {
           //找到本地和mqtt对应的数据
-          if (mt.hasOwnProperty(key) && key === item.abbreviate) {
-            item.value = mt[key];
+          if (message.hasOwnProperty(key) && key === item.abbreviate) {
+            item.value = message[key];
+            item.originValue = message[key];
             //找到mqtt的值对应的枚举数据
           }
         }
       });
-      this.pageData.deviceModes = deviceModes;
       //参数显示处理
-      let deviceParams = JSON.parse(JSON.stringify(this.pageData.deviceParams));
-      deviceParams.forEach(item => {
-        for (const key in mt) {
+      pageData.deviceParams.forEach(item => {
+        for (const key in message) {
           //找到本地和mqtt对应的数据
-          if (mt.hasOwnProperty(key) && key === item.abbreviate) {
-            item.value = mt[key];
+          if (message.hasOwnProperty(key) && key === item.abbreviate) {
+            item.value = message[key];
+            item.originValue = message[key];
             //找到mqtt的值对应的枚举数据
           }
         }
       });
-      this.pageData.deviceParams = deviceParams;
+      this.pageData = pageData;
     }),
     jumpUrl(name) {
       if(name.indexOf('/')!==-1){
@@ -467,6 +448,11 @@ export default {
         box-sizing: border-box;
         font-size: 15px;
         color: #666666;
+        .chart-layout{
+          width: calc(100% - 20px);
+          margin: 10px;
+          height: 275px;
+        }
         .item-con {
           border-bottom: 1px solid #d6d6d6;
           display: flex;

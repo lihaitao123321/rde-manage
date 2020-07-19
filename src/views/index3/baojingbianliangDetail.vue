@@ -14,61 +14,61 @@
                         <span class="titles">{{item.alarmVariableName}}</span>
                     </div>
                     <div class="rights">
-                        <span class="state-name color-one">{{item.stateName}}</span>
+                        <span class="state-name" :style="getColor(item)" >{{item.stateName}}</span>
                     </div>
                 </div>
 
 
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">2</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">压缩机高温报警</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name color-two">故障</span>
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">3</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">电磁阀报警</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name color-three">报警</span>
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">4</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">回水温度报警</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name color-four">警告</span>
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">5</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">冷凝器低压压力报警</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name color-one">正常</span>
-                    </div>
-                </div>
-                <div class="item-con">
-                    <div class="lefts">
-                        <span class="indexs">6</span>
-                        <span class="names">AA1</span>
-                        <span class="titles">冷凝器高压压力报警</span>
-                    </div>
-                    <div class="rights">
-                        <span class="state-name color-one">故障</span>
-                    </div>
-                </div>
+<!--                <div class="item-con">-->
+<!--                    <div class="lefts">-->
+<!--                        <span class="indexs">2</span>-->
+<!--                        <span class="names">AA1</span>-->
+<!--                        <span class="titles">压缩机高温报警</span>-->
+<!--                    </div>-->
+<!--                    <div class="rights">-->
+<!--                        <span class="state-name color-two">故障</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item-con">-->
+<!--                    <div class="lefts">-->
+<!--                        <span class="indexs">3</span>-->
+<!--                        <span class="names">AA1</span>-->
+<!--                        <span class="titles">电磁阀报警</span>-->
+<!--                    </div>-->
+<!--                    <div class="rights">-->
+<!--                        <span class="state-name color-three">报警</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item-con">-->
+<!--                    <div class="lefts">-->
+<!--                        <span class="indexs">4</span>-->
+<!--                        <span class="names">AA1</span>-->
+<!--                        <span class="titles">回水温度报警</span>-->
+<!--                    </div>-->
+<!--                    <div class="rights">-->
+<!--                        <span class="state-name color-four">警告</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item-con">-->
+<!--                    <div class="lefts">-->
+<!--                        <span class="indexs">5</span>-->
+<!--                        <span class="names">AA1</span>-->
+<!--                        <span class="titles">冷凝器低压压力报警</span>-->
+<!--                    </div>-->
+<!--                    <div class="rights">-->
+<!--                        <span class="state-name color-one">正常</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item-con">-->
+<!--                    <div class="lefts">-->
+<!--                        <span class="indexs">6</span>-->
+<!--                        <span class="names">AA1</span>-->
+<!--                        <span class="titles">冷凝器高压压力报警</span>-->
+<!--                    </div>-->
+<!--                    <div class="rights">-->
+<!--                        <span class="state-name color-one">故障</span>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
@@ -76,6 +76,7 @@
 
 <script>
 import { XHeader, Group, XInput, XButton, Toast } from "vux";
+import enumeration from "../../config/enumeration";
 export default {
   components: {
     XHeader,
@@ -111,8 +112,12 @@ export default {
           this.dataList = data.data;
         }
       });
-    }
-  }
+    },
+      getColor(obj){
+          return {color:enumeration.baoJingStates.find(item=>item.value===obj.state).color}
+      }
+  },
+
 };
 </script>
 
