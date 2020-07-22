@@ -3,7 +3,7 @@
     <XHeader
       :left-options="{preventGoBack:true, backText: ''}"
       @on-click-back="$router.goBack()"
-      title="x009循环水泵"
+      :title="this.pageData.deviceBaseInfo.deviceName || '设备详情'"
       fixed
     ></XHeader>
     <div class="shebei-content">
@@ -21,6 +21,7 @@
             <div class="label">所属项目:</div>
             <div class="value">{{this.pageData.deviceBaseInfo.projectName}}</div>
           </div>
+          <x-icon class="right-icon-position" type="ios-arrow-right" size="15"></x-icon>
         </div>
         <div class="item_bottom">
           <div class="icons">
@@ -282,6 +283,7 @@ export default {
       background: rgba(255, 255, 255, 1);
       border-radius: 10px;
       .item_top {
+        position: relative;
         padding: 0 17px 8px 17px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
@@ -302,6 +304,13 @@ export default {
             color: #212121;
             padding-left: 10px;
           }
+        }
+        .right-icon-position{
+          position: absolute;
+          z-index: 1;
+          top: 40px;
+          right: 15px;
+          color: #D9D9DB;
         }
       }
 

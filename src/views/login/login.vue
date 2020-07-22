@@ -84,7 +84,13 @@ export default {
       input2: ""
     };
   },
-  methods: {
+    created() {
+      if(this.config.projectId === 'A'){
+          this.telephone = '17630378060'
+          this.password = '123321'
+      }
+    },
+    methods: {
     login() {
       if (!this.Tools.RegExp.Phone.test(this.telephone)) {
         this.$vux.toast.text("请输入正确的手机号码");

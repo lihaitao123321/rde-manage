@@ -40,16 +40,16 @@
                 </div>
                 <div class="item_bottom">
                     <div class="icons">
-                        <div class="item1" v-if="Number(detailObj.level) === 1">
+                        <div class="item1" v-if="detailObj.level == 1">
                             <img src="../../assets/images/index3/warning@2x.png">报警
                         </div>
-                        <div class="item11" v-else-if="Number(detailObj.level) === 0">
+                        <div class="item11" v-else-if="detailObj.level == 0">
                             <img src="../../assets/images/index3/warning@2x.png">警告
                         </div>
-                        <div class="item12" v-else-if="Number(detailObj.level) === 2">
+                        <div class="item12" v-else-if="detailObj.level == 2">
                             <img src="../../assets/images/index3/warning@2x.png">故障
                         </div>
-                        <div class="item2">
+                        <div class="item2" v-if="detailObj.level!==null">
                             报警中
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                 </div>
 
 
-                <div class="warn_total">每次最多选择3个分析</div>
+                <div class="warn_total">*每次最多选择6个变量分析</div>
             </div>
             <div class="position_bottom uf dr ac">
                 <div class="repair uf ac jc">报修</div>
@@ -280,11 +280,15 @@
                        }
                    });
                }
-                this.$store.commit('checkListFun', checkList);
-                this.$router.push({path: '/WarnReport'});
+                this.$router.push({
+                    name: 'WarnReport',
+                    params:{
+                        checkList
+                    }
+                });
             },
             WarnDetailFun(){
-              this.$router.push({path:'/ReportAna'});
+              this.$router.push({path:'/baoJingLineChart'});
             },
             RemoveWarn(){
                 this.$router.push({path:'/CancelAlarm'});
@@ -295,7 +299,7 @@
                     for (let i = 0; i < this.checkListData.length; i++) {
                         if(this.checkListData[i].active){
                             count++;
-                            if(count>=3){
+                            if(count>=6){
                                 return false;
                             }
                             // this.counter = count + 1;
@@ -320,7 +324,7 @@
             height: 71px;
             background-color: white;
             border-radius: 5px;
-            padding: 10px 10px;
+            padding: 10px 5px 10px 10px;
             position: relative;
             background-size: 100% 100%;
             margin-bottom: 10px;
@@ -583,9 +587,8 @@
         width: 100px;
         height: 13px;
         font-size: 14px;
-        font-family: PingFang SC;
         font-weight: 500;
-        color: black;
+        color: #212121;
     }
 
     .detail_word {

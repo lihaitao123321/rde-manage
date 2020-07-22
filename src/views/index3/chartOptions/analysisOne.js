@@ -1,4 +1,4 @@
-export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataList:[],xAxisDataList:[],colors:[]}){
+export function getOption({legendList,seriesDataList,xAxisDataList, colors} = {legendList:[],seriesDataList:[],xAxisDataList:[],colors:[]}){
     let options = {
         tooltip: {
             trigger: 'axis',
@@ -24,6 +24,16 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
             right: '0',
             bottom: '20%',
             containLabel: true
+        },
+        legend: {
+            align:'left',
+            left:0,
+            top: 0,
+            selectedMode:false,
+            data:['投资版'],
+            itemWidth:9,
+            itemHeight:9,
+            fontSize:13,
         },
         xAxis: [
             {
@@ -59,7 +69,7 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
         yAxis: [
             {
                 type: 'value',
-                name: 'KW',
+                name: '',
                 position: 'left',
                 nameTextStyle:{
                     color:'#999999',
@@ -116,7 +126,10 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
                         show:true,
                         color:'#000000',
                         fontSize:20,
-                        fontWeight:500
+                        fontWeight:500,
+                        formatter(params){
+                            return params.value.toFixed(0)
+                        }
                     },
                     itemStyle:{
                         color:'#FFFFFF',
@@ -125,7 +138,7 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
                     }
                 },
                 areaStyle:{
-                    opacity:0.3,
+                    opacity:0.2,
                     // 线性渐变，前四个参数分别是 x0, y0, x2, y2, 范围从 0 - 1，相当于在图形包围盒中的百分比，如果 globalCoord 为 `true`，则该四个值是绝对的像素位置
                     color: {
                         type: 'linear',
@@ -135,7 +148,7 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
                         y2: 1,
                         colorStops: [{
                             offset: 0,
-                            color: '#57B6FF' // 0% 处的颜色
+                            color: colors[0] // 0% 处的颜色
                         }, {
                             offset: 1,
                             color: '#FFFFFF' // 100% 处的颜色
@@ -170,6 +183,15 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
             options.series[index].itemStyle.color = colors[index]
         }
     })
+    let legends = []
+    legendList.forEach((item,index)=>{
+        options.series[index].name = item
+        legends.push({
+            name: item,
+            icon:'circle',
+        })
+    })
+    options.legend.data = legends
     options.xAxis.forEach((item,index) =>{
         item.data = xAxisDataList[index]
     })

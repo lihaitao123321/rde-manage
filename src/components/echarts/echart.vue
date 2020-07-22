@@ -8,9 +8,9 @@
 </style>
 <script>
     // 引入 数据流方法
-    var echarts = require('echarts')
+    let echarts = require('echarts')
     export default {
-        name: 'work-ehcart',
+        name: 'echart',
         data: function () {
             return {
                 tableHeight: '',

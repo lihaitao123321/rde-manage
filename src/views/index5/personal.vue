@@ -88,7 +88,12 @@ export default {
           }
         }).then(res=>{
           if(res.status === "0"){
-            this.init();
+            if(res.status == 0){
+              this.$toast.success('修改成功')
+              this.init();
+            }else{
+              this.$toast.error('修改失败')
+            }
           }else {
             this.$vux.toast.text('修改失败');
           }
@@ -132,12 +137,12 @@ export default {
       }
     },
     uploadImg(base64DataUrl) {
-      base64DataUrl = "data:image/jpeg;base64," + base64DataUrl;
+      base64DataUrl = "data:image/png;base64," + base64DataUrl;
       let formData = new FormData();
       formData.append("filedata", this.convertBase64UrlToBlob(base64DataUrl));
-      formData.append("filename", new Date().getTime().toString());
+      formData.append("filename", new Date().getTime().toString() + '.png');
       this.Tools.ajax({
-        method: "/filecenter/api/uploadFile",
+        method: "/cloud/api/uploadFile",
         headers: {
           "Content-Type": "multipart/form-data"
         },
@@ -145,7 +150,7 @@ export default {
       }).then(data => {
         console.log('上传接口',data)
         if (data.status == 0) {
-          this.save(this.Tools.config.baseUrl + '/filecenter/api/view/' + data.msg);
+          this.save(data.msg);
         }
       });
     },
@@ -169,16 +174,18 @@ export default {
         }
       }).then(data => {
         console.log('保存接口',data)
-        if (data.code === 200) {
-          this.$vux.toast.show({
-            text: '修改头像成功',
-            time:2000
-          })
-          this.$store.commit("setLoginInfo", {
-            pic: url
-          });
-          this.init()
+        if(res.status === "0"){
+          if(res.status == 0){
+            this.$toast.success('修改成功')
+            this.init();
+          }else{
+            this.$toast.error('修改失败')
+          }
+        }else {
+          this.$toast.error('修改失败')
         }
+      }).catch(()=>{
+        this.$toast.error('修改失败')
       });
     }
   }

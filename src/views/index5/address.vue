@@ -6,14 +6,14 @@
                 <Group class="address-input">
                     <XTextarea  v-model="address" placeholder="请输入地址"></XTextarea>
                 </Group>
-                
+
             </div>
         </div>
 </template>
-      
+
       <script>
       import { XHeader,Group,XTextarea,XButton } from "vux";
-      
+
       export default {
         components: {
             XHeader,
@@ -38,8 +38,11 @@
                             address:this.address
                         }
                     }).then(res=>{
-                        if(res.code === 0){
-
+                        if(res.status == 0){
+                            this.$toast.success('修改成功')
+                            this.$router.goBack()
+                        }else{
+                            this.$toast.error('修改失败')
                         }
                     })
                 }
@@ -47,7 +50,7 @@
         }
       };
       </script>
-    
+
       <style scoped>
           /deep/ .vux-header .vux-header-right {
               top:7px;

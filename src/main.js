@@ -18,20 +18,12 @@ Vue.use(ElementUI, {
   zIndex: 3000
 });
 
-// vue-echarts
-import './components/echarts'
-import ECharts from 'vue-echarts'
-Vue.component('v-chart', ECharts)
-// echarts
-import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
-
 import './css/main.less';
-import 'vant/lib/index.css';
 //引入全局字体图标库,用法：<i class="fa fa-angle-left"></i>,具体图标去 http://fontawesome.dashgame.com 查看
 import './assets/font-awesome-4.7.0/css/font-awesome.css'
-import { Icon } from 'vant';
-Vue.use(Icon);
+import Vant from 'vant';
+import 'vant/lib/index.css';
+Vue.use(Vant);
 //多选button组件
 import CheckButtonList from './components/checkButtonList'
 Vue.component('CheckButtonList', CheckButtonList);

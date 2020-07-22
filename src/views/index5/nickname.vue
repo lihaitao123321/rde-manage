@@ -9,10 +9,10 @@
             </div>
         </div>
     </template>
-      
+
       <script>
       import { XHeader,Group,XInput,XButton,Toast } from "vux";
-      
+
       export default {
         components: {
             XHeader,
@@ -38,16 +38,21 @@
                             username: this.nickname,
                         }
                     }).then(res => {
-                        if(res.code === 0){
-
+                        if(res.status == 0){
+                            this.$toast.success('修改昵称成功')
+                            this.$router.goBack()
+                        }else{
+                            this.$toast.error('修改昵称失败')
                         }
-                    }).catch(() => { })
+                    }).catch(() => {
+                        this.$toast.error('修改昵称失败')
+                    })
                 }
             }
         },
       };
       </script>
-    
+
       <style scoped>
           /deep/ .vux-header .vux-header-right {
               top:7px;

@@ -178,27 +178,10 @@
                       "variableId":"8aaaf67061f433510161f4d8de1f001b"
                   }
               }).then(data => {
-                  if (data.code === 0 || true) {
-                      let chartDataList = data.data.deviceAlarms;
-                      let data3 = JSON.parse(JSON.stringify(this.data3));
-                      for (let index = 0; index < data3.length; index++) {
-                          data3[index].nub = chartDataList[index].count;
-                      }
-                      this.data3 = data3;
-                      if(data.data.deviceModes.length>10){
-                          data.data.deviceModes = data.data.deviceModes.slice(0,9)
-                      }
-                      if(data.data.deviceParams.length>10){
-                          data.data.deviceParams = data.data.deviceParams.slice(0,9)
-                      }
-                      this.pageData = data.data;
-                      //初始化mqtt
-                      let username = this.pageData.deviceBaseInfo.thingId;
-                      let password = this.pageData.deviceBaseInfo.thingKey;
-                      this.initMqtt({
-                          username,
-                          password
-                      })
+                  if (data.status === 0 || true) {
+                      this.$vux.toast.text("设置完成");
+                  }else{
+                      this.$vux.toast.text('设置失败，请稍后再试')
                   }
               });
           },

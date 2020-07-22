@@ -22,8 +22,8 @@ import search from './views/index1/search.vue'
 import region from './views/index5/region.vue'
 import version from './views/index5/version.vue'
 import notice from './views/index1/noticeCenter.vue'
-import notice1 from './views/index1/components/notice1.vue'
-import notice2 from './views/index1/components/notice2.vue'
+import notice1 from './views/index1/notice1.vue'
+import notice2 from './views/index1/notice2.vue'
 import projectNumber from './views/index1/projectNumber.vue'
 import baojingbaobiao from './views/index1/baojingbaobiao.vue'
 import jiankongbaobiao from './views/index1/jiankongbaobiao.vue'
@@ -48,6 +48,7 @@ import xiangMuDetail from './views/index3/xiangMuDetail';
 import xiTongDetail from './views/index3/xiTongDetail';
 import EchartsAnl from './views/index3/ElectricityAnalysis'
 import ReportAna from './views/index3/ReportAnalysis'
+import baoJingLineChart from './views/index3/baoJingLineChart'
 import baojingbianliangDetail from './views/index3/baojingbianliangDetail';
 import canshuDetail from './views/index3/canshuDetail';
 import moshizhuangtaiDetail from './views/index3/moshizhuangtaiDetail';
@@ -110,6 +111,12 @@ const router = new Router({
             name: 'ReportAna',
             component: ReportAna
         },
+        {
+            path: '/baoJingLineChart',
+            name: 'baoJingLineChart',
+            component: baoJingLineChart
+        },
+
         {
             path: '/CancelAlarm',
             name: 'CancelAlarm',

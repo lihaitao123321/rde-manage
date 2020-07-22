@@ -41,14 +41,14 @@ let warns = {
         })
     },
     //报警折线图分析
-    warnBrokenFun(startTime,endTime){
+    warnBrokenFun({thingId,abbreviate,beginTime,endTime}){
         return Tools.ajax({
             method:'/cloud/api/app/monitor/alarmLine',
             data: {
-                "thingId":sessionStorage.getItem('thingId'),
-                "beginTime":startTime + ':00',
-                "endTime":endTime + ':00',
-                "abbreviate":sessionStorage.getItem('abbreviate'),
+                thingId,
+                abbreviate,
+                beginTime:Tools.Date.TimeFormat(beginTime,'ymdhms'),
+                endTime:Tools.Date.TimeFormat(endTime,'ymdhms')
             }
         })
     },
@@ -68,15 +68,16 @@ let warns = {
     },
     //报警折线图报表
     //报警快照分析
-    warnAnalysisFun(param1,param2,param3){
+    warnAnalysisFun({thingId,variableIds,beginTime,endTime}){
         return Tools.ajax({
             method:'/cloud/api/app/monitor/analyzeAlarmSnap',
             data: {
-                "thingId":sessionStorage.getItem('thingId'),
-                "variableIds":param1,
-                "beginTime":param2 + ':00',
-                "endTime":param3 + ':00'
-
+                "thingId":thingId,
+                "variableIds":variableIds,
+                "beginTime":Tools.Date.TimeFormat(beginTime,'ymdhms'),
+                "endTime":Tools.Date.TimeFormat(endTime,'ymdhms'),
+                pageSize:100,
+                pageNum:1
                 // "variableIds":["8aaa83ed644054090164406e8b01001f","8aaa83ed644054090164406e8ae20016"],
                 // "thingId":"dv_96",
                 // "beginTime":"2017-06-12 09:00:00",
