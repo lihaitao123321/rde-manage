@@ -39,13 +39,13 @@
                         }
                     }).then(res => {
                         if(res.status == 0){
-                            this.$toast.success('修改昵称成功')
+                            this.$toast.success('修改成功')
                             this.$router.goBack()
                         }else{
-                            this.$toast.error('修改昵称失败')
+                            this.$toast.fail('修改失败')
                         }
                     }).catch(() => {
-                        this.$toast.error('修改昵称失败')
+                        this.$toast.fail('修改昵称失败')
                     })
                 }
             }

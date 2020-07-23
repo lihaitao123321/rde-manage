@@ -1,29 +1,28 @@
 <template>
     <div class="t_page">
-        <div class="t_content">
             <div class="t_content_image">
                 <div class="t_content_image1">
                     <img style="height: 100%;width: 100%" :src="require('../../assets/images/logo/' + config.logo)">
                 </div>
             </div>
-            <group class="t_login">
-                <div class="t_position">
+            <div class="bottom-layout">
+                <div class="input-layout">
                     <el-input
-                        class="t_position_bottom"
-                        placeholder="请输入账号"
-                        clearable
-                        v-model="telephone"
+                            class="input"
+                            placeholder="请输入账号"
+                            clearable
+                            v-model="telephone"
                     >
                         <i slot="prefix" class="el-input__icon t_margin_icon fa fa-user-o"></i>
                     </el-input>
                 </div>
-                <div class="t_position">
+                <div class="input-layout">
                     <el-input
-                        class="t_position_bottom"
-                        placeholder="请输入密码"
-                        show-password
-                        clearable
-                        v-model="password"
+                            class="input"
+                            placeholder="请输入密码"
+                            show-password
+                            clearable
+                            v-model="password"
                     >
                         <i slot="prefix" class="el-input__icon t_margin_icon fa fa-lock"></i>
                     </el-input>
@@ -35,8 +34,8 @@
                     <span @click="gotoForgetPassword">忘记密码</span>
                     <span @click="register()">新用户注册 ></span>
                 </div>
-            </group>
-        </div>
+            </div>
+
     </div>
 </template>
 
@@ -155,6 +154,39 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+    .t_page{
+        background-color: white;
+        .t_content_image {
+            width: 100%;
+            height: 210px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .t_content_image1 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100px;
+                height: 100px;
+                background-color: rgba(43, 127, 243, 1);
+                border: 0px;
+                border-radius: 15px;
+            }
+        }
+        .bottom-layout{
+            padding: 0 40px;
+            .input-layout {
+                display: flex;
+                align-items: center;
+                height: 66px;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+                .input{
+                    border: none !important;
+                }
+            }
+        }
+    }
+
 .el-input__icon{
     line-height: 36px;
 }
@@ -164,23 +196,8 @@ export default {
 .uf-dr {
   flex-direction: row;
 }
-.t_content_image {
-  width: 100%;
-  height: 210px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.t_content_image1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 100px;
-  background-color: rgba(43, 127, 243, 1);
-  border: 0px;
-  border-radius: 15px;
-}
+
+
 .t_login {
   padding: 0px 38px;
 }
@@ -192,9 +209,6 @@ export default {
 .t_distance {
   margin-top: 50px;
   padding: 15px;
-}
-.t_page {
-  background-color: white;
 }
 /deep/.weui-btn_primary {
   background-color: rgba(43, 127, 243, 1) !important;
@@ -212,19 +226,6 @@ export default {
   font-family:PingFang SC;
   font-weight:bold;
   padding-left: 40px;
-}
-.t_position {
-  position: relative;
-  height: 66px;
-  border: 0px !important;
-  background-color: white !important;
-  border-bottom: 0.5px solid darkgray !important;
-  border-radius: 0px !important;
-}
-.t_position_bottom {
-  position: absolute;
-  bottom: 10px;
-  left: 0px;
 }
 
 /deep/.weui-cell {

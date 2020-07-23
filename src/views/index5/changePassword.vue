@@ -77,10 +77,10 @@
                 }
             }).then(res => {
                 if(res.status == 0){
-                    this.toast.showPositionValue = true;
-                    this.toast.text = '密码修改成功'
+                    this.$toast.success('修改成功')
+                }else{
+                    this.$toast.fail('修改失败')
                 }
-
             }).catch (() => { })
         },
     },

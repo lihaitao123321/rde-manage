@@ -2,13 +2,13 @@
     <div class="t_page">
         <drawer
             :show.sync="drawerVisibility"
-            :show-mode="showModeValue"
+            show-mode="push"
             placement="right"
             :drawer-style="{'background-color':'white', width: '330px'}"
         >
             <!-- drawer content -->
             <div slot="drawer" style="height: 100%;">
-                <SearchOptions v-model="rightOptions" @search="drawerVisibility=false;refresh()"></SearchOptions>
+                <SheBeiDrawer v-model="rightOptions" @search="onSearch()"></SheBeiDrawer>
             </div>
             <!-- main content -->
             <div class="main_content">
@@ -22,7 +22,7 @@
                                 <i class="el-icon-search"></i>
                             </div>
                             <div class="search_content">
-                                <input placeholder="请输入搜索内容" readonly @click="openSearchPage">
+                                <input placeholder="请输入搜索内容">
                             </div>
                         </div>
                     </div>
@@ -31,19 +31,13 @@
                     </div>
                 </div>
                 <div class="content">
-                    <Scroller
-                        use-pullup
-                        :pullup-config="pullupDefaultConfig"
-                        @on-pullup-loading="loadMore"
-                        use-pulldown
-                        :pulldown-config="pulldownDefaultConfig"
-                        @on-pulldown-loading="refresh"
-                        lock-x
-                        ref="scrollerBottom"
-                        height="-95"
-                        style="height:100%;"
-                    >
-                        <div>
+                    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+                        <van-list
+                                v-model="loading"
+                                :finished="finished"
+                                finished-text="没有更多了"
+                                @load="onLoad"
+                        >
                             <div
                                 class="content_item"
                                 v-for="(item, index) in this.dataList"
@@ -88,125 +82,103 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </Scroller>
+                        </van-list>
+                    </van-pull-refresh>
                 </div>
             </div>
         </drawer>
     </div>
 </template>
 <script>
-import { Scroller, Drawer } from "vux";
-import { mapState } from "vuex";
-import SearchOptions from "@/views/index1/components/searchOptions";
-export default {
-  components: {
-    Scroller,
-    Drawer,
-    SearchOptions
-  },
-  data() {
-    return {
-      pageNum: 1,
-      pageSize: 10,
-      dataList: [],
-      pullupDefaultConfig: {
-        content: "上拉加载更多",
-        pullUpHeight: 60,
-        height: 40,
-        autoRefresh: false,
-        downContent: "释放后加载",
-        upContent: "上拉加载更多",
-        loadingContent: "加载中...",
-        clsPrefix: "xs-plugin-pullup-"
-      },
-      pulldownDefaultConfig: {
-        content: "下拉刷新",
-        height: 40,
-        autoRefresh: false,
-        downContent: "下拉刷新",
-        upContent: "释放后刷新",
-        loadingContent: "正在刷新...",
-        clsPrefix: "xs-plugin-pulldown-"
-      },
-      showModeValue: "push",
-      drawerVisibility: false,
-      rightOptions: {
-        areaId: "",
-        projectType: "",
-        beginDesignLoad: "",
-        endDesignLoad: ""
-      }
+    import { Drawer } from "vux";
+    import SheBeiDrawer from "./components/SheBeiDrawer";
+    export default {
+        components: {
+            Drawer,
+            SheBeiDrawer
+        },
+        data() {
+            return {
+                loading: false,
+                finished: false,
+                refreshing: false,
+                pageNum:0,
+                pageSize:10,
+                total:0,
+                dataList: [],
+                drawerVisibility: false,
+                rightOptions: {
+                    deviceTypeId: '',
+                    deviceModelId: '',
+                    deviceSystemId: '',
+                    deviceProjectId:'',
+                    deviceCommStatusId:[],
+                    deviceWorkStatusId:[],
+                    deviceAlarmStatusId:[],
+                }
+            };
+        },
+        methods: {
+            onLoad() {
+                this.pageNum ++;
+                this.initData();
+            },
+            onRefresh() {
+                this.pageNum = 1
+                // 清空列表数据
+                this.finished = false;
+
+                // 重新加载数据
+                // 将 loading 设置为 true，表示处于加载状态
+                this.loading = true;
+                this.refreshing = true;
+                this.initData();
+            },
+            onSearch(){
+                this.drawerVisibility = false
+                this.onRefresh()
+            },
+            initData() {
+                return this.Tools.ajax({
+                    method: "/cloud/api/app/monitor/device/getDevicesPage",
+                    data: {
+                        deviceType:this.rightOptions.deviceTypeId,
+                        modelId:this.rightOptions.deviceModelId,
+                        projectId:this.rightOptions.deviceProjectId,
+                        communicationStatus:this.rightOptions.deviceCommStatusId.join(','),
+                        workStatus:this.rightOptions.deviceWorkStatusId.join(','),
+                        alarmStatus:this.rightOptions.deviceAlarmStatusId.join(','),
+                        pageNum: this.pageNum,
+                        pageSize: this.pageSize
+                    }
+                }).then(res => {
+                    if (this.refreshing) {
+                        this.dataList = [];
+                        this.refreshing = false;
+                    }
+                    this.dataList = this.dataList.concat(res.data.data)
+                    this.total = res.data.total
+                    this.loading = false;
+                    if(this.dataList.length < (this.pageNum-1)*this.pageSize){
+                        this.finished = true;
+                    }
+                });
+            },
+            onClick(item) {
+                this.$bus.emit("oNSetOneProduct", item);
+                this.$router.goBack();
+            },
+            showDrawer() {
+                this.drawerVisibility = !this.drawerVisibility;
+            },
+            openSearchPage() {
+                this.$router.push("/sheBeiSearch");
+            },
+            toDetail(item) {
+                this.$router.push("/shebeiDetail/" + item.id);
+            },
+        }
     };
-  },
-  async mounted() {
-    this.$vux.loading.show("加载数据中");
-    await this.initData();
-    this.$vux.loading.hide();
-  },
-  methods: {
-    openSearchPage() {
-      this.$router.push("/sheBeiSearch");
-    },
-    toDetail(item) {
-      this.$router.push("/shebeiDetail/" + item.id);
-    },
-    onSearch() {
-      this.refresh();
-    },
-    async loadMore() {
-      if (this.dataList.length < this.pageSize * this.pageNum) {
-        return false;
-      }
-      this.$vux.loading.show("加载数据中");
-      this.pageNum++;
-      await this.initData();
-      this.$refs.scrollerBottom.donePullup();
-      this.$vux.loading.hide();
-    },
-    async refresh() {
-      this.$vux.loading.show("刷新数据中");
-      this.pageNum = 1;
-      await this.initData();
-      this.$refs.scrollerBottom.enablePullup();
-      this.$refs.scrollerBottom.donePulldown();
-      this.$vux.loading.hide();
-    },
-    initData() {
-      return this.Tools.ajax({
-        method: "/cloud/api/app/monitor/device/getDevicesPage",
-        data: {
-          pageNum: this.pageNum,
-          pageSize: this.pageSize
-        }
-      }).then(data => {
-        if (data.code === 0 || true) {
-          if (this.pageNum === 1) {
-            this.dataList = data.data.data;
-          } else {
-            this.dataList = this.dataList.concat(data.data.data);
-          }
-          this.$nextTick(() => {
-            this.$refs.scrollerBottom.reset();
-          });
-          if (this.dataList.length < this.pageSize * this.pageNum) {
-            this.$refs.scrollerBottom.disablePullup();
-            // this.$vux.toast.text("没有更多数据了");
-          } else {
-            this.$refs.scrollerBottom.enablePullup();
-          }
-        }
-      });
-    },
-    onClick(item) {
-      this.$bus.emit("oNSetOneProduct", item);
-      this.$router.goBack();
-    },
-    showDrawer() {
-      this.drawerVisibility = !this.drawerVisibility;
-    }
-  }
-};
 </script>
 
 <style lang="less" scoped>
@@ -276,7 +248,6 @@ export default {
             background: none;
             border: none;
             outline: none;
-            color: white;
           }
           input::placeholder {
             font-size: 14px;

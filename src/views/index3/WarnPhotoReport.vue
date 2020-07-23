@@ -15,19 +15,23 @@
             </div>
             <template v-if="tabType===1">
                 <div class="table-box">
-                    <x-table class="table-con" :cell-bordered="false" :content-bordered="false">
+                    <x-table class="table-con"
+                             :cell-bordered="false"
+                             :content-bordered="false"
+                             :style="tableWidth"
+                    >
                         <thead>
                         <tr>
                             <th>序号</th>
                             <th>时间</th>
-                            <th>报警状态</th>
+                            <th v-for="label in columns">{{label}}</th>
                         </tr>
                         </thead>
                         <tbody class="tbody">
-                        <tr v-for="(item,index) in tableDataList" :key="item.series">
-                            <td>{{index+1}}</td>
-                            <td>{{item.date}}</td>
-                            <td>{{item.level}}</td>
+                        <tr v-for="(item,index) in tableDataList" :key="index">
+                            <td>{{item.index}}</td>
+                            <td>{{item.time}}</td>
+                            <td v-for="(label,i) in columns">{{item.value[i]}}</td>
                         </tr>
                         </tbody>
                     </x-table>
@@ -57,18 +61,6 @@
                 </div>
             </template>
             <div class="options">
-                <!--          <div class="option-box">-->
-                <!--            <div class="label-name">采集周期：</div>-->
-                <!--            <el-select v-model="select2" class="select-box">-->
-                <!--              <el-option-->
-                <!--                      v-for="item in options2"-->
-                <!--                      :key="item.value"-->
-                <!--                      :label="item.label"-->
-                <!--                      :value="item.value">-->
-                <!--              </el-option>-->
-                <!--              <div class="el-icon-caret-bottom" slot=""></div>-->
-                <!--            </el-select>-->
-                <!--          </div>-->
                 <div class="option-box" @click="showPopup(1)">
                     <div class="label-name">起始时间：</div>
                     <div class="content">{{Tools.Date.TimeFormat(startDate,'ymdhm')}}</div>
@@ -164,7 +156,7 @@
                 tabType: 0,
                 startTime:'',
                 endTime:'',
-                tableDataList:[],
+
                 chartOption:{},
                 chartOptionList:[{},{},{},{}],
                 tabsActive:0,
@@ -176,34 +168,8 @@
                 startMinDate: '',
                 startDate: '',
                 endDate: '',
-                options: [{
-                    value: 0,
-                    label: '警告'
-                }, {
-                    value: 1,
-                    label: '报警'
-                }, {
-                    value: 2,
-                    label: '故障'
-                }, {
-                    value: 3,
-                    label: '离线'
-                }],
-                select2:5,
-                options2: [{
-                    value: 5,
-                    label: '5分钟'
-                }, {
-                    value: 10,
-                    label: '10分钟'
-                }, {
-                    value: 30,
-                    label: '30分钟'
-                }, {
-                    value: 60,
-                    label: '1小时'
-                }],
-                select3:''
+                columns:[],
+                tableDataList:[],
             }
         },
         computed: {
@@ -218,6 +184,13 @@
             limitEndTime() {
                 let time = this.Tools.Date.getDateDistanceToOneTimeByMinute(this.startDate, 30);
                 return time;
+            },
+            tableWidth(){
+                if(this.columns.length>1){
+                    return {
+                        width:(200 + this.columns.length*180) + 'px'
+                    }
+                }
             }
         },
         methods:{
@@ -287,23 +260,39 @@
                     let chartOptionList = []
 
                     if(res.code === 0){
-                        this.tableDataList = res.data.alarmSnapshotModels || []
-                        for (let i = 0; i < this.tableDataList.length; i++) {
+                        let tableDataList = []
+                        let columns = []
+                        let resDataList = res.data.alarmSnapshotModels || []
+                        for (let i = 0; i < resDataList.length; i++) {
                             seriesDataList.push([])
                             xList.push([])
                         }
-                        this.tableDataList.forEach((item,index)=>{
+                        resDataList.forEach((item,index)=>{
+                            columns.push(item.name + '(' +item.unit + ')')
                             legendList.push(item.name)
                             item.modelDetails.forEach(model=>{
                                 seriesDataList[index].push(Number(model.value))
                                 xList[index].push(model.time)
                             })
                         })
-
+                        this.columns = columns
+                        //表格数据拼装
+                        let modelDetails0 = resDataList[0].modelDetails
+                        modelDetails0.forEach((model,i)=>{
+                            let item = {
+                                index: i + 1,
+                                time: model.time,
+                                value:[],
+                            }
+                            resDataList.forEach((r)=>{
+                                item.value.push(r.modelDetails[i].value)
+                            })
+                            tableDataList.push(item)
+                        })
+                        this.tableDataList = tableDataList
                     }else{
                         this.tableDataList = []
                     }
-                    console.log('xList',xList)
                     this.chartOption = getOption({
                         legendList:legendList,
                         seriesDataList:seriesDataList,
@@ -573,9 +562,16 @@
         }
 
         .table-box{
+            display: flex;
+            width: 100%;
             padding: 17px 15px 15px 15px;
+            overflow-x: scroll;
             /deep/ .vux-table td:before, .vux-table th:before{
                 border-bottom: none;
+            }
+            .vux-table{
+                /*width: 500px;*/
+                /*min-width: 500px;*/
             }
             .table-con{
                 border-radius: 5px;

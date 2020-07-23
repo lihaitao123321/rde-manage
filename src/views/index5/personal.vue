@@ -87,16 +87,12 @@ export default {
             sex:key
           }
         }).then(res=>{
-          if(res.status === "0"){
             if(res.status == 0){
               this.$toast.success('修改成功')
               this.init();
             }else{
-              this.$toast.error('修改失败')
+              this.$toast.fail('修改失败')
             }
-          }else {
-            this.$vux.toast.text('修改失败');
-          }
         })
       }
     },

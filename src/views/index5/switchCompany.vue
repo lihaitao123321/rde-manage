@@ -71,13 +71,13 @@ export default {
           companyId: value[0]
         }
       }).then(res => {
-        if (res.code === 0) {
-          this.$store.commit("setCompany", { id: value[0], name: label[0] });
-          localStorage.setItem("userToken", res.data);
-          this.$router.goBack();
-        } else {
-          this.$vux.toast.text("选择公司失败");
-        }
+          if(res.code == 0){
+              this.$toast.success('修改成功')
+              this.$store.commit("setCompany", { id: value[0], name: label[0] });
+              this.$router.goBack();
+          }else{
+              this.$toast.fail('修改失败')
+          }
       });
     }
   }

@@ -2,13 +2,13 @@
     <div class="t_page">
         <drawer
                 :show.sync="drawerVisibility"
-                :show-mode="showModeValue"
+                show-mode="push"
                 placement="right"
                 :drawer-style="{'background-color':'white', width: '330px'}"
         >
             <!-- drawer content -->
             <div slot="drawer" style="height: 100%;">
-                <CaoZuoDrawer v-model="rightOptions" @search="refresh()"></CaoZuoDrawer>
+                <CaoZuoDrawer v-model="rightOptions" @search="onSearch()"></CaoZuoDrawer>
             </div>
             <!-- main content -->
             <div class="main_content">
@@ -31,18 +31,13 @@
                     </div>
                 </div>
                 <div class="content">
-                    <Scroller
-                            use-pullup
-                            :pullup-config="pullupDefaultConfig"
-                            @on-pullup-loading="loadMore"
-                            use-pulldown
-                            :pulldown-config="pulldownDefaultConfig"
-                            @on-pulldown-loading="refresh"
-                            lock-x
-                            ref="scrollerBottom"
-                            style="height: 100%"
-                            height="-50">
-                        <div>
+                    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+                        <van-list
+                                v-model="loading"
+                                :finished="finished"
+                                finished-text="没有更多了"
+                                @load="onLoad"
+                        >
                             <div class="content_item" v-for="(item,index) in dataList">
                                 <div class="item_top">
                                     <div class="line">
@@ -102,8 +97,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </Scroller>
+                        </van-list>
+                    </van-pull-refresh>
                 </div>
             </div>
         </drawer>
@@ -111,44 +106,23 @@
 </template>
 <script>
     import warn from '../Warn/warn.js'
-    import { Scroller, Drawer } from "vux";
+    import { Drawer } from "vux";
     import CaoZuoDrawer from "./components/CaoZuoDrawer";
     export default {
         components: {
             Drawer,
-            Scroller,
             CaoZuoDrawer
         },
-        mounted(){
-
-        },
-        name: "baoJingListNew",
+        name: "caoZuoList",
         data(){
             return{
-                pullupDefaultConfig: {
-                    content: "上拉加载更多",
-                    pullUpHeight: 10,
-                    height: 10,
-                    autoRefresh: false,
-                    downContent: "释放后加载",
-                    upContent: "上拉加载更多",
-                    loadingContent: "加载中...",
-                    clsPrefix: "xs-plugin-pullup-"
-                },
-                pulldownDefaultConfig: {
-                    content: "下拉刷新",
-                    height: 40,
-                    autoRefresh: false,
-                    downContent: "下拉刷新",
-                    upContent: "释放后刷新",
-                    loadingContent: "正在刷新...",
-                    clsPrefix: "xs-plugin-pulldown-"
-                },
-                dataList:[],
-                total:0,
-                pageNum:1,
+                loading: false,
+                finished: false,
+                refreshing: false,
+                pageNum:0,
                 pageSize:10,
-                showModeValue: "push",
+                total:0,
+                dataList:[],
                 drawerVisibility: false,
                 rightOptions: {
                     rangeTime:[],
@@ -164,57 +138,46 @@
                 }
             }
         },
-        created(){
-            this.getWarnFun();
-        },
         methods:{
-            openSearchPage() {
-                this.$router.push("/caoZuoSearch");
+            onLoad() {
+                this.pageNum ++;
+                this.getWarnFun();
+            },
+            onRefresh() {
+                this.pageNum = 1
+                // 清空列表数据
+                this.finished = false;
+
+                // 重新加载数据
+                // 将 loading 设置为 true，表示处于加载状态
+                this.loading = true;
+                this.refreshing = true;
+                this.getWarnFun();
+            },
+            onSearch(){
+                this.drawerVisibility = false
+                this.onRefresh()
             },
             getWarnFun(){
                 warn.operationRecords({
                     ...this.rightOptions,
                     "pageSize":this.pageSize,
                     "pageNum":this.pageNum
-                }).then(response=>{
-                    if (response.code === 0) {
-                        if (this.pageNum === 1) {
-                            this.dataList = response.data.data;
-                        } else {
-                            this.dataList = this.dataList.concat(response.data.data);
-                        }
-                        this.total = response.data.total
-                        this.$nextTick(() => {
-                            this.$refs.scrollerBottom.reset();
-                        });
-                        if (this.total < this.pageSize * this.pageNum) {
-                            this.$refs.scrollerBottom.disablePullup();
-                        } else {
-                            this.$refs.scrollerBottom.enablePullup();
-                        }
+                }).then(res=>{
+                    if (this.refreshing) {
+                        this.dataList = [];
+                        this.refreshing = false;
                     }
-
-                }).catch()
+                    this.dataList = this.dataList.concat(res.data.data)
+                    this.total = res.data.total
+                    this.loading = false;
+                    if(this.dataList.length < (this.pageNum-1)*this.pageSize){
+                        this.finished = true;
+                    }
+                })
             },
-
-            async loadMore() {
-                if (this.total < this.pageSize * this.pageNum) {
-                    return false;
-                }
-                this.$vux.loading.show("加载数据中");
-                this.pageNum++;
-                await   this.getWarnFun();
-                this.$refs.scrollerBottom.donePullup();
-                this.$vux.loading.hide();
-            },
-            async refresh() {
-                this.drawerVisibility = false;
-                this.$vux.loading.show("刷新数据中");
-                this.pageNum = 1;
-                await   this.getWarnFun();
-                this.$refs.scrollerBottom.enablePullup();
-                this.$refs.scrollerBottom.donePulldown();
-                this.$vux.loading.hide();
+            openSearchPage() {
+                this.$router.push("/caoZuoSearch");
             },
             toDetail(param){
                 sessionStorage.setItem('thingId',param.thingId);

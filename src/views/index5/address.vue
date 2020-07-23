@@ -42,7 +42,7 @@
                             this.$toast.success('修改成功')
                             this.$router.goBack()
                         }else{
-                            this.$toast.error('修改失败')
+                            this.$toast.fail('修改失败')
                         }
                     })
                 }

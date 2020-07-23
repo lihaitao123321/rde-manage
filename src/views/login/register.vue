@@ -398,15 +398,16 @@ export default {
 .t_position {
   position: relative;
   height: 66px;
-  border: 0px !important;
+  border: none;
   background-color: white !important;
-  border-bottom: 01px solid #E6E6E6 !important;
-  border-radius: 0px !important;
+  border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+  border-radius: 0 !important;
 }
 .t_position_bottom {
   position: absolute;
   bottom: 10px;
   left: 0px;
+  border: none !important;
 }
 /deep/.weui-btn_primary {
   background-color: rgba(43, 127, 243, 1) !important;

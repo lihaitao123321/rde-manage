@@ -69,7 +69,6 @@ export default {
   },
   created() {
     this.$store.dispatch("enumeration/getUserList").then(res => {
-      console.log(6666666,res)
       this.options = [res];
       this.ok();
     });

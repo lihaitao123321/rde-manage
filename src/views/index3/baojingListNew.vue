@@ -2,13 +2,13 @@
     <div class="t_page">
         <drawer
                 :show.sync="drawerVisibility"
-                :show-mode="showModeValue"
+                show-mode="push"
                 placement="right"
                 :drawer-style="{'background-color':'white', width: '330px'}"
         >
             <!-- drawer content -->
             <div slot="drawer" style="height: 100%;">
-                <BaojingDrawer v-model="rightOptions" @search="refresh()"></BaojingDrawer>
+                <BaojingDrawer v-model="rightOptions" @search="onSearch()"></BaojingDrawer>
             </div>
             <!-- main content -->
             <div class="main_content">
@@ -135,28 +135,6 @@
                 pageSize:10,
                 total:0,
                 warnList:[],
-
-                pullupDefaultConfig: {
-                    content: "上拉加载更多",
-                    pullUpHeight: 10,
-                    height: 10,
-                    autoRefresh: false,
-                    downContent: "释放后加载",
-                    upContent: "上拉加载更多",
-                    loadingContent: "加载中...",
-                    clsPrefix: "xs-plugin-pullup-"
-                },
-                pulldownDefaultConfig: {
-                    content: "下拉刷新",
-                    height: 40,
-                    autoRefresh: false,
-                    downContent: "下拉刷新",
-                    upContent: "释放后刷新",
-                    loadingContent: "正在刷新...",
-                    clsPrefix: "xs-plugin-pulldown-"
-                },
-
-                showModeValue: "push",
                 drawerVisibility: false,
                 rightOptions: {
                     rangeTime:[],
@@ -169,8 +147,6 @@
                     deviceAlarmStatusId:[],
                 }
             }
-        },
-        created(){
         },
         methods:{
             onLoad() {
@@ -185,10 +161,12 @@
                 // 重新加载数据
                 // 将 loading 设置为 true，表示处于加载状态
                 this.loading = true;
+                this.refreshing = true;
                 this.getWarnFun();
             },
-            openSearchPage() {
-                this.$router.push("/baojingSearch");
+            onSearch(){
+                this.drawerVisibility = false
+                this.onRefresh()
             },
             getWarnFun(){
                 warn.warnReportFun({
@@ -207,6 +185,9 @@
                         this.finished = true;
                     }
                 })
+            },
+            openSearchPage() {
+                this.$router.push("/baojingSearch");
             },
             toDetail(param){
                 sessionStorage.setItem('thingId',param.thingId);
