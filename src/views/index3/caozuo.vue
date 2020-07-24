@@ -71,6 +71,7 @@
   import { XHeader,Group,XInput,XButton,Toast } from "vux";
   import {mapState,mapActions} from "vuex";
   import _ from "lodash";
+  import {getOption as getFirstOption} from "../index1/chartOptions/baojingdongtaiOption"
   export default {
       components: {
         XHeader,
@@ -81,6 +82,7 @@
       },
       data() {
           return {
+              deviceId:'',
               pageData: {
                   deviceBaseInfo: {},
                   deviceModes: [],
@@ -89,6 +91,7 @@
           };
       },
       created() {
+          this.deviceId = this.$route.params.pageData.deviceBaseInfo.id
           this.initData()
       },
       computed:{
@@ -103,18 +106,28 @@
       },
       methods: {
           ...mapActions('mqtt',['initMqtt','setMqttData']),
-          initData(){
-              let pageData = this.$route.params.pageData;
-              pageData.deviceModes.forEach(item=>item.originValue='')
-              pageData.deviceParams.forEach(item=>item.originValue='')
-              this.pageData = pageData
-              //初始化mqtt
-              let username = this.pageData.deviceBaseInfo.thingId;
-              let password = this.pageData.deviceBaseInfo.thingKey;
-              this.initMqtt({
-                  username,
-                  password
-              })
+          //初始化数据
+          initData() {
+              return this.Tools.ajax({
+                  method: "/cloud/api/app/monitor/device/getDeviceDetail",
+                  data: {
+                      deviceId:this.deviceId
+                  }
+              }).then(data => {
+                  if (data.code === 0) {
+                      let pageData = data.data
+                      pageData.deviceModes.forEach(item=>item.originValue='')
+                      pageData.deviceParams.forEach(item=>item.originValue='')
+                      this.pageData = data.data;
+                      //初始化mqtt
+                      let username = pageData.deviceBaseInfo.thingId;
+                      let password = pageData.deviceBaseInfo.thingKey;
+                      this.initMqtt({
+                          username,
+                          password
+                      })
+                  }
+              });
           },
           getColor(item){
               if(item.value != item.originValue ){

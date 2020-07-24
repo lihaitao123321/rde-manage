@@ -78,6 +78,7 @@
             }).then(res => {
                 if(res.status == 0){
                     this.$toast.success('修改成功')
+                    this.$router.goBack()
                 }else{
                     this.$toast.fail('修改失败')
                 }
