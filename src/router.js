@@ -407,9 +407,6 @@ const router = new Router({
             path: '/sheBeiDetail/:deviceId',
             name: 'sheBeiDetail',
             component: sheBeiDetail,
-            meta: {
-                keepAlive: true
-            },
         },
         {
             path: '/xiangMuDetail/:id',
@@ -442,7 +439,7 @@ const router = new Router({
             component: shebeishuxingDetail
         },
         {
-            path: '/caozuo',
+            path: '/caozuo/:deviceId',
             name: 'caozuo',
             component: caozuo
         },

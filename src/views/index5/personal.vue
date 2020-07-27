@@ -170,16 +170,12 @@ export default {
         }
       }).then(data => {
         console.log('保存接口',data)
-        if(res.status === "0"){
-          if(res.status == 0){
+          if(res.status == 0 || res.code == 0){
             this.$toast.success('修改成功')
             this.init();
           }else{
             this.$toast.error('修改失败')
           }
-        }else {
-          this.$toast.error('修改失败')
-        }
       }).catch(()=>{
         this.$toast.error('修改失败')
       });

@@ -30,7 +30,7 @@
          name: '国訾云物联',
          desc: '国訾云物联智能运维云服务系统',
          logo: 'C.png',
-         mqttUrl: 'mqtt://106.12.26.67:8884',
+         mqttUrl: 'mqtt://180.76.180.64:8884',
          baseUrl: 'https://api.guozice.com',
          outputDir: '//Users//lihaitao//Downloads//my//project//rde-cordova-mac-C//www//',//打包输出地址
      },

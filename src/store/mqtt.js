@@ -23,6 +23,9 @@ const mutations = {
         }
     },
     RESET_DATA(state){
+        if(state.client){
+            state.client.end()
+        }
         state.client = null;
         state.username = '';
         state.password = '';
@@ -33,7 +36,7 @@ const mutations = {
 const actions = {
     initMqtt({state,commit},{username,password}){
         commit('RESET_DATA');
-        // console.log('mqtt链接：'+ config.mqttUrl + '，' +username + '，'+password)
+        console.log('mqtt链接：'+ config.mqttUrl + '，' +username + '，'+password)
         let client = mqtt.connect(config.mqttUrl,{
                 username: username,
                 password: password,
@@ -42,6 +45,7 @@ const actions = {
                 clientId:"mqttjs_cr_" + Math.random().toString(16).substr(2, 8)
         });
         client.on("connect", () => {
+            console.log('onconnect')
             commit('SET_DATA',{client,username,password});
             client.subscribe("iot/realData/" + username, {
                 qos: 1
@@ -57,22 +61,25 @@ const actions = {
         });
     },
     setMqttData({state,commit},{id,value}){
-        let topic = 'iot/control/' + state.username
-        let message = {
-            id: state.username,
-            mt:{
-                [id]:Number(value)
+
+        return new Promise(resolve => {
+            let topic = 'iot/control/' + state.username
+            let message = {
+                id: state.username,
+                mt:{
+                    [id]:Number(value)
+                }
             }
-        }
-        let opts = {
-            qos: 1,
-            retain:false,
-            dup:false
-        }
-        console.log(topic,message,opts)
-        state.client.publish(topic,JSON.stringify(message),opts,function(res){
-            console.log(7777,res)
-        });
+            let opts = {
+                qos: 1,
+                retain:false,
+                dup:false
+            }
+            console.log('mqttSetData',topic,message,opts)
+            state.client.publish(topic,JSON.stringify(message),opts,function(res){
+                resolve(res)
+            });
+        })
     }
 }
 

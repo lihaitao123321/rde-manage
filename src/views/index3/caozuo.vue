@@ -21,12 +21,12 @@
                 </div>
             </div>
         </div>
-        <div class="all-mon">
+        <div class="all-mon" v-if="pageData.paramOperation.length">
             <div class="title">
                 <div>参数设置</div>
             </div>
             <div class="pillar-box">
-                <div class="item-con" v-for="(item,index) in pageData.deviceParams" :key="index">
+                <div class="item-con" v-for="(item,index) in pageData.paramOperation" :key="index">
                     <div class="lefts">
                         <div class="indexs">{{index+1}}</div>
                         <div class="names">{{item.abbreviate}}</div>
@@ -45,25 +45,39 @@
                 </div>
             </div>
         </div>
-        <div class="all-mon">
+        <div class="all-mon" v-if="pageData.modeOperation.length">
             <div class="title">
                 <div>状态操作</div>
             </div>
             <div class="pillar-box">
-                <div class="item-con" v-for="(item,index) in pageData.deviceModes" :key="index">
+                <div class="item-con"
+                     v-for="(item,index) in pageData.modeOperation"
+                     :key="index"
+                     @click="showPick(item,index)"
+                >
                     <div class="lefts">
                         <div class="indexs">{{index+1}}</div>
                         <div class="names">{{item.abbreviate}}</div>
                         <div class="titles">{{item.abbreviateName}}</div>
                     </div>
                     <div class="rights">
-                        <div class="state-name blue">{{item.value}}</div>
+<!--                        <div class="state-name blue">{{item.value}}</div>-->
                         <div class="units">{{item.label}}</div>
+                        <div class="el-icon-caret-bottom sanjiao"></div>
                     </div>
                 </div>
             </div>
         </div>
       </div>
+        <van-popup v-model="showPicker" round position="bottom">
+            <van-picker
+                    show-toolbar
+                    :columns="columns"
+                    :default-index="defaultIndex"
+                    @cancel="showPicker = false"
+                    @confirm="onConfirm"
+            />
+        </van-popup>
     </div>
 </template>
 
@@ -85,13 +99,18 @@
               deviceId:'',
               pageData: {
                   deviceBaseInfo: {},
-                  deviceModes: [],
-                  deviceParams: []
-              }
+                  modeOperation: [],
+                  paramOperation: []
+              },
+              value: '',
+              pickIndex:0,
+              defaultIndex:0,
+              showPicker: false,
+              columns: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
           };
       },
       created() {
-          this.deviceId = this.$route.params.pageData.deviceBaseInfo.id
+          this.deviceId = this.$route.params.deviceId
           this.initData()
       },
       computed:{
@@ -105,19 +124,45 @@
           }
       },
       methods: {
+          showPick(item,index){
+              let columns = []
+              let defaultIndex = 0
+              item.dicts.forEach((obj,i)=>{
+                  if(item.label === obj.value){
+                      defaultIndex = i
+                  }
+                  columns.push(obj.value)
+              })
+              this.value = item.label
+              this.columns = columns
+              this.pickIndex = index;
+              this.defaultIndex = defaultIndex
+              this.showPicker = true;
+
+          },
+          onConfirm(value) {
+              let item = JSON.parse(JSON.stringify(this.pageData.modeOperation[this.pickIndex]))
+              this.value = value;
+              let find = this.pageData.modeOperation[this.pickIndex].dicts.find(item=>item.value==value)
+              item.label = value
+              item.value = find.key
+              this.setParamsData(item)
+
+              this.showPicker = false;
+          },
           ...mapActions('mqtt',['initMqtt','setMqttData']),
           //初始化数据
           initData() {
               return this.Tools.ajax({
-                  method: "/cloud/api/app/monitor/device/getDeviceDetail",
+                  method: "/cloud/api/app/monitor/device/getOperationPage",
                   data: {
                       deviceId:this.deviceId
                   }
               }).then(data => {
                   if (data.code === 0) {
                       let pageData = data.data
-                      pageData.deviceModes.forEach(item=>item.originValue='')
-                      pageData.deviceParams.forEach(item=>item.originValue='')
+                      pageData.modeOperation.forEach(item=>item.originValue='')
+                      pageData.paramOperation.forEach(item=>item.originValue='')
                       this.pageData = data.data;
                       //初始化mqtt
                       let username = pageData.deviceBaseInfo.thingId;
@@ -149,18 +194,19 @@
           convertMessage: _.debounce(function(message) {
               //模式状态处理
               let pageData = JSON.parse(JSON.stringify(this.pageData));
-              pageData.deviceModes.forEach(item => {
+              pageData.modeOperation.forEach(item => {
                   for (const key in message) {
                       //找到本地和mqtt对应的数据
                       if (message.hasOwnProperty(key) && key === item.abbreviate) {
-                          item.value = message[key];
-                          item.originValue = message[key];
-                          //找到mqtt的值对应的枚举数据
+                          let find = item.dicts.find(obj=>obj.key == message[key]);
+                          item.value = find.key
+                          item.label = find.value
+                          item.originValue = find.value;
                       }
                   }
               });
               //参数显示处理
-              pageData.deviceParams.forEach(item => {
+              pageData.paramOperation.forEach(item => {
                   for (const key in message) {
                       //找到本地和mqtt对应的数据
                       if (message.hasOwnProperty(key) && key === item.abbreviate) {
@@ -176,11 +222,14 @@
               this.setMqttData({
                   id:item.abbreviate,
                   value:item.value
+              }).then(res=>{
+                  if(!res){
+                      this.sendLog(item)
+                      // this.initData()
+                  }
               })
-              this.sendLog(item)
           },
           sendLog(item) {
-              console.log(6666,this.pageData)
               return this.Tools.ajax({
                   method: "/cloud/api/control/log/save",
                   data: {
@@ -355,6 +404,9 @@
                         color: #2B7FF3;
                         font-size: 25px;
                         width: 35px;
+                    }
+                    .sanjiao{
+                        color: #2B7FF3;
                     }
                 }
             }

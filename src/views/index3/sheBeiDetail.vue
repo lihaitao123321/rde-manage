@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div class="all-mon">
+      <div class="all-mon" v-if="pageData.deviceModes.length">
         <div class="title">
           <div>模式状态</div>
           <div @click="jumpUrl('moshizhuangtaiDetail')">
@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-      <div class="all-mon">
+      <div class="all-mon" v-if="pageData.deviceParams.length">
         <div class="title">
           <div>参数显示</div>
           <div @click="jumpUrl('canshuDetail')">
@@ -100,7 +100,7 @@
     <div class="footer">
       <div>流程图监控</div>
       <div>模型图监控</div>
-      <div @click="jumpUrl('caozuo')">操作</div>
+      <div @click="jumpUrl('/caozuo/' + deviceId)">操作</div>
     </div>
   </div>
 </template>
@@ -149,6 +149,7 @@ export default {
   data() {
     return {
       deviceId: '',
+      originData:{},
       pageData: {
         deviceBaseInfo: {},
         deviceModes: [],
@@ -197,12 +198,7 @@ export default {
         }
       }).then(data => {
         if (data.code === 0 || true) {
-          let chartDataList = data.data.deviceAlarms;
-          let data3 = JSON.parse(JSON.stringify(this.data3));
-          for (let index = 0; index < data3.length; index++) {
-            data3[index].nub = chartDataList[index].count;
-          }
-          this.data3 = data3;
+          this.originData = JSON.parse(JSON.stringify(data.data))
           if(data.data.deviceModes.length>10){
               data.data.deviceModes = data.data.deviceModes.slice(0,9)
           }
@@ -210,6 +206,7 @@ export default {
               data.data.deviceParams = data.data.deviceParams.slice(0,9)
           }
           this.pageData = data.data;
+
           //初始化mqtt
           let username = this.pageData.deviceBaseInfo.thingId;
           let password = this.pageData.deviceBaseInfo.thingKey;
@@ -232,8 +229,9 @@ export default {
         for (const key in message) {
           //找到本地和mqtt对应的数据
           if (message.hasOwnProperty(key) && key === item.abbreviate) {
-            item.value = message[key];
-            item.originValue = message[key];
+            let find = item.dicts.find(obj=>obj.key == message[key]);
+            item.value = find.value
+            item.originValue = find.value;
             //找到mqtt的值对应的枚举数据
           }
         }
@@ -258,7 +256,7 @@ export default {
         this.$router.push({
           name,
           params: {
-            pageData: this.pageData
+            pageData: this.originData
           }
         });
       }

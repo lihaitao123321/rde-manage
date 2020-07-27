@@ -163,7 +163,7 @@ export default {
   methods: {
     consoleIndex() {},
     userHttp() {
-      this.$router.push("home");
+      // this.$router.push("home");
     },
     tabColor() {
       this.isActive = true;
