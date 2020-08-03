@@ -59,7 +59,7 @@ export function getOption({seriesDataList,xAxisDataList, colors} = {seriesDataLi
         yAxis: [
             {
                 type: 'value',
-                name: 'KW',
+                name: '次',
                 position: 'left',
                 nameTextStyle:{
                     color:'#999999',

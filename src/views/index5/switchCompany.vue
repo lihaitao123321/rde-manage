@@ -40,7 +40,8 @@ export default {
     };
   },
   created() {
-    this.companyId = [this.company.id];
+      console.log(66666,this.$store.state.loginInfo.companyId)
+    this.companyId = [this.$store.state.loginInfo.companyId]
   },
   mounted() {
     this.getAllCompany();

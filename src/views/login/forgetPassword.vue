@@ -170,25 +170,11 @@ export default {
           telephone: this.telephone
         }
       }).then(res => {
-        switch (res.status) {
-          case "0":
-            // 发送成功
-            this.$vux.toast.text("设置密码成功");
-            break;
-          case "1":
-            this.$vux.toast.text("发送失败，请稍后重试！");
-            break;
-          case "2":
-            this.$vux.toast.text("验证码错误");
-            break;
-          case "3":
-            this.$vux.toast.text("验证码过期");
-            break;
-          default:
-            // 1：失败 或者其他情况
-            this.$vux.toast.text("发送失败，请稍后重试！");
-            break;
-        }
+          if(res.status == 0){
+              this.$toast.success('发送验证码成功，注意查收')
+          }else{
+              this.$toast.fail('发送验证码失败')
+          }
       });
     },
     register() {
@@ -215,23 +201,20 @@ export default {
         switch (res.status) {
           case "0":
             // 注册成功
-            this.$vux.toast.text("注册成功");
+            this.$toast.success('重置密码成功')
             setTimeout(() => {
               this.$router.goBack();
             }, 1500);
             break;
           case "2":
-            this.$vux.toast.text("验证码错误");
+              this.$toast.fail('验证码错误')
             break;
           case "3":
-            this.$vux.toast.text("验证码过期");
-            break;
-          case "4":
-            this.$vux.toast.text("用户已存在");
+              this.$toast.fail('验证码过期')
             break;
           default:
             // 1：失败 或者其他情况
-            this.$vux.toast.text("注册失败，请重试");
+              this.$toast.fail('重置密码失败，请重试')
             break;
         }
       });

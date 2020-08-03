@@ -3,13 +3,13 @@
   <div class="t_page">
     <drawer
       :show.sync="drawerVisibility"
-      :show-mode="showModeValue"
+      show-mode="push"
       placement="right"
       :drawer-style="{'background-color':'white', width: '330px'}"
     >
       <!-- drawer content -->
       <div slot="drawer" style="height: 100%;">
-        <SearchOptions v-model="rightOptions" @search="drawerVisibility=false;refresh()"></SearchOptions>
+        <SearchOptions v-model="rightOptions" @search="onSearch"></SearchOptions>
       </div>
       <!-- main content -->
       <div class="main_content">
@@ -32,22 +32,17 @@
           </div>
         </div>
         <div class="text">为您搜索到的内容</div>
-        <Scroller
-          use-pullup
-          :pullup-config="pullupDefaultConfig"
-          @on-pullup-loading="loadMore"
-          use-pulldown
-          :pulldown-config="pulldownDefaultConfig"
-          @on-pulldown-loading="refresh"
-          lock-x
-          ref="scrollerBottom"
-          height="-80"
-        >
-          <div class="content">
+        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+          <van-list
+                  v-model="loading"
+                  :finished="finished"
+                  finished-text="没有更多了"
+                  @load="onLoad"
+          >
             <div
               class="content_item"
-              v-for="item in dataList"
-              :key="item.id"
+              v-for="(item,index) in dataList"
+              :key="index"
               @click="onClick(item)"
             >
               <div class="item_top">
@@ -83,114 +78,55 @@
                 </div>
               </div>
             </div>
-          </div>
-        </Scroller>
+          </van-list>
+        </van-pull-refresh>
       </div>
     </drawer>
   </div>
 </template>
 
 <script>
-import { Scroller, Drawer } from "vux";
+import { Drawer } from "vux";
 import { mapState, mapActions } from "vuex";
 import SearchOptions from "@/views/index1/components/searchOptions";
 export default {
   components: {
-    Scroller,
     Drawer,
     SearchOptions
   },
   data() {
     return {
-      pageNum: 1,
-      pageSize: 10,
+      loading: false,
+      finished: false,
+      refreshing: false,
+      pageNum:0,
+      pageSize:10,
+      total:0,
       dataList: [],
-      isLoading: false, //防止多次调用接口
-      pullupDefaultConfig: {
-        content: "上拉加载更多",
-        pullUpHeight: 60,
-        height: 40,
-        autoRefresh: false,
-        downContent: "释放后加载",
-        upContent: "上拉加载更多",
-        loadingContent: "加载中...",
-        clsPrefix: "xs-plugin-pullup-"
-      },
-      pulldownDefaultConfig: {
-        content: "下拉刷新",
-        height: 40,
-        autoRefresh: false,
-        downContent: "下拉刷新",
-        upContent: "释放后刷新",
-        loadingContent: "正在刷新...",
-        clsPrefix: "xs-plugin-pulldown-"
-      },
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        },
-        {
-          value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
-        }
-      ],
-      tabActive: 0,
-      value: "",
+      drawerVisibility: false,
       rightOptions: {
         areaId: "",
         projectType: "",
         beginDesignLoad: "",
         endDesignLoad: ""
       },
-      drawerVisibility: false,
-      showMode: "push",
-      showModeValue: "push",
-      showPlacement: "left",
-      showPlacementValue: "left"
     };
   },
-  async mounted() {
-    this.$vux.loading.show("加载地图中");
-    await this.initData();
-    this.$vux.loading.hide();
-  },
   methods: {
-    onSearch() {
-      if (this.isLoading) {
-        return false;
-      }
-      this.refresh();
+    onLoad() {
+      console.log(1111)
+      this.pageNum ++;
+      this.initData();
     },
-    async loadMore() {
-      if (this.dataList.length < this.pageSize * this.pageNum) {
-        return false;
-      }
-      this.$vux.loading.show("加载数据中");
-      this.pageNum++;
-      await this.initData();
-      this.$refs.scrollerBottom.donePullup();
-      this.$vux.loading.hide();
+    onRefresh() {
+      console.log(2222)
+      this.pageNum = 1
+      this.refreshing = true;
+      this.initData();
     },
-    async refresh() {
-      this.$vux.loading.show("刷新数据中");
-      this.pageNum = 1;
-      await this.initData();
-      this.$refs.scrollerBottom.enablePullup();
-      this.$refs.scrollerBottom.donePulldown();
-      this.$vux.loading.hide();
+    onSearch(){
+      this.drawerVisibility = false
+      this.onRefresh()
     },
     initData() {
       return this.Tools.ajax({
@@ -200,23 +136,17 @@ export default {
           pageNum: this.pageNum,
           pageSize: this.pageSize
         }
-      }).then(data => {
-        if (data.code === 0) {
-          this.isLoading = false;
-          if (this.pageNum === 1) {
-            this.dataList = data.data.data;
-          } else {
-            this.dataList = this.dataList.concat(data.data.data);
-          }
-          this.$nextTick(() => {
-            this.$refs.scrollerBottom.reset();
-          });
-          if (this.dataList.length < this.pageSize * this.pageNum) {
-            this.$refs.scrollerBottom.disablePullup();
-            this.$vux.toast.text("没有更多数据了");
-          } else {
-            this.$refs.scrollerBottom.enablePullup();
-          }
+      }).then(res => {
+        if (this.refreshing) {
+          this.dataList = [];
+          this.refreshing = false;
+        }
+        this.dataList = this.dataList.concat(res.data.data)
+        this.loading = false;
+        if(this.dataList.length < (this.pageNum-1)*this.pageSize){
+          this.finished = true;
+        }else{
+          this.finished = false;
         }
       });
     },
@@ -238,6 +168,10 @@ export default {
 /deep/.weui-tabbar__icon {
   width: 17px;
   height: 19px;
+}
+.van-pull-refresh {
+  height: 100%;
+  overflow-y: auto;
 }
 .tabbar_image {
   width: 17px;
@@ -282,7 +216,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  padding-top: 80px;
+  padding: 80px 10px 0 10px;
   .header {
     display: flex;
     position: absolute;
@@ -346,7 +280,6 @@ export default {
             background: none;
             border: none;
             outline: none;
-            color: white;
           }
           input::placeholder {
             font-size: 14px;
@@ -368,8 +301,6 @@ export default {
     color: #888888ff;
     background-color: #efefef;
   }
-  .content {
-    padding: 0 15px;
     .content_item {
       height: 176px;
       background: rgba(255, 255, 255, 1);
@@ -428,6 +359,5 @@ export default {
         }
       }
     }
-  }
 }
 </style>

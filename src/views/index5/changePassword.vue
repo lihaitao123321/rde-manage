@@ -50,20 +50,25 @@
         onSave() {
             console.log(666)
             const { password } = this;
-            if (!password.old === oldPwd) {
-                this.toast.showPositionValue = true;
-                this.toast.text = '当前密码输入错误'
+            if (!password.old) {
+                this.$toast.fail('请输入旧密码')
                 return false;
             }
-            if (!password.new === password.confirm) {
-                this.toast.showPositionValue = true;
-                this.toast.text = '新密码两次输入不一致'
+            if (!password.new) {
+                this.$toast.fail('请输入新密码')
+                return false;
+            }
+            if (!password.confirm) {
+                this.$toast.fail('请输入确定新密码')
+                return false;
+            }
+            if (password.new !== password.confirm) {
+                this.$toast.fail('新密码两次输入不一致')
                 return false;
             }
             let reg = /^[-_a-zA-Z0-9]+$/;
-            if (!reg.test(password.new) && (password.new.length >= 4 && password.new.length <= 20)) {
-                this.toast.showPositionValue = true;
-                this.toast.text = '请输入合法的密码，可以是4~20位的字母、数字、- 或 _的组合'
+            if (!reg.test(password.new) || password.new.length <= 4 || password.new.length >= 20) {
+                this.$toast.fail('请输入合法的密码，可以是4~20位的字母、数字、- 或 _的组合')
                 return false;
             }
             let oldPwd = encrypt.encrypt(password.old);

@@ -8,52 +8,17 @@
             <div
                     class="text"
             >
-                德孚致力于利用物联网、大数据技术在设备运维服务领域发挥指引作用，帮助设备制造商、设备运维服务商、设备使用者、能源运营商、楼宇管理方等合作伙伴实现智慧运维云、远程监控云、能源管理云、智能楼宇云等，为设备运维行业提供完善的数据化解决方案。我们将帮助设备运维行业实现社会数据的共享，驱动设备运维服务向数字形态、云计算、智能运维的模式发展。
-                我们为设备运维行业提供一站式物联网云服务的解决方案。
-                我们利用云计算、物联网、大数据技术，研发了从设备出厂到运行到整机回收整个生命周期的云服务功能，涵盖“远程监管、节能管理、智能运维客服、3D可视化、专家系统、故障诊断和大数据分析”等平台。
-                我们总部位于昆山城东科技广场，在苏南、苏北、山东分别设立办事处，同时与上海交通大学、南京工业大学、扬州大学等多家科研机构建立了深入的产学研合作。
+                国訾新能源科技（上海）有限公司是一家专注于新能源领域的开发、投资、建设、运维与管理于一体的综合能源服务商，公司总部设在上海，核心团队深耕新能源领域多年，平均行业经验6年以上，依托强大的产业优势，紧跟国际能源发展趋势和中国新能源行业的快速崛起大势，整合资源，致力于光伏发电、风力发电、储能、能源微网、综合能源服务等项目的开发、投资、建设、运维与管理。
+                面对全国综合能源市场，深化与各级政府合作，为智慧工厂、绿色园区、智慧城市提供新能源全产业链的解决方案，是国内较早定位为专业高效的新能源综合运营服务商。目前，已成功落地上海、安徽、江苏和山东等多个合作项目，得到客户和合作伙伴的高度评价和肯定，成为业内及各地政府推广综合能源项目的优质合作单位。
             </div>
             <div class="content1">
                 <span class="title">公司经营理念:</span>
-                <span class="detail">创新求变，诚信经营</span>
+                <span class="detail">为企业提供优质的综合能源服务，为政府提供高效的能源管理服务</span>
             </div>
             <div class="content1" style="margin-top: 40px">
                 <span class="title">经营范围:</span>
                 <span class="detail">光伏太阳能设备及其配件的研发，生产，销售，自营和代理各类商品及技术的进出口业务</span>
             </div>
-        </div>
-        <div class="main-title">
-            <div class="dot"></div>
-            <div class="label">联系我们</div>
-        </div>
-        <div class="content content1">
-            <span class="title">总部</span>
-            <div class="space">
-                <span class="label">公司地址：</span>
-                <span class="detail">江苏省昆山市开发区前进东路科技广场大楼605室</span>
-            </div>
-            <div class="space">
-                <span class="label">电话号码：</span>
-                <span class="detail">+86 15051665680</span>
-            </div>
-            <div class="space">
-                <span class="label">公司网址：</span>
-                <span class="detail">www.de-vo.cn</span>
-            </div>
-            <!--                <span class="title" style="margon-top:30px;">分公司</span>-->
-            <!--                <div class="label space">Radiant Japan 株式会社</div>-->
-            <!--                <div class="space">-->
-            <!--                    <span class="label">公司地址：</span>-->
-            <!--                    <span class="detail">東京都渋谷区東三丁目１５−５ AYビ ル４階</span>-->
-            <!--                </div>-->
-            <!--                <div class="space">-->
-            <!--                    <span class="label">电话号码：</span>-->
-            <!--                    <span class="detail">+86 512-66572916</span>-->
-            <!--                </div>-->
-            <!--                <div class="space">-->
-            <!--                    <span class="label">公司网址：</span>-->
-            <!--                    <span class="detail">www.radiantpv.com</span>-->
-            <!--                </div>-->
         </div>
     </div>
 </template>

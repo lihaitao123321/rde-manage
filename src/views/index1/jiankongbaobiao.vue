@@ -9,10 +9,10 @@
                   :value="item.value">
           </el-option>
         </el-select>
-        <div class="right-box" slot="right">
-          <img src="../../assets/images/index1/share.png" />
-          <img src="../../assets/images/index1/clip.png" />
-        </div>
+<!--        <div class="right-box" slot="right">-->
+<!--          <img src="../../assets/images/index1/share.png" />-->
+<!--          <img src="../../assets/images/index1/clip.png" />-->
+<!--        </div>-->
       </XHeader>
       <div class="project-page">
 

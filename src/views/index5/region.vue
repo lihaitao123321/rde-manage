@@ -8,10 +8,10 @@
             >
                 <XButton slot="right" @click.native="update">保存</XButton>
             </XHeader>
-            <div class="text">定位到的位置</div>
-            <Group class="region-input">
-                <XInput :value="location" readonly></XInput>
-            </Group>
+<!--            <div class="text">定位到的位置</div>-->
+<!--            <Group class="region-input">-->
+<!--                <XInput :value="location" readonly></XInput>-->
+<!--            </Group>-->
             <div class="text">全部</div>
             <group>
                 <x-address title="选择位置" v-model="region" :list="regionList"  placeholder="请选择地址" inline-desc="系统预设位置" :show.sync="showAddress"></x-address>
@@ -22,6 +22,8 @@
 
   <script>
 import { XHeader, Group, XInput, XButton, Cell, XAddress,ChinaAddressV4Data } from "vux";
+import { mapGetters } from "vuex";
+
 
 export default {
   components: {
@@ -34,13 +36,15 @@ export default {
   },
   data() {
     return {
-      location:'江西 南昌',
+      location:'',
       region: [],
       regionList: [],
       showAddress:false
     };
   },
   mounted(){
+      console.log(55555,this.$store)
+      this.region = this.$store.state.loginInfo.areaIds || []
       this.init();
   },
   methods:{
@@ -50,10 +54,11 @@ export default {
           });
       },
       update(key,item) {
+          console.log(77777,this.region)
           this.Tools.ajax({
               method:'/cloud/api/app/my/updateArea',
               data:{
-                  areaId:this.region[0]
+                  areaId:this.region[2]
               }
           }).then(res=>{
               if(res.status == "0"){
@@ -66,6 +71,7 @@ export default {
       },
   },
     computed:{
+        ...mapGetters(["loginInfo", "company"]),
         cValue(){
             if(this.region && this.region.length>0){
                 return this.region[0].name

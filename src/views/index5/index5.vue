@@ -7,30 +7,30 @@
           <span class="name">{{loginInfo.username}}</span>
           <img width="17" src="../../assets/images/index5/认证@2x.png">
         </div>
-        <div class="text-overflow">{{company.name}}</div>
+        <div class="text-overflow">{{loginInfo.companyName}}</div>
       </div>
       <div class="right-icon">
         <i class="el-icon-arrow-right"></i>
       </div>
     </div>
     <Group class="group">
-      <cell title="切换企业" :value="company.name"  is-link :link="{path:'/switchCompany'}">
+      <cell title="切换企业" :value="loginInfo.companyName"  is-link :link="{path:'/switchCompany'}">
         <img
           slot="icon"
           width="14"
-          style="margin: 5px 19px 0 0;"
-          src="../../assets/images/index5/修改密码(1)@2x.png"
+          style="margin: 6px 15px 0 0;"
+          src="../../assets/images/index5/关于我们(1)@3x.png"
         >
       </cell>
-      <cell :title="cellData.changePassword" value="" is-link :link="{path:'/changePassword'}">
+      <cell :title="cellData.changePassword" value="修改" is-link :link="{path:'/changePassword'}">
         <img
           slot="icon"
           width="14"
-          style="margin: 5px 19px 0 0;"
+          style="margin: 6px 15px 0 0;"
           src="../../assets/images/index5/修改密码(1)@2x.png"
         >
       </cell>
-      <cell :title="cellData.cell2" is-link :link="{path:'/message'}">
+      <cell :title="cellData.cell2" value="设置" is-link :link="{path:'/message'}">
         <img
           slot="icon"
           width="14"
@@ -38,7 +38,7 @@
           src="../../assets/images/index5/消息设置@2x.png"
         >
       </cell>
-      <cell :title="cellData.cell3" is-link :link="{path:'/language'}">
+      <cell :title="cellData.cell3" value="设置" is-link :link="{path:'/language'}">
         <img
           slot="icon"
           width="14"
@@ -46,7 +46,7 @@
           src="../../assets/images/index5/语言类型@2x.png"
         >
       </cell>
-      <cell :title="cellData.cell4" is-link>
+      <cell :title="cellData.cell4" value="清理" is-link>
         <img
           slot="icon"
           width="14"
@@ -54,7 +54,7 @@
           src="../../assets/images/index5/清除缓存@2x.png"
         >
       </cell>
-      <cell :title="cellData.cell5" is-link :link="{path:'/version'}">
+      <cell :title="cellData.cell5" value="查看" is-link :link="{path:'/version'}">
         <img
           slot="icon"
           width="14"
@@ -62,7 +62,7 @@
           src="../../assets/images/index5/版本介绍@2x.png"
         >
       </cell>
-      <cell :title="cellData.cell6" is-link :link="{path:'/aboutUs'}">
+      <cell :title="cellData.cell6" value="查看" is-link :link="{path:'/aboutUs'}">
         <img
           slot="icon"
           width="14"

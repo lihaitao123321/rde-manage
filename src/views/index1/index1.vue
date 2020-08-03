@@ -20,7 +20,7 @@
             <div class="search-box" @click.stop="seachDetail">
                 <x-icon class="white-x-icon" type="ios-search" size="25"></x-icon>
                 <group>
-                    <x-input class="search-con" readonly :placeholder="this.localConfig.desc"></x-input>
+                    <x-input class="search-con" readonly :placeholder="config.searchTitle"></x-input>
                 </group>
             </div>
             <x-icon
@@ -82,7 +82,7 @@
                         <div class="action-box" @click="jumpUrl('/projectNumber/4')">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation5.png" >
                             <div class="action-name">实用用电功率<span>(KW)</span></div>
-                            <div class="action-number">{{ pageData.projectCount || 0  }}</div>
+                            <div class="action-number">{{ pageData.kwh || 0  }}</div>
                         </div>
                         <div class="action-box">
                             <img class="navigation-icon" src="../../assets/images/index1/navigation6.png" >
@@ -196,6 +196,7 @@
 </template>
 
 <script>
+    import config from "../../config";
 import {
   Group,
   XInput,
@@ -252,6 +253,7 @@ export default {
       let defaultOption1 = getFirstOption()
       // let defaultOption2 = getFirstOption()
         return {
+            config,
           map,
           firstChartOption:defaultOption1,
           secondChartOption:{},

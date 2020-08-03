@@ -5,19 +5,19 @@
       <Group>
         <cell :title="cellData.avatar" is-link @click.native="isShowImg=true">
           <div @click="isShowImg=true">
-            <img class="headImg" :src=form.imageUrl alt="">
+            <img class="headImg" :src="loginInfo.imageUrl" alt="">
           </div>
         </cell>
-        <cell :title="cellData.nickname" :value="form.username" is-link :link="{path:'/nickname',query:{username:form.username}}"></cell>
-        <cell :title="cellData.gender" :value="form.sex" is-link @click.native="change"></cell>
-        <cell :title="cellData.companyName" :value="form.companyName"></cell>
-        <cell :title="cellData.department" :value="form.deptName"k></cell>
+        <cell :title="cellData.nickname" :value="loginInfo.username" is-link :link="{path:'/nickname',query:{username:loginInfo.username}}"></cell>
+        <cell :title="cellData.gender" :value="loginInfo.sex" is-link @click.native="change"></cell>
+        <cell :title="cellData.companyName" :value="loginInfo.companyName"></cell>
+        <cell :title="cellData.department" :value="loginInfo.deptName"k></cell>
       </Group>
       <Actionsheet v-model="isShowImg" :menus="ImageList" @on-click-menu="onSelect" show-cancel></Actionsheet>
       <Actionsheet v-model="isShowSex" :menus="menus" @on-click-menu="updateSex" show-cancel></Actionsheet>
       <Group>
-        <cell :title="cellData.area" :value="form.areaName" is-link :link="{path:'/region'}"></cell>
-        <cell :title="cellData.address" :value="form.address" is-link :link="{path:'/address',query:{address:form.address}}"></cell>
+        <cell :title="cellData.area" :value="loginInfo.areaName" is-link :link="{path:'/region'}"></cell>
+        <cell :title="cellData.address" :value="loginInfo.address" is-link :link="{path:'/address',query:{address:loginInfo.address}}"></cell>
       </Group>
     </div>
   </div>
@@ -25,7 +25,7 @@
 
   <script>
 import { Group, Cell, XHeader, Actionsheet } from "vux";
-
+import { mapGetters } from "vuex";
 export default {
   components: {
     Group,
@@ -63,6 +63,9 @@ export default {
       }
     };
   },
+  computed:{
+    ...mapGetters(["loginInfo", "company"]),
+  },
   mounted() {
     this.init();
   },
@@ -73,9 +76,7 @@ export default {
         data: {}
       }).then(res => {
         if (res.code === 0) {
-          this.form = res.data;
-        } else {
-          this.$vux.toast.text("加载失败");
+          this.$store.commit('setLoginInfo',res.data);
         }
       });
     },
@@ -170,7 +171,7 @@ export default {
         }
       }).then(data => {
         console.log('保存接口',data)
-          if(res.status == 0 || res.code == 0){
+          if(data.status == 0 || data.code == 0){
             this.$toast.success('修改成功')
             this.init();
           }else{
