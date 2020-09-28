@@ -1,5 +1,5 @@
  const config = {
-    project: 'B',
+    project: 'C',
     //苏州德孚
     A: {
         projectId: 'A',
@@ -9,8 +9,9 @@
         // mqttUrl: 'mqtt://106.12.36.121:8884',
         // mqttUrl: 'mqtt://106.12.18.233:8884',
         mqttUrl: 'mqtt://106.12.26.67:8884',
-        // baseUrl: 'https://iot.congrongyun.com',
-        baseUrl: 'https://iot.de-vo.net/',
+        // baseUrl: 'https://iot.de-vo.net/',
+        // baseUrl: 'https://106.12.26.67/',
+        baseUrl: 'https://106.12.84.118/',
         // baseUrl: 'https://iot.de-vo.cn/',
         outputDir: '//Users//lihaitao//Downloads//my//project//rde-cordova-mac-A//www//',//打包输出地址
         searchTitle:'德孚智能运维云服务系统'

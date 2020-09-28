@@ -22,7 +22,7 @@
                                 <i class="el-icon-search"></i>
                             </div>
                             <div class="search_content">
-                                <input placeholder="请输入搜索内容">
+                                <input placeholder="请输入搜索内容" v-model="searchContent" @input="onSearch">
                             </div>
                         </div>
                     </div>
@@ -113,6 +113,7 @@
     import warn from '../Warn/warn.js'
     import { Drawer } from "vux";
     import BaojingDrawer from "./components/BaojingDrawer";
+    import _ from 'lodash'
     export default {
         components: {
             Drawer,
@@ -132,6 +133,7 @@
                 total:0,
                 warnList:[],
                 drawerVisibility: false,
+                searchContent:'',
                 rightOptions: {
                     rangeTime:[],
                     deviceTypeId: '',
@@ -163,10 +165,12 @@
                 this.refreshing = true;
                 this.getWarnFun();
             },
-            onSearch(){
-                this.drawerVisibility = false
-                this.onRefresh()
-            },
+            onSearch:_.debounce(function(){
+                    this.drawerVisibility = false
+                    this.onRefresh()
+                },
+                600
+            ),
             getWarnFun(){
                 warn.warnReportFun({
                     ...this.rightOptions,

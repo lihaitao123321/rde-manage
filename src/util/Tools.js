@@ -34,8 +34,6 @@ export default {
         if (userToken) {
             // token = `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMTZhYjNjMTdlNTA4ODM3OTQxYjY5YmQ1ODBkMDA0NSIsImF1dGgiOiJST0xFX0FOT05ZTU9VUyIsIlVTRVJUWVBFIjowLCJjb21wIjoiIiwiZXhwIjoxNTgyNTQ3MjA5fQ.9GaoVeCSgdbq4--etqieHriRv0t3B5uYYZtQampq84PcJMeWVir4k-G00eV6HY4CsOaiP7zPX-EzsU36TMqJ-A`;
             token = userToken;
-        } else {
-            token = '';
         }
         let defaultHeaders = {
             'Access-Control-Allow-Origin': '*',
@@ -72,12 +70,19 @@ export default {
         });
         //响应拦截器
         service.interceptors.response.use(response => {
-            if (response.data.code === 401) {
-                router.push('login');
+            console.log(55555,response)
+            if(response.data){
+                if (response.data.status === 401 || response.data.code === 401) {
+                    router.push('/login');
+                }
+                return response.data;
+            }else{
+                return {status:-1,msg:'系统错误请稍后再试'};
             }
-            // 对响应数据做些事
-            return response.data;
         }, error => {
+            if(error.response.status === 401){
+                router.push('/login');
+            }
             // 请求错误
             return {};
         });

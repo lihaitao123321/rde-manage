@@ -6,8 +6,6 @@ import mqtt from "./mqtt";
 Vue.use(Vuex);
 let store = new Vuex.Store({
   state: {
-    mqttUrl: 'mqtt://106.12.36.121:8884',
-    baseUrl: 'https://iot.congrongyun.com',
     location: [121.469652, 31.230121],
     theme: {
       baseColor: '#333333',

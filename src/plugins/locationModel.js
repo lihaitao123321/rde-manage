@@ -1,21 +1,5 @@
 import store from '../store';
 export default {
-    //初始化 配置
-    init(){
-        if(window.device){
-            GaodeLocation.configLocation({
-                appName: '国訾云物联',
-                android: {
-                    locationMode: 1
-                },
-                ios: {
-                    accuracy: 1,
-                    locationTimeout: 10
-                }
-            },  successMsg => {
-            });
-        }
-    },
     getCurrentLocation(cb){
         if(window.device){
             let obj={
@@ -43,9 +27,7 @@ export default {
             };
             //兼容android第一次打开地图，权限未获取卡住情况
             function getLocation(){
-                console.log(1)
                 window.GaoDe.getCurrentPosition(locationInfo=> {
-                    console.log(22,locationInfo)
                     if(locationInfo.longitude){
                         localStorage.setItem('isFirstOpenMap','1')
                         let center =[locationInfo.longitude,locationInfo.latitude];
@@ -54,15 +36,12 @@ export default {
                         cb(false);
                     }
                 },  (err) => {
-                    console.log(333,err)
                     cb(false);
                 },obj);
             }
             getLocation();
             let timer = setInterval(()=>{
-
                 let isFirstOpenMap = localStorage.getItem('isFirstOpenMap');
-                console.log(666,isFirstOpenMap)
                 if(!isFirstOpenMap){
                     getLocation();
                 }else{
@@ -81,13 +60,11 @@ export default {
             });
             //返回定位信息
             AMap.event.addListener(geolocation, 'complete', async res => {
-                console.log(4444444,res);
                 let center = [res.position.lng, res.position.lat];
                 cb(center);
             });
             //返回定位出错信息
             AMap.event.addListener(geolocation, 'error', err => {
-                console.log(555555,err);
                 cb(false);
             });
             geolocation.getCurrentPosition();

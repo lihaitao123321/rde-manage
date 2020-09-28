@@ -99,6 +99,7 @@ export default {
         this.$vux.toast.text("请输入密码");
         return false;
       }
+      localStorage.removeItem('userToken')
       this.Tools.ajax({
         method: "/cloud/api/appLogin",
         data: {
