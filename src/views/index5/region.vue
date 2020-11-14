@@ -43,7 +43,6 @@ export default {
     };
   },
   mounted(){
-      console.log(55555,this.$store)
       this.region = this.$store.state.loginInfo.areaIds || []
       this.init();
   },

@@ -85,8 +85,8 @@ export default {
   },
     created() {
       if(this.config.projectId === 'A' || process.env.NODE_ENV === "development"){
-          this.telephone = '17630378060'
-          this.password = '123321'
+          this.telephone = '15051665680'
+          this.password = '11076038'
       }
     },
     methods: {

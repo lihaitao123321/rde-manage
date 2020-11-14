@@ -70,7 +70,6 @@ export default {
         });
         //响应拦截器
         service.interceptors.response.use(response => {
-            console.log(55555,response)
             if(response.data){
                 if (response.data.status === 401 || response.data.code === 401) {
                     router.push('/login');

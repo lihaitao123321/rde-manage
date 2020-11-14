@@ -40,14 +40,14 @@ export default {
     };
   },
   created() {
-      console.log(66666,this.$store.state.loginInfo.companyId)
-    this.companyId = [this.$store.state.loginInfo.companyId]
+      console.log(66666,this.loginInfo.companyId)
+    this.companyId = [this.loginInfo.companyId]
   },
   mounted() {
     this.getAllCompany();
   },
   computed: {
-    ...mapGetters(["company"])
+    ...mapGetters(["loginInfo"])
   },
   methods: {
     getAllCompany() {
@@ -63,7 +63,7 @@ export default {
       });
     },
     selectCompany(value, label) {
-      if (value.length === 0 || value[0] === this.company.id) {
+      if (value.length === 0 || value[0] === this.loginInfo.companyId) {
         return;
       }
       this.Tools.ajax({
@@ -72,10 +72,11 @@ export default {
           companyId: value[0]
         }
       }).then(res => {
-          if(res.code == 0){
+          if(res.code === 0){
               this.$toast.success('修改成功')
-              this.$store.commit("setCompany", { id: value[0], name: label[0] });
-              this.$router.goBack();
+              localStorage.setItem("userToken", res.data);
+              this.$store.commit("setLoginInfo", { companyId: value[0], companyName: label[0] });
+              this.$router.goBack()
           }else{
               this.$toast.fail('修改失败')
           }

@@ -66,6 +66,7 @@ let store = new Vuex.Store({
     setCompany(state, data) {
       state.company = data;
       localStorage.setItem('company', JSON.stringify(data));
+      localStorage.setItem("userToken", data.token);
     },
     setPushNum(state, data) {
       state.jPush.messageNum = data;
