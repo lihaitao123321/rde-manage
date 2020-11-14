@@ -229,10 +229,12 @@ export default {
         for (const key in message) {
           //找到本地和mqtt对应的数据
           if (message.hasOwnProperty(key) && key === item.abbreviate) {
-            let find = item.dicts.find(obj=>obj.key == message[key]);
-            item.value = find.value
-            item.originValue = find.value;
             //找到mqtt的值对应的枚举数据
+            let find = item.dicts.find(obj=>obj.key == message[key]);
+            if(find){
+              item.value = find.value
+              item.originValue = find.value;
+            }
           }
         }
       });
