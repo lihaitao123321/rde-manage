@@ -15,7 +15,7 @@
     "jsencrypt": "^3.0.0-rc.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mqtt": "^3.0.0",
     "postcss-pxtorem": "^5.1.1",
     "px2rem": "^0.5.0",
